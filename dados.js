@@ -153,120 +153,741 @@ const ESSENCIA = {
 };
 
 const RESUMO_1MIN = {
-  usar: "Use quando quiser lembrar tudo em trinta segundos, antes de gravar.",
-  linhas: [
-    { k: "O que você faz", v: "Faz enxergar o que ainda não estava sendo visto." },
-    { k: "Onde você faz isso", v: "Praia Grande, seus imóveis, seu mercado e as pessoas que estão construindo o que vem depois." },
-    { k: "O que isso provoca", v: "Expansão. A pessoa sai enxergando uma possibilidade que antes não estava no campo de visão dela." },
-    { k: "No que você acredita", v: "É difícil querer uma possibilidade que você ainda não conhece." },
-    { k: "Como você age", v: "Conhece → enxerga → mostra → provoca movimento." }
+  usar: "Use quando estiver com informação demais na cabeça e precisar lembrar o que realmente importa.",
+  selo: "A sua marca em 1 minuto",
+
+  /* Duas linhas. A segunda ganha cor e é a que fica. */
+  headline: ["Se você esquecer todo o resto,", "lembre disso."],
+
+  /* Ficha da marca. Cada campo respira sozinho.
+     rot    = etiqueta pequena, só para navegar
+     resp   = resposta em corpo normal
+     grande = a frase que merece peso, em serifa
+     anota  = anotação lateral (uma palavra) */
+  campos: [
+    { rot: "O que você faz",
+      resp: "Mostra o que ainda não estava sendo enxergado." },
+
+    { rot: "Onde isso acontece",
+      resp: "Em Praia Grande, nos imóveis, no mercado\ne nas pessoas que estão construindo o que vem depois." },
+
+    { rot: "O que acontece do outro lado",
+      resp: "A pessoa passa a enxergar uma possibilidade\nque antes não estava no campo de visão dela.",
+      anota: "expansão" },
+
+    { rot: "No que você acredita",
+      grande: "É difícil querer uma possibilidade\nque você ainda não conhece." },
+
+    { rot: "O que te move",
+      resp: "Você não espera o medo passar para ir.",
+      grande: "Quando enxerga onde quer chegar,\ncomeça a construir o caminho." }
   ]
 };
 
 const TERRITORIO = {
-  usar: "Use quando estiver em dúvida se um assunto é seu ou não.",
-  titulo: "Sobre o que você fala, e o que acontece com quem te escuta.",
-  resumo: "Você não vai falar sobre expansão. Você vai falar sobre Praia Grande, imóveis, compradores e mercado. Expansão é o que queremos que aconteça do outro lado.",
-  detalhe: "A pessoa chega pensando de um jeito e sai enxergando uma possibilidade que antes não enxergava. É isso que separa a sua marca de um perfil que apenas informa sobre o mercado.\n\nE é por isso que os dois precisam andar juntos. Se você falar só do mercado, vira boletim. Se falar só de possibilidade e mentalidade, vira palestra motivacional, e aí qualquer pessoa pode fazer. O que ninguém consegue copiar é você fazendo as duas coisas ao mesmo tempo, sobre esta cidade, com doze anos de mercado embaixo do pé.\n\nSobre o Canto do Forte: é ali que você prova que lê um bairro melhor do que qualquer um. Mas o bairro é o seu endereço, não o seu teto. O método que você usa no Forte é o mesmo que lê a cidade inteira."
+  usar: "Use quando surgir uma pauta, convite ou ideia e você estiver em dúvida: isso cabe na minha marca?",
+  titulo: "Afinal, sobre o que é a sua marca?",
+
+  abertura: [
+    { n: "linha", t: "Sua marca não é sobre vender imóveis de alto padrão." },
+    { n: "linha", t: "É sobre a forma como você enxerga o mercado, a cidade, os imóveis e as pessoas que estão construindo o que vem depois." },
+    { n: "linha", t: "Por isso, você não precisa falar sempre da mesma coisa." },
+    { n: "recuo", t: "Um imóvel pode entrar.\nUma mudança em Praia Grande pode entrar.\nUma viagem para Balneário Camboriú pode entrar.\nUma conversa com a equipe pode entrar.\nUma decisão dentro da Elite pode entrar.\nO que você está construindo no Nexus pode entrar.\nUma conversa com um construtor pode entrar.\nUma história da sua trajetória pode entrar." },
+    { n: "pausa" },
+    { n: "destaque", t: "O assunto pode mudar.\nO seu olhar precisa continuar reconhecível." }
+  ],
+
+  /* O contraste visual: muitos assuntos possíveis de um lado,
+     um olhar só do outro, em fundo vinho. */
+  contraste: {
+    rotA: "O assunto muda",
+    assuntos: "Praia Grande.\nUm imóvel.\nBalneário Camboriú.\nUma negociação.\nUma viagem.\nA Elite.\nO Nexus.\nUma história sua.",
+    rotB: "O seu olhar continua",
+    pergunta: "O que eu estou enxergando aqui\nque talvez o outro ainda não tenha percebido?"
+  },
+
+  olhar: [
+    { n: "linha", t: "Quando você mostra uma perspectiva que a pessoa ainda não tinha considerado, alguma coisa muda do outro lado." },
+    { n: "linha", t: "Ela passa a enxergar uma possibilidade que antes não estava no campo de visão dela." },
+    { n: "recuo", t: "Pode ser uma forma diferente de morar.\nUm bairro que ela não considerava.\nUma oportunidade de mercado.\nUma maneira diferente de conduzir uma negociação.\nUm próximo passo na carreira." },
+    { n: "pausa" },
+    { n: "forte", t: "Você não precisa dizer para alguém pensar grande." },
+    { n: "destaque", t: "Você mostra algo que faz essa pessoa enxergar maior." }
+  ],
+
+  forte: [
+    { n: "linha", t: "O Canto do Forte pode ser o seu ponto de partida." },
+    { n: "linha", t: "Não precisa ser o único assunto da sua marca." },
+    { n: "recuo", t: "É onde você mora.\nÉ onde concentra boa parte da sua experiência e dos negócios que analisamos.\nÉ onde você tem histórias, repertório e detalhes que alguém de fora dificilmente teria." },
+    { n: "linha", t: "Por isso, é um ótimo lugar para começar a mostrar publicamente a profundidade do seu olhar." },
+    { n: "pausa" },
+    { n: "destaquem", t: "Mas a mesma Julliana que lê o Forte\ntambém lê Praia Grande, um projeto, um comprador,\numa negociação e um movimento de mercado." }
+  ],
+
+  ferramenta: {
+    titulo: "Isso cabe na minha marca?",
+    intro: [
+      { n: "linha", t: "Quando surgir um assunto novo, não pergunte apenas:" },
+      { n: "recuo", t: "\u201CIsso é sobre mercado imobiliário?\u201D" },
+      { n: "linha", t: "Pergunte:" }
+    ],
+    perguntas: [
+      "Eu tenho alguma coisa minha para dizer sobre isso?",
+      "Existe uma experiência, observação ou história que sustenta o que estou dizendo?",
+      "Consigo mostrar uma perspectiva que talvez a pessoa ainda não estivesse enxergando?"
+    ],
+    fecho: "Se as respostas forem sim,\nprovavelmente existe conteúdo aí."
+  }
 };
 
 const PRINCIPIOS = {
-  usar: "Use quando não souber o que dizer. Volte para o que você acredita.",
+  usar: "Use quando precisar lembrar quais ideias sustentam o seu jeito de olhar para o mercado.",
+  titulo: "Algumas ideias precisam aparecer tantas vezes\nque começam a ser associadas a você.",
+
+  abertura: [
+    { n: "linha", t: "Você não precisa repetir essas frases literalmente." },
+    { n: "destaque", t: "Precisa repetir o raciocínio." },
+    { n: "recuo", t: "Em imóveis diferentes.\nEm histórias diferentes.\nEm momentos diferentes." },
+    { n: "pausa" },
+    { n: "linha", t: "É assim que uma opinião deixa de ser um post isolado\ne começa a construir percepção." }
+  ],
+
+  /* Seis princípios. Fechados mostram só número e frase.
+     t     = a frase do princípio (use \n para quebrar onde você quer)
+     corpo = a explicação, na mesma lógica editorial das outras telas */
   itens: [
-    { a: "preço", b: "padrão", txt: "O preço diz quanto custa. O padrão diz o que está incluído na vida de quem mora ali." },
-    { a: "produto", b: "valor", txt: "Dois apartamentos iguais não valem a mesma coisa para a mesma pessoa." },
-    { a: "característica", b: "critério", txt: "\"3 vagas\" está no anúncio. \"Nunca mais estacionar na rua\" está na cabeça de quem decide." },
-    { a: "mostrar", b: "interpretar", txt: "Mostrar é catálogo. Interpretar é dizer para quem serve e para quem não serve." },
-    { a: "morar aqui", b: "entender o mercado daqui", txt: "O morador sabe onde almoça no domingo. Não sabe qual quadra sustenta preço daqui a cinco anos." }
+    { t: "Preço alto não é alto padrão.",
+      corpo: [
+        { n: "linha", t: "Um apartamento custar mais não significa, sozinho, que ele entrega mais." },
+        { n: "linha", t: "Antes de chamar de alto padrão, você quer entender o que naquele projeto realmente elevou o padrão de morar." }
+      ] },
+
+    { t: "O mesmo imóvel não tem o mesmo valor para todo mundo.",
+      corpo: [
+        { n: "linha", t: "Três vagas podem ser excesso para uma pessoa e resolver um problema diário para outra." },
+        { n: "linha", t: "Uma varanda enorme pode ser decisiva para uma família e espaço desperdiçado para outra." },
+        { n: "pausa" },
+        { n: "destaquem", t: "Valor aparece quando o imóvel encontra a vida de quem vai usar aquilo." }
+      ] },
+
+    { t: "A ficha diz o que o imóvel tem.\nA vida diz por que isso importa.",
+      corpo: [
+        { n: "linha", t: "\u201C3 vagas\u201D está no anúncio." },
+        { n: "linha", t: "\u201CNunca mais precisar deixar o carro da minha esposa na rua\u201D é o que pode fazer alguém decidir." },
+        { n: "pausa" },
+        { n: "destaquem", t: "O atributo só ganha valor quando encontra uma situação real." }
+      ] },
+
+    { t: "Mostrar um imóvel é diferente\nde ajudar alguém a enxergá-lo.",
+      corpo: [
+        { n: "linha", t: "O cliente já consegue ver metragem, fotos, lazer e preço antes de falar com você." },
+        { n: "linha", t: "O seu valor começa onde a ficha técnica termina." },
+        { n: "recuo", t: "Para quem isso faz sentido?\nPara quem não faz?\nO que essa pessoa ainda não percebeu?" },
+        { n: "pausa" },
+        { n: "destaque", t: "Você não precisa mostrar mais.\nPrecisa mostrar o que o outro ainda não viu." }
+      ] },
+
+    { t: "Conhecer a cidade como morador\né diferente de ler a cidade como mercado.",
+      corpo: [
+        { n: "linha", t: "Quem mora aqui conhece a rotina." },
+        { n: "linha", t: "Sabe onde gosta de comer, qual praia frequenta e como o bairro funciona num sábado." },
+        { n: "linha", t: "Quem acompanha o mercado olha outras coisas também:" },
+        { n: "recuo", t: "o que está sendo construído,\nquem está comprando,\nquais produtos estão chegando,\ncomo os bairros estão mudando." },
+        { n: "linha", t: "Uma leitura não substitui a outra." },
+        { n: "pausa" },
+        { n: "destaquem", t: "Juntas, ajudam a enxergar a cidade inteira." }
+      ] },
+
+    { t: "Repertório muda o que você consegue enxergar.",
+      corpo: [
+        { n: "linha", t: "Foi conhecendo outros mercados, produtos, cidades e pessoas que você começou a ampliar a sua própria visão." },
+        { n: "linha", t: "É por isso que Balneário Camboriú, viagens, feiras e novas experiências não são coisas separadas do seu trabalho." },
+        { n: "pausa" },
+        { n: "destaque", t: "Você vai ver\npara voltar enxergando diferente." }
+      ] }
+  ],
+
+  fecho: [
+    { n: "linha", t: "Esses princípios não são assuntos que você precisa transformar em post." },
+    { n: "linha", t: "São ideias que vão aparecer de formas diferentes em tudo o que você comunica." },
+    { n: "pausa" },
+    { n: "linha", t: "Quanto mais elas se repetem em contextos diferentes," },
+    { n: "destaque", t: "mais o mercado começa a reconhecer\ncomo Julliana pensa." }
   ]
 };
 
 const CAMADAS = {
-  usar: "Use quando estiver em dúvida se algo deve sair no seu perfil, no da Elite ou no do Nexus.",
-  titulo: "Julliana lidera. Elite materializa. Nexus expande.",
-  resumo: "Você não precisa escolher entre ser corretora, gestora ou referência de mercado. Precisa decidir qual dessas versões lidera as outras.",
-  itens: [
-    { nome: "Julliana", papel: "é onde mora a sua leitura", txt: "O olhar, a direção, a perspectiva que ninguém mais está mostrando. É aqui que o mercado já te reconhece e é justamente aqui que hoje não existe voz própria." },
-    { nome: "Elite", papel: "é onde a leitura vira resultado", txt: "A Elite não é o assunto da sua marca. Ela é a prova de que a sua leitura funciona no mundo real." },
-    { nome: "Nexus", papel: "é onde a leitura vira cultura", txt: "O Nexus não é um produto para divulgar no seu perfil. Ele é a prova de que outras pessoas adotaram o seu jeito de enxergar." },
-    { nome: "Construtoras", papel: "é o horizonte, daqui a cinco ou dez anos", futuro: true, txt: "Essa porta abre para quem é lido como leitura de mercado. Não abre para quem é lido como vendedor de estoque." }
+  usar: "Use quando estiver em dúvida sobre qual é o papel da Julliana, da Elite e do Nexus na sua comunicação.",
+  titulo: "Você não precisa escolher\nqual Julliana vai aparecer.",
+
+  /* Cada uma aparece sozinha na tela, com respiro. */
+  versoes: [
+    "Corretora.",
+    "Gestora.",
+    "Sócia da Elite.",
+    "Parte do Nexus.",
+    "Uma mulher que acompanha esse mercado há anos."
   ],
-  frase: "Não sou a Julliana da Elite. É a Elite que é da Julliana."
+
+  abertura: [
+    { n: "pausa" },
+    { n: "destaque", t: "Tudo isso é você." },
+    { n: "fortew", t: "O que precisa ficar claro\né qual papel cada uma dessas frentes ocupa na sua marca." }
+  ],
+
+  /* Bloco claro. É a ideia central da página. */
+  central: [
+    "Sua marca pessoal é o lugar\nonde o seu olhar aparece.",
+    "Elite e Nexus ajudam a provar,\nno mundo real,\naquilo que você pensa, constrói e lidera."
+  ],
+
+  /* A ordem define o peso visual: a primeira é a maior,
+     as duas do meio são secundárias, a última é a mais distante. */
+  itens: [
+    { nome: "Julliana",
+      papel: "É onde aparece o que só você pode dizer.",
+      corpo: [
+        { n: "recuo", t: "Sua opinião.\nO que você percebe antes.\nAs perguntas que faz.\nO jeito como lê uma negociação.\nO que aprende quando conhece outro mercado.\nA sua trajetória.\nAs perspectivas que mostra para clientes, equipe e parceiros." },
+        { n: "pausa" },
+        { n: "destaquem", t: "É aqui que precisamos tornar visível\na autoridade que hoje muita gente só conhece\nquando está perto de você." }
+      ] },
+
+    { nome: "Elite",
+      papel: "É onde boa parte do que você acredita vira prática.",
+      corpo: [
+        { n: "linha", t: "É na Elite que aparecem:" },
+        { n: "recuo", t: "decisões de gestão,\nnegociações,\nformação da equipe,\natendimento,\nproduto,\nresultado." },
+        { n: "linha", t: "Por isso, a Elite pode aparecer bastante na sua comunicação." },
+        { n: "linha", t: "Mas existe uma diferença importante:" },
+        { n: "forte", t: "você não precisa transformar\no seu perfil\nno perfil institucional da Elite." },
+        { n: "pausa" },
+        { n: "destaquem", t: "Quando a Elite entra no seu perfil,\nentra porque existe uma leitura sua\npor trás daquela cena." }
+      ] },
+
+    { nome: "Nexus",
+      papel: "É onde aparece o mercado que você quer ajudar a construir.",
+      corpo: [
+        { n: "linha", t: "O Nexus mostra uma Julliana\nque não pensa apenas na própria venda." },
+        { n: "recuo", t: "Mostra critério.\nRelação com outros profissionais.\nDiscussão sobre ética.\nTroca.\nDesenvolvimento do mercado." },
+        { n: "linha", t: "Quando o Nexus entrar na sua comunicação,\na pergunta não é:" },
+        { n: "recuo", t: "\u201CComo divulgo o Nexus?\u201D" },
+        { n: "linha", t: "É:" },
+        { n: "destaque", t: "\u201CO que isso revela\nsobre o mercado em que eu acredito?\u201D" }
+      ] },
+
+    { nome: "Construtoras",
+      papel: "Uma possibilidade que a sua marca pode abrir no futuro.",
+      corpo: [
+        { n: "linha", t: "Você já demonstrou interesse\nem participar mais cedo dessa conversa." },
+        { n: "linha", t: "Não apenas receber um produto pronto para vender,\nmas levar para quem constrói\naquilo que você percebe atendendo quem compra." },
+        { n: "linha", t: "O caso de Balneário Camboriú\njá deu uma pista dessa capacidade." },
+        { n: "pausa" },
+        { n: "destaquem", t: "Não é uma frente para construir agora." },
+        { n: "linha", t: "É uma possibilidade que fica mais próxima\nà medida que o mercado passa a reconhecer\npublicamente a sua leitura." }
+      ] }
+  ],
+
+  /* Ferramenta final. Em *palavra* o texto fica destacado na cor de acento. */
+  quem: {
+    titulo: "Antes de publicar, pergunte:\nquem está falando aqui?",
+    casos: [
+      { p: "Existe opinião, leitura, experiência ou história sua?",
+        quem: "É Julliana.",
+        r: "Faz sentido no seu perfil." },
+
+      { p: "É comunicado institucional, imóvel, campanha, equipe ou informação da empresa sem uma leitura pessoal sua?",
+        quem: "É Elite.",
+        r: "O canal institucional provavelmente é o lugar mais adequado." },
+
+      { p: "É agenda, chamada, evento ou comunicado institucional do grupo?",
+        quem: "É Nexus.",
+        r: "O canal do Nexus provavelmente é o lugar mais adequado." },
+
+      { p: "A cena aconteceu dentro da Elite ou do Nexus,\nmas revelou alguma coisa que *você* pensa?",
+        grande: true,
+        r: "Pode ser Julliana.\nConte pela sua perspectiva." }
+    ]
+  },
+
+  fecho: [
+    { n: "linha", t: "Você não precisa separar\ntodas as suas versões." },
+    { n: "linha", t: "Precisa entender o papel de cada uma." },
+    { n: "pausa" },
+    { n: "destaque", t: "A Julliana é a voz." },
+    { n: "linha", t: "Elite e Nexus são lugares\nonde partes dessa marca ganham vida." }
+  ]
 };
 
-/* =============================================================================
-   MANUAL DA MARCA · nível 2, entra depois do resumo de 1 minuto
-   ============================================================================= */
 const MANUAL = {
   usar: "Use quando estiver em dúvida se uma ideia, uma parceria, um conteúdo ou uma decisão combina com a marca que você quer construir.",
-  campos: [
-    { k: "A fala de quem chega até você", v:
-      "\"Eu sei mais ou menos o que estou procurando. Só não sei se estou olhando para tudo que deveria.\"\n\nE, mais fundo: \"talvez exista uma possibilidade melhor que eu ainda nem conheço.\"\n\nQuando é o investidor que já mora aqui, a fala muda: \"não é se eu compro. É se vale mais a pena aqui do que onde o meu dinheiro está agora.\"" },
+  titulo: "Se a dúvida for\n\u2018isso parece comigo?\u2019,\nvolte aqui.",
 
-    { k: "O que você ajuda a pessoa a fazer", v:
-      "Ver outras possibilidades.\nComparar além do óbvio.\nEntender o que realmente muda de uma escolha para outra.\nConhecer o que ela ainda não sabia que deveria procurar.\nImaginar a vida dentro daquela escolha antes de decidir.\nPerceber quando aquilo que parecia ideal não serve para ela." },
+  abertura: [
+    { n: "linha", t: "Você não precisa decorar este Manual." },
+    { n: "linha", t: "Ele existe para registrar as decisões que tomamos sobre a sua marca." },
+    { n: "linha", t: "Quando aparecer uma nova ideia, parceria, oportunidade ou caminho de comunicação, volte aqui e compare." },
+    { n: "pausa" },
+    { n: "destaque", t: "A marca pode evoluir." },
+    { n: "fortew", t: "O que não pode é mudar de personalidade\na cada nova oportunidade." }
+  ],
 
-    { k: "O que fica em quem passa por você", v:
-      "Possibilidade. \"Eu não sabia que isso existia.\"\nDesejo. \"Agora que conheci, consigo imaginar isso para mim.\"\nExpansão. \"Tem mais mundo do que eu estava vendo.\"\nConfiança. \"Ela vai me mostrar coisas que eu talvez não encontrasse sozinha.\"\nMovimento. \"Agora eu sei qual pode ser o meu próximo passo.\"\n\nSegurança e clareza continuam existindo. Mas elas vêm como consequência, não como promessa." },
+  /* Quatro portas. Só uma fica aberta por vez.
+     Cada bloco pode ser:
+       corpo: [...]              texto editorial
+       tipo: "ideias"            lista numerada de convicções
+       tipo: "ecos"              percepções em serifa
+       tipo: "tracos"            palavra grande + explicação curta
+       tipo: "protege"           o que a marca não deve virar
+       tipo: "virada"            bloco vinho
+       mais: { r, corpo }        aprofundamento fechado */
+  areas: [
 
-    { k: "No que você acredita", v:
-      "É difícil querer uma possibilidade que você ainda não conhece.\n\nÀs vezes o próximo passo começa simplesmente conhecendo o que existe além.\n\nE você é a prova disso. A primeira venda de um milhão, aos 18 anos, nas suas palavras, \"mudou minha percepção sobre as coisas, mudou minha mentalidade sobre a vida\". Você entrou numa experiência que não conhecia e aquilo mudou o tamanho do que você achava possível. Depois disso, passou a fazer o mesmo com os outros." },
+    { n: "01", t: "O coração da marca", s: "No que você acredita\ne o que quer provocar.",
+      blocos: [
 
-    { k: "As quatro bandeiras", v:
-      "Praia Grande precisa ser olhada pelo que está se tornando, não só pelo que já foi.\n\nPreço alto não é alto padrão.\n\nCumprir a lista não significa fazer a escolha certa.\n\nQuem está perto do comprador enxerga mudanças que o mercado precisa ouvir.\n\nE a crença que sustenta as quatro: quem enxerga primeiro, mostra." },
+        { rot: "No que você acredita",
+          corpo: [
+            { n: "destaque", t: "É difícil querer uma possibilidade\nque você ainda não conhece." },
+            { n: "linha", t: "Às vezes, o próximo passo começa\nsimplesmente conhecendo o que existe além." }
+          ],
+          mais: { r: "Por que isso tem a ver com a sua história?",
+            corpo: [
+              { n: "linha", t: "A sua primeira venda de R$ 1 milhão, aos 18 anos, fez exatamente isso com você." },
+              { n: "linha", t: "Nas suas palavras, aquela experiência mudou a sua percepção sobre as coisas e a sua mentalidade sobre a vida." },
+              { n: "linha", t: "Você conheceu uma possibilidade\nque ainda não fazia parte da sua realidade." },
+              { n: "pausa" },
+              { n: "destaquem", t: "Depois de conhecer,\no tamanho do que parecia possível mudou." }
+            ] } },
 
-    { k: "A sua personalidade", v:
-      "Curiosa. Quer conhecer por dentro.\nAtenta. Percebe movimento, comportamento, detalhe.\nProvocadora. Mostra outro ângulo sem entregar a resposta pronta.\nGenerosa. Não guarda a descoberta para si. Leva equipe, cliente e parceiro junto.\nExigente. Não confunde mais caro com melhor.\nRealizadora. Referência só vale quando vira movimento." },
+        { rot: "Para que essa marca existe",
+          corpo: [
+            { n: "destaque", t: "Mostrar novas possibilidades\npara que mais pessoas consigam perceber\naté onde podem chegar." }
+          ] },
 
-    { k: "Os seus valores", v:
-      "Crescimento. Sempre existe um próximo nível possível.\nCuriosidade. É preciso conhecer antes de concluir.\nVerdade. Nem tudo que você pode vender deveria ser vendido para aquela pessoa.\nGente. Crescer levando pessoas junto.\nMovimento. Conhecimento precisa mudar alguma coisa." },
+        { rot: "O que você promete",
+          corpo: [
+            { n: "ponte", t: "como marca" },
+            { n: "linha", t: "Você vai sair percebendo possibilidades\nque antes não estavam no seu campo de visão." },
+            { n: "pausa" },
+            { n: "ponte", t: "no atendimento" },
+            { n: "linha", t: "Eu te ajudo a enxergar além\ndo imóvel que você estava procurando." },
+            { n: "linha", t: "Para entender qual escolha realmente faz sentido\npara a vida que você quer construir." }
+          ] },
 
-    { k: "O seu propósito", v:
-      "Abrir novas perspectivas para que pessoas e mercados possam ir além do que já conhecem." },
+        { rot: "Ideias que você defende", tipo: "ideias",
+          itens: [
+            "Praia Grande está mudando.\n\nE para entender o mercado de hoje,\nnão basta repetir a imagem que a cidade teve no passado.",
+            "Um imóvel custar mais\nnão significa que ele entregue uma experiência melhor.\n\nAlto padrão precisa aparecer\nna forma de morar, no produto e nas escolhas do projeto.",
+            "O cliente pode encontrar tudo o que pediu\ne ainda assim descobrir que fez a escolha errada.\n\nPor isso, entender a vida que ele quer levar\né tão importante quanto entender a lista do imóvel que procura.",
+            "Quem conversa todos os dias com compradores\npercebe mudanças de comportamento,\nnovas necessidades e novas expectativas.\n\nEssa percepção também pode contribuir\npara quem pensa, desenvolve e constrói os próximos produtos do mercado."
+          ] },
 
-    { k: "A sua promessa", v:
-      "Para a marca: você vai enxergar possibilidades que antes não estavam no seu campo de visão.\n\nPara o atendimento: eu te ajudo a enxergar além do imóvel que você estava procurando, para entender a escolha que realmente faz sentido para a vida que você quer construir." },
+        { rot: "O mercado que você gostaria de ajudar a construir", tipo: "virada",
+          linhas: [
+            "Uma Praia Grande que continue crescendo\nnão apenas em número de lançamentos,\nmas na qualidade dos produtos,\ndas escolhas e das experiências que oferece.",
+            "Um mercado em que compradores,\ncorretores e construtores tenham acesso\na mais referências para tomar decisões melhores."
+          ] }
+      ] },
 
-    { k: "O ideal que você persegue", v:
-      "Uma Praia Grande que cresce não apenas construindo mais, mas enxergando maior." },
+    { n: "02", t: "Como você entrega valor", s: "O que muda para quem passa por você.",
+      blocos: [
 
-    { k: "O seu tom de voz", v:
-      "Direto sem ser ríspido. Concreto sempre: bairro, metragem, valor, cena, nome de rua. Você fala como quem já viu acontecer, não como quem leu.\n\nDiscorda de frente, com cuidado. Não usa superlativo. Nada de \"imperdível\", \"oportunidade única\", \"realize seu sonho\".\n\nNão motiva, mostra. Quando não sabe, diz que não sabe.\n\nNunca guru. Nunca coach. Nunca vendedora de sonho." },
+        { rot: "Antes",
+          corpo: [
+            { n: "destaquem", t: "Eu sei mais ou menos o que estou procurando.\nSó não sei se estou olhando\npara tudo que deveria." },
+            { n: "linha", t: "E, em alguns casos, existe uma dúvida ainda mais profunda:" },
+            { n: "destaquem", t: "\u2018Talvez exista uma possibilidade melhor\nque eu ainda nem conheça.\u2019" },
+            { n: "pausa" },
+            { n: "linha", t: "Para quem já mora aqui e está investindo,\na pergunta pode ser outra:" },
+            { n: "destaquem", t: "\u2018Não é se eu compro.\nÉ se vale mais a pena aqui\ndo que onde meu dinheiro está agora.\u2019" }
+          ] },
 
-    { k: "Como a sua marca deveria parecer", v:
-      "Praia de verdade, não praia de cartão postal. Luz natural, fim de tarde, vento. O bairro aparece: calçada, praça, orla, a padaria da esquina.\n\nMovimento em vez de pose. Caminhando, olhando um apartamento vazio, medindo com o olho, apontando alguma coisa na rua.\n\nRoupa confortável e bem cortada, sem logomarca aparente. Paleta de areia, madeira, verde e o azul do mar em tom real.\n\nO que nunca entra: taça, mármore em close, chave na mão, foto em frente a carro, legenda de \"conquista realizada\". Você ostenta trajetória, não patrimônio." },
+        { rot: "Com você",
+          corpo: [
+            { n: "linha", t: "Você ajuda essa pessoa a:" },
+            { n: "seqm", t: "ver outras possibilidades;" },
+            { n: "seqm", t: "comparar além do óbvio;" },
+            { n: "seqm", t: "entender o que realmente muda\nde uma escolha para outra;" },
+            { n: "seqm", t: "conhecer aquilo que ainda não sabia\nque deveria procurar;" },
+            { n: "seqm", t: "imaginar a vida dentro daquela escolha\nantes de decidir;" },
+            { n: "seqm", t: "perceber quando aquilo que parecia ideal\nnão serve para ela." }
+          ] },
 
-    { k: "O que a sua marca não é", v:
-      "Não é conteúdo de luxo. Mármore e closet qualquer perfil copia em uma semana.\n\nNão disputa o imóvel mais caro do mês. Isso depende de quem pegou a melhor captação naquele mês.\n\nNão é o canal institucional da Elite. Suas palavras: \"eu, Julliana, não vou vender essa comunicação\".\n\nNão é gestora da teoria. Também suas palavras. Toda leitura aqui nasce de caso real." }
+        { rot: "Depois", tipo: "ecos", intro: "ela pode sair pensando",
+          frases: [
+            "Eu não sabia que isso existia.",
+            "Agora consigo imaginar isso para mim.",
+            "Tem mais possibilidades\ndo que eu estava vendo.",
+            "Confio que ela vai me mostrar coisas\nque talvez eu não encontrasse sozinha.",
+            "Agora consigo perceber melhor\nqual pode ser o meu próximo passo."
+          ] }
+      ] },
+
+    { n: "03", t: "Como você aparece", s: "Personalidade, voz e imagem.",
+      blocos: [
+
+        { rot: "Personalidade", tipo: "tracos",
+          itens: [
+            { t: "Curiosa", d: "Quer conhecer por dentro." },
+            { t: "Atenta", d: "Percebe movimento, comportamento e detalhe." },
+            { t: "Provocadora", d: "Mostra outro ângulo sem precisar entregar uma resposta pronta." },
+            { t: "Generosa", d: "Não guarda a descoberta para si." },
+            { t: "Exigente", d: "Não confunde mais caro com melhor." },
+            { t: "Realizadora", d: "O que conhece precisa virar alguma coisa." }
+          ],
+          mais: { r: "Os valores que aparecem por trás disso",
+            corpo: [
+              { n: "recuo", t: "Crescimento. Sempre existe um próximo nível possível.\nCuriosidade. É preciso conhecer antes de concluir.\nVerdade. Nem tudo que você pode vender deveria ser vendido para aquela pessoa.\nGente. Crescer levando pessoas junto.\nMovimento. Conhecimento precisa mudar alguma coisa." }
+            ] } },
+
+        { rot: "Tom de voz",
+          corpo: [
+            { n: "linha", t: "Direta sem ser ríspida." },
+            { n: "linha", t: "Fala de coisas concretas:\nbairro, metragem, valor, rua, cena." },
+            { n: "linha", t: "Fala como quem já viu acontecer,\nnão como quem acabou de aprender uma teoria." },
+            { n: "pausa" },
+            { n: "linha", t: "Pode discordar." },
+            { n: "linha", t: "Mas não precisa diminuir ninguém\npara sustentar uma opinião." },
+            { n: "linha", t: "Evita superlativos vazios como:" },
+            { n: "recuo", t: "\u2018imperdível\u2019\n\u2018oportunidade única\u2019\n\u2018realize seu sonho\u2019" },
+            { n: "linha", t: "Não motiva por motivar.\nMostra." },
+            { n: "linha", t: "Quando não sabe,\ndiz que não sabe." },
+            { n: "pausa" },
+            { n: "recuo", t: "Nunca guru.\nNunca coach.\nNunca vende fantasia." },
+            { n: "destaquem", t: "Inspira pelo que viveu,\nviu e construiu." },
+            { n: "linha", t: "Não por frases motivacionais vazias." }
+          ] },
+
+        { rot: "Imagem",
+          corpo: [
+            { n: "forte", t: "A imagem também precisa ter\numa leitura por trás." },
+            { n: "ponte", t: "funciona" },
+            { n: "recuo", t: "Praia Grande de verdade.\nArquitetura.\nCidade.\nMovimento.\nVisitas.\nReuniões.\nViagens.\nAmbientes que ampliam suas referências.\nVida real com estética bem cuidada.\nAlto padrão quando existe alguma coisa para mostrar além do preço." },
+            { n: "pausa" },
+            { n: "linha", t: "Você pode mostrar\numa experiência sofisticada." },
+            { n: "linha", t: "A pergunta é por que ela está ali." },
+            { n: "linha", t: "Se for apenas:\n\u2018olha onde estou\u2019,\nacrescenta pouco." },
+            { n: "destaque", t: "Se for:\n\u2018olha o que eu vi aqui\ne o que isso me fez perceber\u2019,\nganha função." }
+          ] }
+      ] },
+
+    { n: "04", t: "O que você protege", s: "O que não quer que a sua marca vire.",
+      blocos: [
+        { rot: "Para crescer sem perder a marca", tipo: "protege",
+          itens: [
+            { t: "Não virar perfil de luxo",
+              a: "Alto padrão pode aparecer.",
+              b: "Ostentação não precisa ser o argumento." },
+            { t: "Não virar catálogo da Elite",
+              a: "A empresa pode aparecer.",
+              b: "O seu perfil precisa continuar tendo uma perspectiva sua." },
+            { t: "Não virar perfil para corretor",
+              a: "Você pode falar com o mercado.",
+              b: "Mas o cliente final continua sendo prioridade." },
+            { t: "Não virar perfil motivacional",
+              a: "Sua história inspira porque aconteceu.",
+              b: "Não precisamos transformar cada experiência em uma lição." },
+            { t: "Não virar comentarista de notícia",
+              a: "Se não existe uma leitura sua,",
+              b: "não precisa publicar só porque o assunto está em alta." }
+          ] }
+      ] }
   ]
 };
 
 const ARQUETIPOS = {
-  usar: "Use quando quiser entender por que você age do jeito que age, e por que isso é uma força.",
-  itens: [
-    { t: "HEROÍNA", s: "dominante · sabe onde quer chegar e vai, apesar do que sente", tipo: "hero", txt:
-      "Você não construiu essa carreira porque não teve medo. Construiu porque, mesmo tímida, mesmo insegura e muitas vezes sem saber exatamente como faria, tinha clareza de onde queria chegar.\n\nNas suas palavras: \"sempre fui e ainda sou tímida, mas eu sempre fui uma pessoa corajosa. Eu vou fazer, vou ir, vou gravar, vou criar, independente daquilo que eu estou sentindo.\"\n\nE também: \"eu sempre faço aquilo que eu me sinto confortável de fazer. Mas nunca deixo de fazer.\"\n\nA sua força não é parecer invencível. É continuar indo.\n\nGuarde isso, porque é o que destrava o seu 5 de comunicação: você não precisa virar outra pessoa na frente da câmera. Precisa não parar." },
+  usar: "Use quando precisar lembrar quais características da sua história e da sua forma de agir dão personalidade à sua marca.",
+  titulo: "Seus arquétipos não dizem\nquem você precisa ser.",
 
-    { t: "EXPLORADORA", s: "secundária · vai conhecer aquilo que ainda não conhece", txt:
-      "Você sai do conhecido para ampliar o que consegue enxergar, e depois traz essa visão para perto. Voltou de Balneário com uma leitura, levou para o construtor, e aquilo virou lançamento no Canto do Forte. Os Estados Unidos em outubro são a próxima rodada disso." },
+  abertura: [
+    { n: "destaque", t: "Eles ajudam a reconhecer forças\nque já aparecem em quem você é." },
+    { n: "pausa" },
+    { n: "linha", t: "Na sua história,\numa delas aparece com muita força." },
+    { n: "linha", t: "Você sonha alto,\ndefine onde quer chegar\ne começa a construir o caminho,\nmesmo quando ainda existe medo,\ninsegurança\nou alguma coisa para aprender." }
+  ],
 
-    { t: "GOVERNANTE", s: "apoio · eleva o nível do ambiente em que está", txt:
-      "Você não quer crescer sozinha. Cria estrutura, organiza, lidera e provoca o mercado ao redor. A Elite, o Nexus, o código de ética escrito junto com os membros, a recusa de comunicar o varejo. Tudo isso é a mesma coisa." },
+  /* A força principal. Ocupa a maior parte da página. */
+  heroi: {
+    rot: "Heroína · força principal",
+    h: "A coragem de ir\nantes de se sentir pronta.",
 
-    { t: "MAGO", s: "competência · faz o outro enxergar diferente", txt:
-      "Não é um arquétipo dominante, é a habilidade que você exerce. Você não precisa dar todas as respostas. Muitas vezes o seu papel é mostrar uma perspectiva que a pessoa ainda não havia considerado, e a partir daí ela mesma enxerga o próximo passo. \"Eles já sabem a resposta, só não têm a confiança de seguir. Eu mostro várias perspectivas e ele sozinho busca a solução.\"" },
+    rotLinha: "A história que sustenta essa leitura",
+    linha: [
+      { q: "16 anos",
+        t: "Começou no mercado\ncom dificuldade até para falar com clientes." },
+      { q: "18 anos",
+        t: "Tinha R$ 20 no bolso.\n\nViu na venda de um imóvel\na possibilidade de conquistar o carro que queria.\n\nAprendeu o que precisava,\nfoi atrás\ne vendeu." },
+      { q: "Praia Grande",
+        t: "Quando surgiu a possibilidade de seguir um caminho mais confortável ao lado da mãe,\nescolheu permanecer em Praia Grande\npara construir a própria carreira." },
+      { q: "Hoje",
+        t: "Continua reconhecendo a timidez.\n\nMas não usa o medo\ncomo condição para agir." }
+    ],
 
-    { t: "A TENSÃO", s: "o que ainda trava", tipo: "tensao", txt:
-      "Você tem a autoridade e recusa ocupá-la. Nas suas palavras: \"não sei se é porque eu tenho receio de ter esses traços de alto ego, então eu sempre vou me policiando para não ser essa pessoa\".\n\nO resultado aparece em coisas concretas: o post fixado do seu perfil é do Nexus, a sua grade é tomada pela Elite, e a agência apresentou como novidade o que você vinha dizendo há dois anos e meio.\n\nÉ por isso que a bandeira \"quem enxerga primeiro, mostra\" importa tanto. Ela transforma aparecer em responsabilidade, não em exibição." }
+    falaRot: "fala da própria Julliana",
+    fala: "Eu sempre fui e ainda sou tímida,\nmas eu sempre fui uma pessoa corajosa.",
+
+    porque: [
+      { n: "linha", t: "É por isso que a Heroína aparece\ncom tanta força na sua marca." },
+      { n: "destaquem", t: "Não porque a sua história foi difícil." },
+      { n: "linha", t: "Mas porque existe uma recorrência\nna forma como você atravessa os desafios:" },
+      { n: "recuo", t: "você enxerga onde quer chegar,\nentende o que precisa desenvolver\ne começa a fazer." }
+    ],
+
+    naoRot: "O que essa Heroína não é",
+    nao: [
+      { n: "recuo", t: "Não é a mulher que nunca tem medo.\nNão é a mulher que aguenta tudo.\nNão é: \u2018eu venci e você também consegue\u2019.\nNão é transformar toda dificuldade em conteúdo de superação." },
+      { n: "pausa" },
+      { n: "destaque", t: "A força está em mostrar\nque coragem pode existir junto\ncom medo, dúvida e imperfeição." }
+    ]
+  },
+
+  /* As duas forças seguintes, lado a lado no desktop. */
+  duo: [
+    { rot: "Exploradora · força secundária",
+      h: "Você precisa conhecer\npara ampliar o que consegue perceber.",
+      corpo: [
+        { n: "linha", t: "Você não constrói sua visão\nolhando apenas para o mercado em que já está." },
+        { n: "recuo", t: "Conhece outras cidades.\nOutros produtos.\nOutros profissionais.\nOutros ambientes." },
+        { n: "linha", t: "Observa o que já está acontecendo fora\ne volta fazendo novas perguntas\nsobre Praia Grande." }
+      ],
+      fecho: "A Exploradora da sua marca\nnão viaja para mostrar onde foi.\n\nVai para conhecer\ne volta com alguma coisa nova para pensar.",
+      evid: "balneário camboriú" },
+
+    { rot: "Governante · força de apoio",
+      h: "Crescer também significa\nelevar o ambiente ao redor.",
+      corpo: [
+        { n: "linha", t: "A sua ambição não aparece apenas\nno que quer construir para você." },
+        { n: "linha", t: "Ela também aparece\nna forma como organiza,\nlidera,\ncobra padrão\ne participa da construção\ndo mercado ao redor." },
+        { n: "linha", t: "Elite e Nexus mostram essa força\nde maneiras diferentes." }
+      ],
+      fecho: "Se eu participo desse ambiente,\nquero ajudar a torná-lo melhor estruturado." }
+  ],
+
+  /* O Mago não é um quarto arquétipo. É competência, e tem tratamento visual próprio. */
+  mago: {
+    rot: "uma habilidade que atravessa tudo",
+    h: "Existe ainda uma habilidade\nque atravessa os três.",
+    fala: "Eu mostro várias perspectivas.",
+    corpo: [
+      { n: "linha", t: "Foi você mesma quem nos deu essa pista." },
+      { n: "linha", t: "Quando alguém trava,\nvocê não precisa entregar\numa resposta pronta." },
+      { n: "linha", t: "Muitas vezes,\nmostra um ângulo\nque aquela pessoa ainda não tinha considerado." },
+      { n: "linha", t: "É aí que aparece uma característica\ndo arquétipo do Mago:" },
+      { n: "recuo", t: "mudar a forma como alguém\nestá enxergando uma situação." },
+      { n: "pausa" },
+      { n: "fortew", t: "Por isso, o Mago aparece aqui\ncomo uma competência da sua marca." },
+      { n: "linha", t: "Não como a força\nque conduz a sua história." }
+    ]
+  },
+
+  comunicacao: {
+    titulo: "Como isso aparece\nna sua comunicação?",
+    itens: [
+      { t: "Heroína aparece quando",
+        d: "Você conta uma história\nde decisão,\ncoragem,\ntentativa,\naprendizado\nou conquista.\n\nNão precisa terminar\ncom uma lição motivacional." },
+      { t: "Exploradora aparece quando",
+        d: "Você mostra algo que conheceu\nfora da sua rotina\n\ne explica o que aquilo\nfez você perceber." },
+      { t: "Governante aparece quando",
+        d: "Você fala sobre liderança,\npadrão,\nequipe,\nética,\nElite,\nNexus\nou mercado\n\na partir daquilo que acredita\nque pode ser melhor construído." },
+      { t: "Mago aparece quando",
+        d: "Você pega uma situação\nque parecia óbvia\n\ne mostra uma perspectiva\nque ainda não estava sendo considerada." }
+    ]
+  },
+
+  fecho: [
+    { n: "linha", t: "Você não precisa escolher\num arquétipo antes de criar um conteúdo." },
+    { n: "linha", t: "Eles não são editorias." },
+    { n: "linha", t: "São forças que naturalmente aparecem\nquando a comunicação está fiel\na quem você é." },
+    { n: "pausa" },
+    { n: "destaque", t: "Arquétipo não é personagem." },
+    { n: "linha", t: "Se você precisar interpretar\numa Heroína para comunicar,\nalguma coisa deu errado." },
+    { n: "linha", t: "A força está justamente" },
+    { n: "destaque", t: "em reconhecer o que já existe\ne deixar isso aparecer." }
   ]
 };
 
-const MANIFESTO = "Existe uma conta que quase todo mundo faz antes de comprar um imóvel aqui.\n\nQuanto eu tenho. Quantos dormitórios cabem nisso. Que bairro cabe nisso.\n\nÉ uma conta honesta. E ela está incompleta.\n\nPorque eu já vi gente conseguir exatamente o que pediu e passar um ano infeliz. Vista para o mar por quatrocentos mil. Estava lá. Era real. Era o que ela tinha pedido. E mesmo assim ela achou que tinha errado a cidade.\n\nEla não errou a cidade. Errou o bairro. E ninguém explicou a diferença para ela antes de assinar.\n\nEu acredito que o problema quase nunca é o quanto a pessoa tem. É o quanto ela consegue enxergar do lugar onde está colocando isso.\n\nÉ difícil querer uma possibilidade que você ainda não conhece.\n\nEu não acho que o meu trabalho seja mostrar imóvel. Mostrar imóvel qualquer um mostra, e hoje o cliente vê tudo sozinho no celular antes de me ligar.\n\nO meu trabalho é mostrar o que ele ainda não estava vendo. Para quem serve, para quem não serve, e por quê. E dizer não quando é não, mesmo quando o não derruba a venda.\n\nEu moro aqui. Eu comprei aqui. Eu erro e acerto aqui há doze anos. Sei qual quadra pega vento, qual calçada tem sombra às quatro da tarde, qual prédio envelheceu bem e qual só parecia bom no folder.\n\nIsso não está em anúncio nenhum.\n\nPraia Grande está mudando mais rápido do que a conversa sobre ela. Sobe prédio, sobe preço, chega gente de fora, muda o que as pessoas pedem. E quase ninguém está explicando isso em voz alta.\n\nEu vou explicar.\n\nNão para vender mais rápido. Para que quem compra aqui compre enxergando o que está comprando. E para que essa cidade pare de ser vendida como se fosse só metro quadrado com vista.\n\nPorque às vezes a pessoa pode mais. Só não sabia que podia.";
+const MANIFESTO = {
+  rot: "Manifesto",
 
-/* =============================================================================
-   CLIENTE IDEAL
-   ============================================================================= */
+  /* Página de leitura. Sem ferramenta, sem accordion, sem rótulo entre os blocos.
+     n: "n" texto normal | "l" item da abertura | "s" frase quase sozinha, em serifa
+        "t" frase curta com peso | "q" fala entre aspas | "p" respiro (g ou gg para maior)
+        "fim" o fechamento, no bloco vinho. Linha em branco dupla separa os dois blocos. */
+  blocos: [
+    { n: "n", t: "Tem coisa que você não deseja\nporque ainda nem sabe que existe." },
+    { n: "p" },
+    { n: "l", t: "Uma forma diferente de morar." },
+    { n: "l", t: "Um lugar que nunca tinha considerado." },
+    { n: "l", t: "Um trabalho que parecia grande demais." },
+    { n: "p", g: "g" },
+
+    { n: "s", t: "É difícil querer aquilo\nque você nunca conseguiu imaginar para você." },
+    { n: "p", g: "g" },
+
+    { n: "n", t: "Eu aprendi isso cedo." },
+    { n: "n", t: "Cresci querendo coisas\nque ainda não faziam parte da minha realidade." },
+    { n: "n", t: "E entendi que,\nse eu queria chegar em lugares diferentes,\nprecisaria me tornar capaz de chegar até eles." },
+    { n: "p" },
+
+    { n: "t", t: "Nem sempre pronta." },
+    { n: "t", t: "Nem sempre segura." },
+    { n: "t", t: "Mas sabendo onde eu queria chegar." },
+    { n: "p", g: "g" },
+
+    { n: "n", t: "Aos 18 anos,\numa venda de R$ 1 milhão\nmudou a minha percepção\nsobre o que era possível para mim." },
+    { n: "p" },
+    { n: "n", t: "E, com o tempo,\npercebi outra coisa:" },
+    { n: "p" },
+
+    { n: "s", t: "às vezes,\no que falta para alguém dar o próximo passo\nnão é uma resposta." },
+    { n: "p", g: "g" },
+
+    { n: "n", t: "É uma possibilidade\nque ela ainda não tinha considerado." },
+    { n: "n", t: "É alguém mostrar:" },
+    { n: "q", t: "\u2018olha por aqui também.\u2019" },
+    { n: "p", g: "gg" },
+
+    { n: "fim", t: "Eu não quero te dizer\nonde você deveria chegar.\n\nQuero te mostrar\no que você ainda não viu." }
+  ]
+};
+
 const CLIENTE = {
+  usar: "Use quando souber o que quer falar,\nmas estiver em dúvida sobre como tornar isso relevante\npara quem está do outro lado.",
+  rot: "Cliente ideal",
+  titulo: "Não pense em quem ela é no papel.\n\nPense no momento\nem que ela chega até você.",
+
+  abertura: [
+    { n: "linha", t: "Ela não chega necessariamente dizendo:" },
+    { n: "recuo", t: "\u2018Quero ampliar minhas referências.\u2019\n\u2018Quero fazer uma escolha mais consciente.\u2019\n\u2018Quero entender melhor o mercado.\u2019" },
+    { n: "linha", t: "Ela chega dizendo:" },
+    { n: "recuo", t: "\u2018Quero um apartamento de três quartos.\u2019\n\u2018Quero morar no Forte.\u2019\n\u2018Tenho até X para investir.\u2019\n\u2018Quero duas vagas.\u2019" },
+    { n: "pausa" },
+    { n: "linha", t: "O seu trabalho começa justamente\nquando você entende" },
+    { n: "destaque", t: "o que existe por trás dessa lista." }
+  ],
+
+  /* O contraste que ensina a página inteira em três segundos. */
+  diz: {
+    rotA: "ela diz",
+    itens: "\u2018Quero 3 quartos.\u2019\n\u2018Quero o Forte.\u2019\n\u2018Quero duas vagas.\u2019\n\u2018Tenho até X para investir.\u2019",
+    rotB: "você precisa descobrir",
+    porque: "Por quê?"
+  },
+
+  quem: {
+    rot: "Quem é essa pessoa?",
+    corpo: [
+      { n: "linha", t: "É alguém que já conquistou alguma coisa\ne está diante de uma nova escolha." },
+      { n: "recuo", t: "Pode estar comprando um imóvel melhor.\nMudando de bairro.\nInvestindo.\nSaindo de outra cidade.\nReorganizando patrimônio." },
+      { n: "linha", t: "Ou simplesmente percebendo\nque a vida mudou\ne o imóvel atual deixou de acompanhá-la." },
+      { n: "pausa" },
+      { n: "destaquem", t: "Ela tem condição de escolher." },
+      { n: "fortew", t: "O que nem sempre tem\né clareza sobre tudo o que deveria considerar\nantes de escolher." }
+    ]
+  },
+
+  lista: {
+    rotA: "ela chega procurando",
+    a: "metragem\nbairro\nnúmero de quartos\nvagas\nlazer\nvista\npreço\ncondição de pagamento",
+    rotB: "mas a decisão pode estar em",
+    b: [
+      "como a família realmente vive;",
+      "o que mudou na rotina;",
+      "o que ela não quer mais tolerar;",
+      "o que valoriza hoje\ne não valorizava cinco anos atrás;",
+      "quanto pretende permanecer naquele imóvel;",
+      "o que está disposta a abrir mão;",
+      "o que ainda nem sabe que existe."
+    ],
+    fecho: [
+      { n: "linha", t: "A lista ajuda a começar a busca." },
+      { n: "destaque", t: "Não deveria decidir a compra sozinha." }
+    ]
+  },
+
+  /* Pensamentos possíveis de quem chega. Não são depoimentos. */
+  tensao: {
+    rot: "o que ela pode estar pensando",
+    um: "Eu sei mais ou menos\no que estou procurando.\n\nSó não sei se estou olhando\npara tudo que deveria.",
+    ponte: "Em alguns casos,\nexiste uma segunda pergunta:",
+    dois: "E se existir uma possibilidade melhor\nque eu ainda nem conheço?"
+  },
+
+  /* Três situações em que a mesma cliente pode chegar. Fechadas por padrão. */
+  momentos: {
+    rot: "Três momentos de compra",
+    itens: [
+      { t: "Minha vida mudou",
+        s: "O imóvel atual\njá não acompanha a vida que ela leva.",
+        corpo: [
+          { n: "recuo", t: "Casamento.\nFilhos.\nTrabalho.\nDois carros.\nMudança de rotina.\nNecessidade de espaço.\nLocalização." },
+          { n: "linha", t: "Alguma coisa mudou." },
+          { n: "linha", t: "E aquilo que funcionava antes\ncomeçou a incomodar." }
+        ],
+        perg: "O que hoje me incomoda\ne eu não quero levar\npara a próxima casa?" },
+
+      { t: "Posso escolher melhor",
+        s: "Ela chegou a um momento em que consegue acessar possibilidades\nque antes não faziam parte da realidade dela.",
+        corpo: [
+          { n: "recuo", t: "Pode ser uma mudança de condição financeira.\nDe momento de vida.\nDe patrimônio." },
+          { n: "linha", t: "Ou simplesmente o desejo\nde conhecer produtos diferentes\ndaqueles que sempre conheceu." }
+        ],
+        perg: "O que muda de verdade\nquando eu subo de nível de produto?" },
+
+      { t: "Quero fazer meu dinheiro trabalhar melhor",
+        s: "Ela não precisa ser convencida a comprar um imóvel.\nPrecisa entender por que colocaria o dinheiro aqui.",
+        corpo: [
+          { n: "linha", t: "Muitas vezes,\nesse cliente já mora na região." },
+          { n: "recuo", t: "Já conhece imóveis.\nJá investe." },
+          { n: "linha", t: "E está comparando essa escolha\ncom outras possibilidades para o próprio dinheiro." }
+        ],
+        perg: "Não é se eu compro.\n\nÉ se vale mais a pena aqui\ndo que onde meu dinheiro está agora." }
+    ]
+  },
+
+  percebe: {
+    titulo: "O que essa pessoa precisa perceber\nna Julliana antes mesmo de chamar?",
+    rot: "queremos que ela pense",
+    frases: [
+      "Ela conhece possibilidades\nque eu não conheço.",
+      "Ela não vai tentar encaixar qualquer imóvel\nnaquilo que eu pedi.",
+      "Ela consegue me explicar\npor que uma escolha é diferente da outra.",
+      "Ela vai me dizer\nquando alguma coisa não faz sentido para mim.",
+      "Ela conhece a cidade\npara além do anúncio.",
+      "Ela me ajuda a perceber coisas\nque eu não sabia que deveria observar."
+    ]
+  },
+
+  nao: {
+    rot: "O que ela não precisa receber de você",
+    itens: "Mais ficha técnica.\nMais \u2018oportunidade imperdível\u2019.\nMais vídeo abrindo porta e mostrando cômodo.\nMais afirmação de que tudo é alto padrão.\nMais conteúdo dizendo que Praia Grande valorizou sem explicar o que está mudando.",
+    virada: [
+      "Informação ela encontra.",
+      "O que queremos que ela encontre em você\né interpretação."
+    ]
+  },
+
+  troca: {
+    titulo: "Como isso muda\no seu conteúdo?",
+    itens: [
+      { a: "Empreendimento de alto padrão\ncom 3 suítes,\n3 vagas\ne lazer completo.",
+        b: "Vocês compraram o segundo carro.\n\nMas continuam morando\nnum prédio com uma vaga." },
+      { a: "Excelente oportunidade\nno Canto do Forte.",
+        b: "Duas quadras no mesmo bairro\npodem representar\nescolhas completamente diferentes." },
+      { a: "Conheça este incrível lançamento.",
+        b: "Antes de olhar a planta,\neu quero te mostrar\npor que esse produto está aparecendo agora." }
+    ]
+  },
+
+  regua: {
+    intro: "Antes de publicar para essa pessoa,\npergunte:",
+    p: "Estou dizendo alguma coisa\nque ajuda ela a escolher melhor\n\nou só mostrando\no que tenho para vender?"
+  }
+};
+
+/* GUARDADO PARA MATERIAIS > EXERCÍCIOS COMPLEMENTARES > MAPEAMENTO DE PERSONA.
+   Este bloco não é exibido em nenhuma tela hoje. Nada aqui foi perdido. */
+const MAPEAMENTO_PERSONA = {
   usar: "Use quando souber o que quer falar, mas não souber como tornar aquilo relevante para quem compra.",
   titulo: "Não é uma pessoa. São três, e elas decidem por razões diferentes.",
   resumo: "Metade de quem compra com você já mora na Baixada. A outra metade vem de fora. Os dois grupos precisam ouvir coisas diferentes, e é aí que a maioria dos corretores erra.",
