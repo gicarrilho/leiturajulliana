@@ -70,31 +70,86 @@ const DIAGNOSTICO = [
    ============================================================================= */
 
 const RETRATO = {
-  usar: "Use quando bater a dúvida de se você realmente já construiu alguma coisa.",
+  usar: "Use quando precisar lembrar por que a sua comunicação precisa acompanhar a Julliana que você se tornou.",
   titulo: "O problema nunca foi falta de autoridade.",
-  resumo: "Você se deu 8 em reconhecimento, 8 em marca gerando negócio, 6 em clareza de papel e 5 em comunicação. É aí que aparece o primeiro descompasso da sua marca.",
-  detalhe: "O mercado já conhece uma Julliana que o Instagram ainda mostra pouco.\n\nÉ a Julliana que senta numa negociação. Que o construtor escuta. Que a equipe procura quando trava. Que olha para uma situação e enxerga uma perspectiva que os outros ainda não estavam vendo.\n\nQuem estava nessas salas viu. O problema é que a maior parte do mercado não estava nelas.\n\nÉ isso que vamos mudar agora. Não criando uma nova Julliana para o digital. Abrindo a porta dessas salas.",
+
+  /* Composição editorial. Cada item vira um bloco com peso visual próprio.
+     n: "linhag" texto maior | "linha" texto normal | "ponte" texto menor de ligação
+        "destaque" serifa grande | "forte" caixa alta de peso | "recuo" lista recuada
+        "assin" assinatura em serifa | "pausa" respiro (use {n:"pausa",g:true} para respiro grande)
+     Quebra de linha dentro de um item: use \n onde você quer que a linha quebre. */
+  bloco: [
+    { n: "linhag", t: "Você se deu 8 em Reconhecimento\ne 8 em Negócios." },
+    { n: "linha", t: "Mas, quando olhou para a sua Comunicação,\na nota caiu para 5." },
+    { n: "pausa" },
+    { n: "ponte", t: "E foi aí que apareceu uma pista importante:" },
+    { n: "destaque", t: "a Julliana que o mercado já conhece\nainda não é a mesma Julliana\nque o digital consegue enxergar." }
+  ],
+
+  /* peso: "forte" (os dois 8) | "tensao" (o ponto que pede trabalho) | "secundario" */
   notas: [
-    { v: 8, t: "reconhecimento do mercado" },
-    { v: 8, t: "a marca gerando negócio" },
-    { v: 5, t: "a sua comunicação hoje", baixa: true },
-    { v: 6, t: "clareza do seu papel", baixa: true }
+    { v: 8, t: "Reconhecimento", peso: "forte" },
+    { v: 8, t: "Negócios", peso: "forte" },
+    { v: 5, t: "Comunicação", peso: "tensao" },
+    { v: 6, t: "Clareza de papel", peso: "secundario" }
+  ],
+
+  detalhe: [
+    { n: "linha", t: "O mercado já conhece uma Julliana que o Instagram ainda mostra pouco." },
+    { n: "linha", t: "É a Julliana que senta numa negociação\ne consegue enxergar uma saída." },
+    { n: "linha", t: "Que o construtor escuta." },
+    { n: "linha", t: "Que a equipe procura quando trava." },
+    { n: "linha", t: "Que olha para uma situação\ne mostra perspectivas que os outros ainda não estavam vendo." },
+    { n: "pausa" },
+    { n: "destaque", t: "Essa autoridade já existe." },
+    { n: "pausa" },
+    { n: "linha", t: "Só que ela foi construída, em grande parte,\nem lugares fechados:" },
+    { n: "recuo", t: "na mesa de negociação,\nna reunião,\nno atendimento,\nna conversa com a equipe,\nna relação com outros profissionais do mercado." },
+    { n: "linha", t: "Quem estava nessas salas viu." },
+    { n: "linha", t: "Quem só conhece você pelo Instagram,\nviu muito menos." },
+    { n: "pausa" },
+    { n: "linha", t: "E é justamente aí que está o trabalho daqui para frente." },
+    { n: "forte", t: "Não criar uma nova Julliana para o digital." },
+    { n: "forte", t: "Tornar perceptível a Julliana que você já se tornou." },
+    { n: "pausa" },
+    { n: "assin", t: "Abrir a porta dessas salas." }
   ]
 };
 
 const ESSENCIA = {
   usar: "Use quando precisar explicar, em uma frase, o que você faz.",
-  frase: "Julliana faz você enxergar o que ainda não estava vendo.",
+
+  /* A frase-mãe. A quebra depois de "enxergar" é proposital. */
+  frase: "Julliana faz você enxergar\no que ainda não estava vendo.",
+
+  ponte: "Pode ser:",
+
+  /* Cada item respira sozinho na tela. */
   desdobra: [
-    "Uma possibilidade.",
-    "Uma forma diferente de morar.",
-    "Um movimento que já começou em outro mercado.",
-    "Uma saída para um problema que parecia travado.",
-    "Um próximo nível que parecia distante."
+    "uma possibilidade.",
+    "uma forma diferente de morar.",
+    "um movimento\nque já começou em outro mercado.",
+    "uma saída\npara um problema que parecia travado.",
+    "um próximo nível\nque parecia distante."
   ],
-  fecho: "Você tem o hábito de olhar por outros ângulos. E de mostrar esses ângulos para quem está do seu lado.",
+
+  /* Bloco vinho. É a virada da página: de enxergar para fazer enxergar. */
+  virada: [
+    "Você olha por outros ângulos.",
+    "Mas a sua marca não está apenas\nno que você consegue enxergar.",
+    "Está no que você faz\nquando mostra isso para alguém."
+  ],
+
+  provaIntro: "E foi você mesma quem nos deu a pista.",
   prova: "Eu mostro várias perspectivas.",
-  provaOnde: "Você, no encontro 1, explicando o que faz quando alguém da equipe trava. Essa frase é sua. Não fomos nós que inventamos essa leitura, ela já estava na sua boca."
+  provaOnde: "Você disse isso no Encontro 1,\nexplicando o que faz quando alguém da equipe trava.",
+
+  fecho: [
+    { n: "linha", t: "Essa frase importa porque mostra que essa leitura não foi inventada para a sua marca." },
+    { n: "linha", t: "Ela já estava na sua forma de agir.\nNa sua forma de falar.\nNa forma como as pessoas já recorrem a você." },
+    { n: "pausa" },
+    { n: "assin", t: "A Leitura só reconheceu o padrão." }
+  ]
 };
 
 const RESUMO_1MIN = {
