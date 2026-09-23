@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Julliana Marques · Plano de Ativação · Leitura de Marca</title>
+<meta name="description" content="Ambiente de execução do Plano de Ativação da Leitura de Marca: pilares, banco de pautas, régua editorial e plano de 30 dias.">
+<meta name="theme-color" content="#4A2028">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..800;1,9..144,400..800&family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* =========================================================================
+   IDENTIDADE VISUAL v3 · Giovanna Carrilho
+   vinho 34 / laranja 24 / creme 22 / terracota 8 / oliva 6 / cacau 4
+   Archivo 800 caixa baixa = impacto. Fraunces itálico = autoria.
+   METÁFORA ESTRUTURAL: dossiê de processo. Rail fixo com abas numeradas
+   à esquerda, linha de margem, cada seção é uma folha com canto
+   arredondado à direita e borda colorida à esquerda.
+   ========================================================================= */
+:root{
+  --vinho:#4A2028; --vinho-d:#331319; --laranja:#B45F2B;
+  --terra:#C89078; --oliva:#545A34; --lousa:#A3BACB;
+  --ocre:#C9A227; --cacau:#6B4433;
+  --creme:#F5F0E6; --creme2:#EFE9DC; --papel:#FBFAF7;
+  --disp:'Archivo',Helvetica,sans-serif; --serif:'Fraunces',Georgia,serif;
+  --rail:88px; --pad:clamp(20px,4vw,72px);
+  --linha:rgba(74,32,40,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;background:var(--vinho-d)}
+body{background:var(--vinho-d);color:var(--vinho);font-family:var(--disp);
+  font-weight:400;line-height:1.6;-webkit-font-smoothing:antialiased;
+  padding-left:var(--rail);overflow-x:hidden}
+::selection{background:var(--ocre);color:var(--vinho)}
+img{max-width:100%;display:block}
+button{font-family:inherit}
+
+/* ---------------------- RAIL DE ABAS (lateral fixa) ---------------------- */
+.rail{position:fixed;left:0;top:0;bottom:0;width:var(--rail);z-index:60;
+  background:var(--vinho-d);display:flex;flex-direction:column;
+  align-items:center;padding:16px 0;gap:4px;
+  border-right:1px solid rgba(245,240,230,.12)}
+.rail .marca{font-family:var(--disp);font-weight:800;font-size:11px;letter-spacing:.18em;
+  color:var(--ocre);writing-mode:vertical-rl;transform:rotate(180deg);
+  margin-bottom:14px;text-transform:uppercase;opacity:.9}
+.rail nav{display:flex;flex-direction:column;gap:3px;width:100%;align-items:center;
+  overflow-y:auto;flex:1;scrollbar-width:none}
+.rail nav::-webkit-scrollbar{display:none}
+.aba{width:56px;min-height:46px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:3px;background:transparent;border:none;cursor:pointer;
+  color:rgba(245,240,230,.5);border-left:3px solid transparent;transition:.16s;
+  padding:6px 2px;border-radius:0 6px 6px 0}
+.aba .nb{font-family:var(--disp);font-weight:800;font-size:13px;letter-spacing:-.03em;line-height:1}
+.aba .lb{font-size:8px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;
+  line-height:1.15;text-align:center;opacity:.72}
+.aba:hover,.aba:focus-visible{color:var(--creme);background:rgba(180,95,43,.22);outline:none}
+.aba.on{color:var(--creme);background:var(--laranja);border-left-color:var(--ocre)}
+.rail .topo{margin-top:10px;width:46px;height:34px;border:1px solid rgba(245,240,230,.26);
+  background:transparent;color:rgba(245,240,230,.7);cursor:pointer;font-size:14px;
+  border-radius:4px;flex:0 0 auto}
+.rail .topo:hover{background:var(--laranja);color:var(--creme);border-color:var(--laranja)}
+
+/* ---------------------- FOLHAS ---------------------- */
+.folha{background:var(--papel);border-left:6px solid var(--laranja);
+  border-radius:0 18px 18px 0;margin:0 clamp(10px,2vw,28px) clamp(12px,2vw,20px) 0;
+  padding:clamp(30px,5vw,68px) var(--pad);position:relative;overflow:hidden;
+  scroll-margin-top:14px}
+.folha::before{content:'';position:absolute;left:clamp(16px,3vw,42px);top:0;bottom:0;
+  width:1px;background:rgba(180,95,43,.28)}
+.folha .conteudo{position:relative;z-index:2;max-width:1060px;
+  margin-left:clamp(26px,3.6vw,58px)}
+.folha.escura{background:var(--vinho);color:rgba(245,240,230,.9);border-left-color:var(--ocre)}
+.folha.tinta{background:var(--vinho-d);color:rgba(245,240,230,.9);border-left-color:var(--laranja)}
+.folha.fogo{background:var(--laranja);color:rgba(245,240,230,.96);border-left-color:var(--vinho-d)}
+.folha.mato{background:var(--oliva);color:rgba(245,240,230,.92);border-left-color:var(--ocre)}
+.folha.areia{background:var(--creme2);border-left-color:var(--cacau)}
+.folha.escura::before,.folha.tinta::before,.folha.fogo::before,.folha.mato::before{background:rgba(245,240,230,.2)}
+.grade{background-image:radial-gradient(rgba(74,32,40,.1) 1px,transparent 1px);
+  background-size:22px 22px}
+
+/* ---------------------- TIPOGRAFIA ---------------------- */
+.etq{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:10.5px;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--laranja);margin-bottom:18px}
+.etq::before{content:'';width:22px;height:2px;background:currentColor}
+.escura .etq,.tinta .etq,.mato .etq{color:var(--ocre)}
+.fogo .etq{color:rgba(245,240,230,.8)}
+h1{font-family:var(--disp);font-weight:800;letter-spacing:-.045em;line-height:.88;
+  font-size:clamp(42px,8.6vw,124px)}
+h2{font-family:var(--disp);font-weight:800;letter-spacing:-.038em;line-height:1;
+  font-size:clamp(26px,4.2vw,54px);max-width:20ch;margin-bottom:16px}
+h3{font-family:var(--disp);font-weight:800;letter-spacing:-.03em;line-height:1.1;
+  font-size:clamp(18px,2vw,25px);margin-bottom:10px}
+h4{font-family:var(--disp);font-weight:800;letter-spacing:-.028em;line-height:1.1;
+  font-size:clamp(15px,1.5vw,19px);margin-bottom:8px}
+p{font-size:clamp(15px,1.15vw,17.5px);max-width:58ch;margin-bottom:12px}
+p:last-child{margin-bottom:0}
+.dim{opacity:.68}
+.mao{font-family:var(--serif);font-variation-settings:'SOFT' 100,'WONK' 1;
+  font-weight:500;font-style:italic;letter-spacing:-.026em;line-height:1.1}
+.mao.g{font-size:clamp(26px,4.6vw,62px);max-width:20ch}
+.mao.m{font-size:clamp(19px,2.6vw,33px);max-width:26ch;line-height:1.16}
+.mao.p{font-size:clamp(16px,1.8vw,23px);max-width:34ch;line-height:1.24}
+em.oc{font-style:normal;color:var(--laranja);font-weight:500}
+.escura em.oc,.tinta em.oc,.mato em.oc{color:var(--ocre)}
+.fogo em.oc{color:var(--creme);font-weight:700}
+.risco{width:42px;height:3px;background:var(--laranja);margin:22px 0}
+.escura .risco,.tinta .risco,.mato .risco{background:var(--ocre)}
+.fogo .risco{background:var(--creme)}
+
+/* ---------------------- CAPA ---------------------- */
+.capa{min-height:calc(100svh - 26px);display:flex;flex-direction:column;justify-content:center}
+.capa .cliente{font-weight:700;font-size:clamp(11px,1.1vw,14px);letter-spacing:.24em;
+  text-transform:uppercase;color:var(--ocre);margin-bottom:22px}
+.capa .frase{font-size:clamp(16px,1.5vw,21px);max-width:44ch;margin-top:26px;opacity:.82}
+.botoes{display:flex;gap:11px;flex-wrap:wrap;margin-top:clamp(26px,4vh,44px)}
+.bt{display:inline-flex;align-items:center;gap:9px;font-weight:800;font-size:12px;
+  letter-spacing:.14em;text-transform:uppercase;padding:14px 22px;cursor:pointer;
+  border:1px solid currentColor;background:transparent;color:inherit;
+  text-decoration:none;transition:.16s;border-radius:3px}
+.bt.cheio{background:var(--laranja);border-color:var(--laranja);color:var(--creme)}
+.bt.cheio:hover{background:var(--ocre);border-color:var(--ocre);color:var(--vinho-d)}
+.bt:hover{background:rgba(245,240,230,.14)}
+.selos{display:flex;flex-wrap:wrap;gap:clamp(20px,4vw,62px);margin-top:clamp(32px,5vh,64px);
+  padding-top:24px;border-top:1px solid rgba(245,240,230,.22)}
+.selo .v{font-family:var(--disp);font-weight:800;letter-spacing:-.05em;
+  font-size:clamp(30px,4.4vw,58px);line-height:.9;color:var(--ocre)}
+.selo p{font-size:clamp(11.5px,.92vw,13.5px);margin:9px 0 0;opacity:.6;max-width:20ch;line-height:1.35}
+.tarja{margin-top:clamp(26px,4vh,46px);display:flex;flex-wrap:wrap;gap:10px}
+.tarja span{font-weight:700;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  padding:8px 13px;border:1px solid rgba(245,240,230,.28);opacity:.72;border-radius:3px}
+
+/* ---------------------- NÚMERO GIGANTE ---------------------- */
+.gigante{font-family:var(--disp);font-weight:800;letter-spacing:-.055em;line-height:.82;
+  font-size:clamp(58px,10vw,150px);color:var(--ocre)}
+.gigante small{font-size:.3em;letter-spacing:-.02em;opacity:.8}
+.gigante.frio{color:var(--terra)}
+.legenda{font-weight:700;font-size:clamp(11.5px,1.1vw,14px);letter-spacing:.2em;
+  text-transform:uppercase;opacity:.62;margin-top:16px}
+
+/* ---------------------- DUELO 8 x 5 ---------------------- */
+.duelo{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  gap:clamp(14px,3vw,48px);margin-top:20px}
+.duelo .n2{font-family:var(--disp);font-weight:800;letter-spacing:-.055em;
+  font-size:clamp(64px,12vw,180px);line-height:.8;color:var(--ocre)}
+.duelo .b .n2{color:var(--terra);opacity:.74}
+.duelo .cap{font-weight:700;font-size:clamp(10.5px,1vw,13px);letter-spacing:.2em;
+  text-transform:uppercase;opacity:.62;margin-top:12px;max-width:17ch}
+.duelo .meio{font-family:var(--serif);font-variation-settings:'SOFT' 100,'WONK' 1;
+  font-weight:500;font-style:italic;font-size:clamp(18px,2.4vw,34px);opacity:.46}
+
+/* ---------------------- GRADES ---------------------- */
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--linha);margin-top:26px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--linha);margin-top:26px}
+.escura .g3,.escura .g2,.tinta .g3,.tinta .g2{background:rgba(245,240,230,.2)}
+.cel{background:var(--papel);padding:clamp(16px,2vw,28px)}
+.escura .cel{background:var(--vinho)}
+.tinta .cel{background:var(--vinho-d)}
+.areia .cel{background:var(--creme2)}
+.cel .k{font-weight:700;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--laranja);margin-bottom:10px}
+.escura .cel .k,.tinta .cel .k{color:var(--ocre)}
+.cel .v{font-family:var(--disp);font-weight:800;letter-spacing:-.03em;
+  font-size:clamp(16px,1.6vw,22px);line-height:1.12}
+.cel p{font-size:clamp(13px,1vw,15.5px);opacity:.72;margin:10px 0 0;max-width:none}
+.cel.aceso{background:var(--laranja);color:var(--creme)}
+.cel.aceso .k{color:rgba(245,240,230,.8)}
+
+/* ---------------------- PRINCÍPIOS ---------------------- */
+.pr{padding:16px 0;border-bottom:1px solid rgba(245,240,230,.18)}
+.pr:last-child{border-bottom:none}
+.pr .eq{font-family:var(--disp);font-weight:800;letter-spacing:-.035em;
+  font-size:clamp(19px,2.4vw,33px);line-height:1;margin-bottom:8px}
+.pr .eq i{font-style:normal;color:var(--ocre);padding:0 .1em}
+.pr p{font-size:clamp(13.5px,1.04vw,16px);opacity:.74;max-width:62ch;margin:0}
+
+/* ---------------------- ESCADA DE CAMADAS ---------------------- */
+.camadas{margin-top:26px}
+.cam{display:grid;grid-template-columns:clamp(100px,13vw,180px) 1fr;
+  gap:clamp(14px,2.6vw,40px);padding:18px 0;align-items:baseline;
+  border-top:1px solid rgba(245,240,230,.2)}
+.cam:last-child{border-bottom:1px solid rgba(245,240,230,.2)}
+.cam .nome{font-family:var(--disp);font-weight:800;letter-spacing:-.03em;
+  font-size:clamp(18px,2.2vw,30px);line-height:1;color:var(--ocre)}
+.cam.futuro .nome{color:rgba(245,240,230,.4)}
+.cam .papel{font-weight:700;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  opacity:.55;display:block;margin-bottom:8px}
+.cam p{font-size:clamp(13.5px,1.05vw,16.5px);opacity:.82;max-width:60ch;margin:0}
+
+/* ---------------------- FILTROS (abas de divisória) ---------------------- */
+.filtros{display:flex;flex-wrap:wrap;gap:7px;margin:26px 0 22px}
+.fl{font-weight:800;font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  padding:11px 17px;border:1px solid var(--linha);background:var(--papel);color:var(--vinho);
+  cursor:pointer;border-radius:5px 5px 0 0;border-bottom:3px solid var(--terra);transition:.14s}
+.fl:hover{background:var(--creme2)}
+.fl.on{background:var(--vinho);color:var(--creme);border-color:var(--vinho);border-bottom-color:var(--ocre)}
+.fl .qt{opacity:.55;font-weight:700;margin-left:5px}
+
+/* ---------------------- CARDS DE PAUTA ---------------------- */
+.pautas{display:grid;grid-template-columns:repeat(auto-fill,minmax(282px,1fr));gap:12px}
+.pauta{background:var(--papel);border:1px solid var(--linha);border-left:4px solid var(--laranja);
+  border-radius:0 10px 10px 0;padding:19px 20px;display:flex;flex-direction:column;gap:11px;
+  transition:.16s;position:relative}
+.pauta:hover{transform:translateX(3px);box-shadow:-3px 6px 20px -10px rgba(51,19,25,.4)}
+.pauta.p1{border-left-color:var(--laranja)}
+.pauta.p2{border-left-color:var(--oliva)}
+.pauta.p3{border-left-color:var(--cacau)}
+.pauta.p4{border-left-color:var(--ocre)}
+.pauta.p5{border-left-color:var(--terra)}
+.pauta .top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.pauta .pl{font-weight:700;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--laranja);line-height:1.2}
+.pauta.p2 .pl{color:var(--oliva)} .pauta.p3 .pl{color:var(--cacau)}
+.pauta.p4 .pl{color:#8a7016} .pauta.p5 .pl{color:var(--cacau)}
+.pauta .fm{font-weight:700;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  opacity:.5;white-space:nowrap}
+.pauta .gancho{font-family:var(--disp);font-weight:800;letter-spacing:-.03em;
+  font-size:clamp(15.5px,1.3vw,18.5px);line-height:1.18}
+.pauta .nota{font-size:13px;opacity:.68;line-height:1.45;margin:0;max-width:none}
+.pauta .flag{font-weight:800;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--creme);background:var(--cacau);padding:5px 9px;border-radius:3px;align-self:flex-start}
+.copiar{align-self:flex-start;font-weight:800;font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;background:transparent;border:1px solid var(--linha);
+  padding:8px 12px;cursor:pointer;color:var(--vinho);border-radius:3px;transition:.14s}
+.copiar:hover{background:var(--vinho);color:var(--creme);border-color:var(--vinho)}
+.copiar.feito{background:var(--oliva);color:var(--creme);border-color:var(--oliva)}
+.vazio{padding:34px 0;opacity:.6;font-size:15px}
+
+/* ---------------------- SISTEMA 1 VIRA 3 ---------------------- */
+.pecas{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(245,240,230,.2);margin-top:26px}
+.peca{background:var(--vinho-d);padding:clamp(17px,2.1vw,28px);display:flex;flex-direction:column}
+.peca .no{font-family:var(--disp);font-weight:800;font-size:clamp(26px,3.4vw,44px);
+  letter-spacing:-.05em;line-height:.9;color:var(--ocre);margin-bottom:11px}
+.peca h4{color:var(--creme)}
+.peca p{font-size:clamp(13px,1vw,15.5px);opacity:.78;max-width:none;margin-bottom:12px}
+.exemplo{border-left:2px solid var(--laranja);padding:11px 0 11px 13px;margin-top:auto;
+  font-size:13.5px;line-height:1.45}
+.exemplo b{display:block;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ocre);margin-bottom:7px}
+.riscado{opacity:.42;text-decoration:line-through;display:block;margin-bottom:7px}
+.certo{display:block;font-weight:800;letter-spacing:-.03em;font-size:15px;line-height:1.16}
+
+/* ---------------------- OFICINA (ferramenta) ---------------------- */
+.oficina{background:var(--papel);border:1px solid var(--linha);border-left:5px solid var(--ocre);
+  border-radius:0 12px 12px 0;padding:clamp(20px,2.8vw,34px);margin-top:26px}
+.campo{margin-bottom:16px}
+.campo label{display:block;font-weight:700;font-size:10.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--laranja);margin-bottom:8px}
+.campo input,.campo textarea{width:100%;font-family:var(--disp);font-size:16px;
+  padding:13px 15px;border:1px solid var(--linha);background:var(--creme);color:var(--vinho);
+  border-radius:4px;resize:vertical}
+.campo input:focus,.campo textarea:focus{outline:2px solid var(--ocre);outline-offset:1px;border-color:var(--ocre)}
+.saida{margin-top:18px;padding:18px 20px;background:var(--vinho);color:var(--creme);
+  border-radius:4px;display:none}
+.saida.ver{display:block}
+.saida .lin{padding:11px 0;border-bottom:1px solid rgba(245,240,230,.18)}
+.saida .lin:last-child{border-bottom:none}
+.saida .lb2{font-weight:700;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ocre);margin-bottom:6px}
+.saida .tx2{font-weight:800;letter-spacing:-.028em;font-size:clamp(15px,1.3vw,18px);line-height:1.2}
+
+/* ---------------------- CHECKLIST ---------------------- */
+.checks{margin-top:24px}
+.ck{display:flex;gap:15px;align-items:flex-start;padding:15px 0;
+  border-top:1px solid rgba(245,240,230,.18);cursor:pointer}
+.ck:last-child{border-bottom:1px solid rgba(245,240,230,.18)}
+.ck .bx{flex:0 0 26px;width:26px;height:26px;border:2px solid var(--ocre);border-radius:4px;
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;
+  color:transparent;transition:.14s;margin-top:2px}
+.ck.ok .bx{background:var(--ocre);color:var(--vinho-d)}
+.ck.ok .txt3{opacity:.45}
+.ck .txt3 h4{margin-bottom:5px}
+.ck .txt3 p{font-size:13.5px;opacity:.72;margin:0;max-width:56ch}
+.placar{margin-top:22px;padding:17px 20px;border:1px solid rgba(245,240,230,.26);
+  border-radius:4px;font-weight:800;letter-spacing:-.02em;font-size:clamp(16px,1.6vw,21px)}
+.placar.bom{background:var(--oliva);border-color:var(--oliva);color:var(--creme)}
+.placar.ruim{background:var(--cacau);border-color:var(--cacau);color:var(--creme)}
+
+/* ---------------------- SEMANAS ---------------------- */
+.semanas{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:rgba(245,240,230,.2);margin-top:26px}
+.sem{background:var(--vinho-d);padding:clamp(16px,2vw,25px)}
+.sem .w{font-weight:700;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ocre);margin-bottom:10px}
+.sem h4{color:var(--creme);margin-bottom:14px}
+.sem ul{list-style:none}
+.sem li{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;padding:9px 0;
+  line-height:1.4;border-bottom:1px solid rgba(245,240,230,.12);cursor:pointer;opacity:.85}
+.sem li:last-child{border-bottom:none}
+.sem li .mk{flex:0 0 18px;width:18px;height:18px;border:2px solid rgba(245,240,230,.4);
+  border-radius:3px;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;color:transparent;transition:.14s;margin-top:1px}
+.sem li.ok .mk{background:var(--ocre);border-color:var(--ocre);color:var(--vinho-d)}
+.sem li.ok{opacity:.42;text-decoration:line-through}
+.progresso{margin-top:24px}
+.trilho{height:9px;background:rgba(245,240,230,.18);border-radius:20px;overflow:hidden}
+.trilho i{display:block;height:100%;width:0;background:var(--ocre);transition:width .4s}
+.progresso p{margin-top:11px;font-weight:700;font-size:12px;letter-spacing:.16em;
+  text-transform:uppercase;opacity:.66}
+
+/* ---------------------- PENDÊNCIAS ---------------------- */
+.pend{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:18px;margin-top:26px}
+.pd{border-top:3px solid var(--laranja);padding-top:14px}
+.pd .nn{font-family:var(--disp);font-weight:800;font-size:26px;letter-spacing:-.05em;
+  color:var(--laranja);line-height:1;margin-bottom:9px}
+.pd p{font-size:14px;opacity:.76;margin:0;max-width:none}
+.recusas{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:22px;margin-top:26px}
+.recusas div{border-top:2px solid rgba(74,32,40,.28);padding-top:12px}
+.recusas h4{opacity:.48;text-decoration:line-through;text-decoration-thickness:1.5px;margin-bottom:6px}
+.recusas p{font-size:13.5px;opacity:.72;margin:0;max-width:none}
+
+/* ---------------------- CONTATO ---------------------- */
+.contato{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(22px,4vw,58px);margin-top:26px}
+.contato .canais{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+.ok-msg{display:none;padding:17px 20px;background:var(--oliva);color:var(--creme);
+  border-radius:4px;font-weight:700;margin-top:14px}
+.ok-msg.ver{display:block}
+
+/* ---------------------- RODAPÉ ---------------------- */
+.rodape{padding:clamp(26px,4vw,50px) var(--pad);color:rgba(245,240,230,.62);
+  display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
+.rodape b{color:var(--ocre);font-weight:800;letter-spacing:-.02em;font-size:17px}
+.rodape p{font-size:13px;margin:0;max-width:none}
+.rodape a{color:inherit}
+
+/* ---------------------- CARD DE BOAS VINDAS ---------------------- */
+.fundo{position:fixed;inset:0;background:rgba(51,19,25,.76);z-index:90;display:none;
+  align-items:center;justify-content:center;padding:20px}
+.fundo.ver{display:flex}
+.cartao{background:var(--papel);max-width:520px;width:100%;border-left:7px solid var(--laranja);
+  border-radius:0 16px 16px 0;padding:clamp(24px,4vw,42px);position:relative;
+  max-height:90vh;overflow-y:auto}
+.cartao .fechar{position:absolute;top:13px;right:15px;background:transparent;border:none;
+  font-size:24px;cursor:pointer;color:var(--vinho);opacity:.5;line-height:1;padding:5px}
+.cartao .fechar:hover{opacity:1}
+.cartao ol{margin:18px 0 0 19px}
+.cartao li{font-size:15px;padding:8px 0;line-height:1.45}
+.cartao li b{color:var(--laranja)}
+
+/* ---------------------- ANIMAÇÃO DE ENTRADA ---------------------- */
+.sobe{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.sobe.dentro{opacity:1;transform:none}
+
+/* ---------------------- RESPONSIVO ---------------------- */
+@media(max-width:900px){
+  :root{--rail:0px}
+  body{padding-left:0;padding-top:58px}
+  .rail{flex-direction:row;width:100%;height:58px;bottom:auto;padding:0 10px;
+    gap:0;border-right:none;border-bottom:1px solid rgba(245,240,230,.14);
+    align-items:center;justify-content:space-between}
+  .rail .marca{writing-mode:horizontal-tb;transform:none;margin:0;font-size:11px;flex:0 0 auto}
+  .rail nav{flex-direction:row;overflow-x:auto;overflow-y:hidden;gap:2px;
+    justify-content:flex-start;padding:0 8px;flex:1;align-items:center}
+  .aba{flex:0 0 auto;width:auto;min-height:38px;flex-direction:row;gap:6px;padding:8px 11px;
+    border-left:none;border-bottom:3px solid transparent;border-radius:4px}
+  .aba .lb{font-size:9.5px;letter-spacing:.06em}
+  .aba.on{border-left-color:transparent;border-bottom-color:var(--ocre)}
+  .rail .topo{display:none}
+  .folha{margin:0 0 10px 0;border-radius:0 14px 14px 0;padding:34px 20px 34px 22px}
+  .folha::before{left:10px}
+  .folha .conteudo{margin-left:14px}
+  .g3,.g2,.pecas,.semanas{grid-template-columns:1fr}
+  .duelo{grid-template-columns:1fr;gap:18px}
+  .duelo .meio{display:none}
+  .cam{grid-template-columns:1fr;gap:6px}
+  .contato{grid-template-columns:1fr}
+  .capa{min-height:auto;padding-top:48px;padding-bottom:48px}
+}
+@media(max-width:560px){
+  .pautas{grid-template-columns:1fr}
+  .selos{gap:22px}
+}
+
+:focus-visible{outline:2px solid var(--ocre);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation:none !important;transition:none !important}
+  .sobe{opacity:1;transform:none}
+}
+@media print{
+  .rail,.fundo,.copiar,.oficina .saida{display:none !important}
+  body{padding-left:0;background:#fff}
+  .folha{page-break-inside:avoid;margin:0 0 8px 0}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== RAIL DE ABAS ===================== -->
+<aside class="rail">
+  <div class="marca">Leitura de Marca</div>
+  <nav id="navAbas" aria-label="Seções do plano"></nav>
+  <button class="topo" id="btTopo" aria-label="Voltar ao topo">&uarr;</button>
+</aside>
+
+<main>
+
+<!-- ===================== 01 · CAPA ===================== -->
+<section class="folha tinta capa" id="s01">
+  <div class="conteudo">
+    <div class="cliente" id="capaCliente"></div>
+    <h1 id="capaNome"></h1>
+    <p class="frase" id="capaFrase"></p>
+    <div class="botoes">
+      <a class="bt cheio" href="#s05">Ver o banco de pautas</a>
+      <a class="bt" href="#s08">Começar os 30 dias</a>
+    </div>
+    <div class="selos" id="capaSelos"></div>
+    <div class="tarja" id="capaTarja"></div>
+  </div>
+</section>
+
+<!-- ===================== 02 · PRINCÍPIO ===================== -->
+<section class="folha grade" id="s02">
+  <div class="conteudo">
+    <div class="etq">01 · o princípio</div>
+    <h2>o assunto não é alto padrão.</h2>
+    <p>Qualquer corretor da cidade pode dizer que atua nele. Ninguém precisa provar nada para dizer isso.</p>
+    <div class="risco"></div>
+    <p class="mao m">Você não é interessante porque vende caro. É interessante porque entende <b style="font-weight:600">por que</b> uma coisa passa a valer o que vale.</p>
+  </div>
+</section>
+
+<section class="folha fogo" id="s02b">
+  <div class="conteudo">
+    <div class="etq">o território</div>
+    <p class="mao g" id="territorio"></p>
+    <div class="risco"></div>
+    <p>O assunto é a mudança. O alto padrão é uma das lentes, é onde ela aparece primeiro.</p>
+  </div>
+</section>
+
+<section class="folha areia" id="s02c">
+  <div class="conteudo">
+    <div class="etq">e você já tem o observatório</div>
+    <div class="gigante" data-conta="46" data-prefixo="R$" data-sufixo=" milhões">R$0 milhões</div>
+    <div class="legenda">de VGV em 45 negócios, dentro da Elite, em 2026</div>
+    <p style="margin-top:32px">Isso não é argumento de venda. É matéria prima. Cada negócio é uma leitura que ninguém na cidade está fazendo em público.</p>
+    <div class="g3">
+      <div class="cel"><div class="k">concentração</div><div class="v">26 dos 45</div><p>aconteceram no Canto do Forte</p></div>
+      <div class="cel"><div class="k">quem comprou</div><div class="v">22 dos 45</div><p>moram na Baixada Santista. Sua intuição de sessão estava certa</p></div>
+      <div class="cel aceso"><div class="k">já funciona</div><div class="v">9 dos 45</div><p>vieram do Instagram orgânico, com a comunicação em nota 5</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 03 · A VIRADA ===================== -->
+<section class="folha escura" id="s03">
+  <div class="conteudo">
+    <div class="etq">02 · a grande virada</div>
+    <p class="mao g">Você não precisa escolher entre corretora, gestora ou referência de mercado. Precisa decidir qual delas lidera as outras.</p>
+    <div class="camadas" id="camadas"></div>
+  </div>
+</section>
+
+<section class="folha tinta" id="s03b">
+  <div class="conteudo">
+    <div class="etq">o descompasso, em dois números</div>
+    <div class="duelo">
+      <div><div class="n2" data-conta="8">0</div><div class="cap">como o mercado te lê</div></div>
+      <div class="meio">contra</div>
+      <div class="b"><div class="n2" data-conta="5">0</div><div class="cap">o que a sua comunicação mostra</div></div>
+    </div>
+    <div class="risco"></div>
+    <p class="mao m">A autoridade já existe. A comunicação ainda não a traduz.</p>
+    <p style="margin-top:22px">Os oitos foram construídos em lugares fechados: mesa de negociação, reunião com construtor, a hora em que a equipe trava e te procura. Quem estava na sala viu. Mais ninguém. O cinco é o que sobra disso na tela.</p>
+  </div>
+</section>
+
+<!-- ===================== 04 · PILARES ===================== -->
+<section class="folha mato" id="s04">
+  <div class="conteudo">
+    <div class="etq">03 · os cinco princípios</div>
+    <h2>o que separa você de todo mundo que também vende imóvel bom.</h2>
+    <div id="principios" style="margin-top:24px"></div>
+  </div>
+</section>
+
+<section class="folha grade" id="s04b">
+  <div class="conteudo">
+    <div class="etq">04 · os cinco pilares</div>
+    <h2>de onde sai todo conteúdo, sem exceção.</h2>
+    <div class="g2" id="gradePilares"></div>
+    <div class="risco"></div>
+    <p><b>A régua de distribuição:</b> 70 por cento para o cliente final, 20 por cento de dupla leitura, 10 por cento para o mercado. A regra na hora de gravar: 90 por cento do conteúdo ainda precisa fazer sentido para um potencial cliente consumir.</p>
+  </div>
+</section>
+
+<!-- ===================== 05 · BANCO DE PAUTAS ===================== -->
+<section class="folha areia" id="s05">
+  <div class="conteudo">
+    <div class="etq">05 · banco de pautas</div>
+    <h2>escolha um pilar e tenha o que gravar hoje.</h2>
+    <p>Cada card já vem com o gancho pronto. Clique em copiar e cole no bloco de notas do celular antes de gravar.</p>
+    <div class="filtros" id="filtros" role="group" aria-label="Filtrar pautas por pilar"></div>
+    <div class="pautas" id="listaPautas"></div>
+    <div class="vazio" id="vazio" hidden>Nenhuma pauta neste filtro.</div>
+  </div>
+</section>
+
+<!-- ===================== 06 · SISTEMA ===================== -->
+<section class="folha tinta" id="s06">
+  <div class="conteudo">
+    <div class="etq">06 · imóvel com critério</div>
+    <h2>um imóvel vira três peças.</h2>
+    <p>Multiplica conteúdo sem multiplicar captação, e impede que o seu perfil vire vitrine.</p>
+    <div class="pecas">
+      <div class="peca">
+        <div class="no">1</div><h4>VITRINE EDITADA</h4>
+        <p>Foto protagonista e ficha selecionada. Três informações, no máximo quatro. O que você escolhe mostrar já é leitura.</p>
+        <div class="exemplo"><b>exemplo</b>Canto do Forte<br>129 m² · 3 vagas<br>R$ 1.190.000</div>
+      </div>
+      <div class="peca">
+        <div class="no">2</div><h4>DOR E DESEJO</h4>
+        <p>O atributo vira consequência de vida. Não o benefício genérico, a cena que acaba.</p>
+        <div class="exemplo"><b>3 vagas demarcadas</b>
+          <span class="riscado">"mais conforto para a sua família"</span>
+          <span class="certo">"Chega de estacionar o carro da sua esposa na rua."</span>
+        </div>
+      </div>
+      <div class="peca">
+        <div class="no">3</div><h4>CRITÉRIO</h4>
+        <p>A peça que só você faz. Não vende o imóvel, mostra o raciocínio que escolhe entre imóveis.</p>
+        <div class="exemplo"><b>exemplo</b>"Com R$ 1,2 milhão no Canto do Forte, para quem eu mostraria esse e para quem eu não mostraria?"</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="folha fogo" id="s06b">
+  <div class="conteudo">
+    <div class="etq">oficina · monte a peça 2 agora</div>
+    <p class="mao m">Não pergunte "qual benefício essa característica oferece?". Pergunte: "o que acontece na vida dele porque hoje ele não tem isso?"</p>
+    <div class="oficina" style="color:var(--vinho)">
+      <div class="campo">
+        <label for="fAtributo">1. Qual é o atributo do imóvel?</label>
+        <input id="fAtributo" type="text" placeholder="ex: 3 vagas demarcadas">
+      </div>
+      <div class="campo">
+        <label for="fHoje">2. O que acontece hoje na vida dele porque ele NÃO tem isso?</label>
+        <input id="fHoje" type="text" placeholder="ex: estaciona o carro da esposa na rua">
+      </div>
+      <div class="campo">
+        <label for="fFicha">3. Três informações da ficha (bairro, metragem, valor)</label>
+        <input id="fFicha" type="text" placeholder="ex: Canto do Forte · 129 m² · R$ 1.190.000">
+      </div>
+      <button class="bt cheio" id="btMontar" type="button">Montar as três peças</button>
+      <div class="saida" id="saidaPecas" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 07 · RÉGUA ===================== -->
+<section class="folha escura" id="s07">
+  <div class="conteudo">
+    <div class="etq">07 · régua editorial</div>
+    <h2>antes de publicar, passe por aqui.</h2>
+    <p>Marque o que o seu conteúdo cumpre. Se falhar em duas, não sobe.</p>
+    <div class="checks" id="regua"></div>
+    <div class="placar" id="placar">0 de 7 marcados</div>
+  </div>
+</section>
+
+<!-- ===================== 08 · 30 DIAS ===================== -->
+<section class="folha tinta" id="s08">
+  <div class="conteudo">
+    <div class="etq">08 · os primeiros 30 dias</div>
+    <h2>quatro a cinco publicações por semana, stories todo dia útil.</h2>
+    <div class="semanas" id="semanas"></div>
+    <div class="progresso">
+      <div class="trilho"><i id="barraProg"></i></div>
+      <p id="txtProg">0 de 0 tarefas concluídas</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 09 · PENDÊNCIAS ===================== -->
+<section class="folha grade" id="s09">
+  <div class="conteudo">
+    <div class="etq">09 · o que ainda precisa ser decidido</div>
+    <h2>quatro pontos travam parte do plano.</h2>
+    <p>Enquanto não forem cruzados na planilha, eles não viram conteúdo. Número aqui é prova, não enfeite.</p>
+    <div class="pend" id="pendencias"></div>
+    <div class="risco"></div>
+    <h3>E o que fica de fora agora, de propósito</h3>
+    <div class="recusas" id="recusas"></div>
+  </div>
+</section>
+
+<section class="folha areia" id="s09b">
+  <div class="conteudo">
+    <div class="etq">fale comigo</div>
+    <h2>travou em alguma parte?</h2>
+    <div class="contato">
+      <form id="formulario" novalidate>
+        <div class="campo">
+          <label for="cNome">Seu nome</label>
+          <input id="cNome" type="text" required placeholder="Julliana Marques">
+        </div>
+        <div class="campo">
+          <label for="cEmail">Seu e-mail</label>
+          <input id="cEmail" type="email" required placeholder="seuemail@email.com">
+        </div>
+        <div class="campo">
+          <label for="cMsg">Onde você travou</label>
+          <textarea id="cMsg" rows="4" required placeholder="Descreva o ponto do plano"></textarea>
+        </div>
+        <button class="bt cheio" type="submit">Enviar</button>
+        <div class="ok-msg" id="okMsg" role="status">Recebido. Vou responder no seu WhatsApp em até um dia útil.</div>
+      </form>
+      <div>
+        <h3>Canais diretos</h3>
+        <p class="dim">Para dúvida rápida de execução, o WhatsApp resolve mais rápido que o formulário.</p>
+        <div class="canais" id="canais"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="rodape">
+  <div>
+    <b id="rodapeNome"></b>
+    <p id="rodapeLinha"></p>
+  </div>
+  <p id="rodapeAno"></p>
+</footer>
+
+</main>
+
+<!-- ===================== CARD DE BOAS VINDAS ===================== -->
+<div class="fundo" id="fundoCartao" role="dialog" aria-modal="true" aria-labelledby="tCartao">
+  <div class="cartao">
+    <button class="fechar" id="fecharCartao" aria-label="Fechar">&times;</button>
+    <div class="etq">comece por aqui</div>
+    <h3 id="tCartao">Três passos para usar este ambiente</h3>
+    <ol>
+      <li><b>Banco de pautas.</b> Filtre por um pilar, escolha um gancho, clique em copiar. Já dá para gravar hoje.</li>
+      <li><b>Oficina da peça 2.</b> Digite o atributo do imóvel e o ambiente monta as três peças para você.</li>
+      <li><b>Plano de 30 dias.</b> Marque cada tarefa conforme fizer. A barra de progresso guarda no seu navegador.</li>
+    </ol>
+    <button class="bt cheio" id="btComecar" type="button" style="margin-top:22px">Entendi, vamos</button>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   DADOS EDITÁVEIS
+   Para reusar este ambiente com outra cliente, troque apenas os blocos
+   abaixo. O HTML não precisa ser tocado.
+   ========================================================================= */
+
+/* ---- quem é a cliente e quem assina a consultoria ---- */
+const CLIENTE = {
+  nome: "Julliana Marques",
+  rotulo: "Plano de Ativação · Leitura de Marca",
+  frase: "A Leitura respondeu quem você é. Este ambiente responde o que você faz com isso, toda semana, em público.",
+  territorio: "Julliana Marques interpreta como Praia Grande, seus imóveis e seus compradores estão mudando."
+};
+
+const CONSULTORA = {
+  nome: "Giovanna Carrilho",
+  assinatura: "Corretora de Marca · estratégia de marca para corretoras",
+  instagram: "@gicarrilho",
+  email: "contato@gicarrilho.com.br",
+  whatsapp: "5513991361451",
+  whatsappVisivel: "13 99136-1451",
+  cidade: "Santos"
+};
+
+/* ---- números da capa. anime somente números verificados ---- */
+const SELOS = [
+  { valor: 45, sufixo: "",          texto: "negócios fechados em 2026" },
+  { valor: 46, prefixo: "R$", sufixo: " mi", texto: "de VGV somado nesses negócios" },
+  { valor: 26, sufixo: "",          texto: "deles no Canto do Forte" },
+  { valor: 11, sufixo: "",          texto: "pessoas na equipe que você lidera" }
+];
+
+/* ---- faixa da capa: as frentes da marca ---- */
+const FRENTES = ["Julliana lidera", "Elite materializa", "Nexus expande", "Construtoras no horizonte"];
+
+/* ---- hierarquia das camadas ---- */
+const CAMADAS = [
+  { nome:"Julliana", papel:"a leitura",
+    txt:"O olhar, o critério, a direção. A camada onde o mercado já te reconhece e que hoje não tem voz própria em lugar nenhum." },
+  { nome:"Elite", papel:"a prova",
+    txt:"Não é o assunto da sua marca. É a evidência de que a sua leitura funciona no mundo real." },
+  { nome:"Nexus", papel:"a multiplicação",
+    txt:"Não é um produto no seu perfil. É a prova de que outras pessoas adotam o seu critério." },
+  { nome:"Horizonte", papel:"construtoras · 5 a 10 anos", futuro:true,
+    txt:"Fica disponível para quem é lido como leitura de mercado, não como vendedor de estoque." }
+];
+
+/* ---- os cinco princípios ---- */
+const PRINCIPIOS = [
+  { a:"preço", b:"padrão", txt:"O preço diz quanto custa. O padrão diz o que está incluído na vida de quem mora ali." },
+  { a:"produto", b:"valor", txt:"Dois apartamentos iguais não valem a mesma coisa para a mesma pessoa." },
+  { a:"característica", b:"critério", txt:"\"3 vagas\" está no anúncio. \"Nunca mais estacionar na rua\" está na cabeça de quem decide." },
+  { a:"mostrar", b:"interpretar", txt:"Mostrar é catálogo. Interpretar é dizer para quem serve e para quem não serve." },
+  { a:"vender cidade", b:"entender cidade", txt:"\"Você não se decepcionou com a cidade. Se decepcionou com o atendimento que te ofereceram.\"" }
+];
+
+/* ---- os cinco pilares. a ordem aqui define a ordem dos filtros ---- */
+const PILARES = [
+  { id:"p1", nome:"Praia Grande por dentro", pergunta:"O que está mudando aqui e quem já percebeu?",
+    editorias:"Acima do Horizonte · PG em Movimento · Viver no Forte" },
+  { id:"p2", nome:"Como quem compra escolhe", pergunta:"O que realmente acontece na cabeça de alguém no momento de decidir?",
+    editorias:"O que você não abre mão · Vida real · Antes de decidir" },
+  { id:"p3", nome:"Imóvel com critério", pergunta:"Um imóvel, três peças. Não é editoria, é sistema.",
+    editorias:"Vitrine editada · Dor e desejo · Critério e comparação" },
+  { id:"p4", nome:"O mercado que está chegando", pergunta:"O que muda aqui antes de a cidade perceber?",
+    editorias:"Isso é alto padrão · Radar do mercado · O que o comprador já percebeu" },
+  { id:"p5", nome:"Bastidores Julliana", pergunta:"Quem é a pessoa por trás da leitura, sem virar lifestyle.",
+    editorias:"Na mesa de gestão · No Nexus · Fora da bolha · De onde eu vim" }
+];
+
+/* ---- banco de pautas. adicione quantas quiser no mesmo formato ---- */
+const PAUTAS = [
+  { p:"p1", f:"reel narrado", g:"Esse trecho aqui tinha três casas há oito anos.", n:"Imagem aérea do antes e do agora. Termine dizendo o que isso fez com o preço da quadra." },
+  { p:"p1", f:"reel narrado", g:"De cima dá para ver o que nenhum folder mostra: onde o sol bate às 16h.", n:"Drone sobre o Forte no fim da tarde. Leitura sobre orientação solar e valor." },
+  { p:"p1", f:"reel falado", g:"A obra que está subindo na Guilhermina vai mudar o preço da sua quadra.", n:"Grave na frente da obra. Três consequências concretas, nada de opinião genérica." },
+  { p:"p1", f:"carrossel", g:"Cinco coisas que Praia Grande tinha em 2019 e não tem mais.", n:"Use fotos reais. Feche com o que isso revela sobre quem está chegando na cidade." },
+  { p:"p1", f:"reel falado", g:"Canto do Forte não é um bairro só. São três, e o preço muda de quadra em quadra.", n:"Ande pelo bairro mostrando os cortes. Esse é o conteúdo mais salvo de qualquer corretor de bairro." },
+  { p:"p1", f:"reel falado", g:"Morar de frente para o mar no Forte: o que ninguém te conta sobre o vento.", n:"Cena real, não conceito. Fale de maresia, esquadria e manutenção." },
+  { p:"p1", f:"carrossel", g:"Um dia comum no Canto do Forte, das 7h às 22h.", n:"Hora a hora, com foto. Mostra rotina, não paisagem." },
+  { p:"p1", f:"tela dividida", g:"Esse lançamento promete bairro nobre. Vamos olhar o mapa juntos.", n:"Reaja a um anúncio real. Leia o que o projeto revela sobre quem ele quer atender." },
+
+  { p:"p2", f:"reel falado", g:"O imóvel perfeito provavelmente não existe. E quanto antes você aceitar isso, melhor você compra.", n:"Gancho, cena do Caiçara, leitura, pergunta final. Quarenta e cinco segundos." },
+  { p:"p2", f:"reel falado", g:"A pergunta que eu faço antes de mostrar qualquer imóvel: do que você não abre mão?", n:"Conte duas respostas reais que você já ouviu e o que cada uma mudou na busca." },
+  { p:"p2", f:"reel falado", g:"Ela conseguiu exatamente o que pediu. E passou um ano infeliz.", n:"Cena do Caiçara inteira. Feche com: não errou a cidade, errou o bairro." },
+  { p:"p2", f:"carrossel", g:"Você não está comprando metro quadrado. Está comprando o seu sábado de manhã.", n:"Cada slide é uma cena de sábado em um bairro diferente." },
+  { p:"p2", f:"carrossel", g:"A conta do anúncio não é a conta real. Faltam quatro linhas.", n:"Condomínio, IPTU, reforma, vaga. Com números de verdade." },
+  { p:"p2", f:"reel falado", g:"Localização você não muda. Cozinha você reforma. Decida nessa ordem.", n:"Curto, direto, sem cena. Funciona bem como corte de um vídeo maior." },
+  { p:"p2", f:"reel falado", g:"Todo mundo pede vista mar. Quase ninguém pergunta para que lado.", n:"Explique sol da manhã, sol da tarde e o que isso faz com a conta de luz e a rotina." },
+  { p:"p2", f:"tela dividida", g:"O erro mais caro que eu vejo acontecer: escolher pela planta e não pela rotina.", n:"Reaja a uma planta de lançamento apontando onde a vida real não cabe." },
+
+  { p:"p3", f:"carrossel vitrine", g:"Canto do Forte. 129 m². 3 vagas.", n:"Peça 1. Foto protagonista e três informações. Nada de ficha completa." },
+  { p:"p3", f:"carrossel dor e desejo", g:"Chega de estacionar o carro da sua esposa na rua.", n:"Peça 2 do mesmo imóvel. Slide 4 diz para quem isso não importa." },
+  { p:"p3", f:"carrossel critério", g:"Com R$ 1,2 milhão no Canto do Forte, para quem eu mostraria esse e para quem não mostraria.", n:"Peça 3. É a única que ninguém consegue copiar." },
+  { p:"p3", f:"carrossel dor e desejo", g:"Chega de fechar a cortina para ter privacidade dentro da própria sala.", n:"Atributo: vista livre. Mesma lógica da peça 2." },
+  { p:"p3", f:"carrossel critério", g:"Dois apartamentos, mesmo preço, mesma quadra. Eu escolheria um. Te explico por quê.", n:"Use dois imóveis reais da carteira. É o formato que mais gera direct." },
+  { p:"p3", f:"carrossel vitrine", g:"Três informações. É tudo que você precisa saber antes de querer visitar.", n:"Prove que menos ficha gera mais pergunta." },
+
+  { p:"p4", f:"reel falado", g:"Nem todo apartamento de R$ 2 milhões é alto padrão. Às vezes ele só custa R$ 2 milhões.", n:"Precisa da sua validação antes de subir. Cria atrito com produto de colega e com construtor.", pendente:true },
+  { p:"p4", f:"reel falado", g:"Voltei de Balneário com uma lista. Três dessas coisas chegam aqui em cinco anos.", n:"Você já fez isso antes de virar lançamento. Agora faça em público." },
+  { p:"p4", f:"carrossel", g:"O que o comprador parou de pedir em 2026.", n:"Baseie nos negócios que você viu fechar. Leitura de comportamento, não palpite." },
+  { p:"p4", f:"tela dividida", g:"Esse projeto foi desenhado para quem? Vou ler o que ele revela.", n:"Reaja a um lançamento da cidade. Sem citar nome de concorrente." },
+  { p:"p4", f:"reel falado", g:"O construtor devia consultar o corretor antes de lançar. Vou explicar por quê.", n:"Sua frase da sessão. Esse é o conteúdo que abre porta de construtora." },
+
+  { p:"p5", f:"reel falado", g:"A negociação travou. A equipe me procurou. O que eu falei.", n:"Bastidor de gestão. É aqui que o 8 de reconhecimento finalmente fica visível." },
+  { p:"p5", f:"reel falado", g:"Por que eu recuso gente no Nexus.", n:"Critério de entrada e ética. Pouco volume, muito peso." },
+  { p:"p5", f:"reel narrado", g:"Isso aqui mudou a minha régua.", n:"Regra fixa: nunca \"olha onde eu estou\", sempre \"olha o que eu vi aqui\"." },
+  { p:"p5", f:"carrossel", g:"De onde eu vim até aqui, sem novela.", n:"Trajetória como prova de percurso, não como conteúdo de superação." }
+];
+
+/* ---- régua editorial ---- */
+const REGUA = [
+  { t:"É cena ou é conceito?", d:"Cena ganha sempre." },
+  { t:"Existe tensão?", d:"Se ninguém pode discordar, não há motivo para assistir até o fim." },
+  { t:"Qualquer corretor poderia dizer esse gancho?", d:"Se poderia, reescreva." },
+  { t:"Tem algo concreto?", d:"Bairro, metragem, valor, cena. Se está no genérico, é conselho e não leitura." },
+  { t:"Estou explicando demais?", d:"Excesso de explicação parece justificativa." },
+  { t:"Mostra como eu penso ou só o que eu sei?", d:"O que você sabe qualquer um pesquisa." },
+  { t:"A primeira frase gera reação sem contexto?", d:"Se precisa de três segundos de introdução, a pessoa já saiu." }
+];
+
+/* ---- plano de 30 dias ---- */
+const SEMANAS = [
+  { w:"semana 1", t:"Arrumar a casa", itens:[
+    "Reescrever a bio para o território",
+    "Tirar o post do Nexus do topo do perfil",
+    "Reorganizar destaques pelos cinco pilares",
+    "1 imóvel com o sistema do pilar 3 completo" ]},
+  { w:"semana 2", t:"Achar a voz", itens:[
+    "2 reels falados com punch",
+    "1 Acima do Horizonte",
+    "1 carrossel de critério",
+    "Stories: a decisão por trás de uma peça" ]},
+  { w:"semana 3", t:"Ocupar o mercado", itens:[
+    "1 peça do pilar 4, radar ou reação",
+    "1 bastidor de mesa de gestão",
+    "Sistema do pilar 3 com o segundo imóvel" ]},
+  { w:"semana 4", t:"Fechar o ciclo", itens:[
+    "Passar tudo pela régua e anotar o que falhou",
+    "Ver o que gerou conversa no direct",
+    "1 peça sobre o assunto que mais gerou pergunta",
+    "Escrever sua definição de alto padrão sem usar preço" ]}
+];
+
+/* ---- o que ainda não está comprovado ---- */
+const PENDENCIAS = [
+  { t:"A mediana do ticket", d:"A média de R$ 1.023.752 pode estar puxada por poucos negócios grandes. Sem a mediana, nenhuma frase sobre faixa de preço sobe." },
+  { t:"Preço de 2 dormitórios no Forte", d:"60 por cento dos negócios foram de 2 dormitórios, mas o valor por tipologia ainda não foi cruzado." },
+  { t:"O comprador que mora em Praia Grande", d:"São 17 dos 45. Ainda não sabemos se é upgrade ou primeira compra, e isso muda o conteúdo inteiro." },
+  { t:"O que a cidade chama de alto padrão", d:"Sem a sua definição por escrito, e sem usar faixa de preço, a série Isso é alto padrão não pode subir." }
+];
+
+/* ---- recusas conscientes ---- */
+const RECUSAS = [
+  { t:"institucional da Elite", d:"Tem canal próprio." },
+  { t:"conteúdo para corretor como eixo", d:"Fica nos 10 por cento." },
+  { t:"consultoria para construtora", d:"Horizonte de 5 a 10 anos." },
+  { t:"fechar a tagline", d:"60 dias rodando primeiro." },
+  { t:"colab em tudo", d:"36 das 51 publicações são colab. Metade da vitrine leva outro nome junto." }
+];
+
+/* =========================================================================
+   FIM DOS DADOS EDITÁVEIS
+   ========================================================================= */
+
+const ABAS = [
+  { id:"s01", n:"01", l:"Capa" },
+  { id:"s02", n:"02", l:"Princípio" },
+  { id:"s03", n:"03", l:"Virada" },
+  { id:"s04", n:"04", l:"Pilares" },
+  { id:"s05", n:"05", l:"Pautas" },
+  { id:"s06", n:"06", l:"Sistema" },
+  { id:"s07", n:"07", l:"Régua" },
+  { id:"s08", n:"08", l:"30 dias" },
+  { id:"s09", n:"09", l:"Decidir" }
+];
+
+const $  = (s, e) => (e || document).querySelector(s);
+const $$ = (s, e) => Array.from((e || document).querySelectorAll(s));
+const guarda = {
+  ler(k, padrao){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : padrao; } catch(e){ return padrao; } },
+  salvar(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+};
+
+/* ---------- capa ---------- */
+$("#capaCliente").textContent = CLIENTE.rotulo;
+$("#capaNome").innerHTML = CLIENTE.nome.replace(" ", "<br>");
+$("#capaFrase").textContent = CLIENTE.frase;
+$("#territorio").textContent = CLIENTE.territorio;
+$("#capaSelos").innerHTML = SELOS.map(s =>
+  '<div class="selo"><div class="v" data-conta="' + s.valor + '"' +
+  (s.prefixo ? ' data-prefixo="' + s.prefixo + '"' : '') +
+  (s.sufixo  ? ' data-sufixo="'  + s.sufixo  + '"' : '') + '>0</div><p>' + s.texto + '</p></div>'
+).join("");
+$("#capaTarja").innerHTML = FRENTES.map(f => "<span>" + f + "</span>").join("");
+
+/* ---------- rail ---------- */
+$("#navAbas").innerHTML = ABAS.map(a =>
+  '<button class="aba" data-alvo="' + a.id + '"><span class="nb">' + a.n + '</span><span class="lb">' + a.l + '</span></button>'
+).join("");
+$$(".aba").forEach(b => b.addEventListener("click", () => {
+  const el = document.getElementById(b.dataset.alvo);
+  if (el) el.scrollIntoView({ behavior:"smooth", block:"start" });
+}));
+$("#btTopo").addEventListener("click", () => window.scrollTo({ top:0, behavior:"smooth" }));
+
+/* ---------- camadas ---------- */
+$("#camadas").innerHTML = CAMADAS.map(c =>
+  '<div class="cam' + (c.futuro ? " futuro" : "") + '"><div class="nome">' + c.nome +
+  '</div><div><span class="papel">' + c.papel + '</span><p>' + c.txt + '</p></div></div>'
+).join("");
+
+/* ---------- princípios ---------- */
+$("#principios").innerHTML = PRINCIPIOS.map(p =>
+  '<div class="pr"><div class="eq">' + p.a + ' <i>&ne;</i> ' + p.b + '</div><p>' + p.txt + '</p></div>'
+).join("");
+
+/* ---------- grade de pilares ---------- */
+$("#gradePilares").innerHTML = PILARES.map((p, i) =>
+  '<div class="cel' + (i === 2 ? " aceso" : "") + '"><div class="k">pilar ' + (i + 1) +
+  '</div><div class="v">' + p.nome + '</div><p>' + p.pergunta + '<br><br><b>' + p.editorias + '</b></p></div>'
+).join("");
+
+/* ---------- filtros e pautas ---------- */
+const filtros = $("#filtros");
+filtros.innerHTML =
+  '<button class="fl on" data-f="todos">Todos <span class="qt">' + PAUTAS.length + '</span></button>' +
+  PILARES.map((p, i) => {
+    const q = PAUTAS.filter(x => x.p === p.id).length;
+    return '<button class="fl" data-f="' + p.id + '">' + (i + 1) + '. ' + p.nome + ' <span class="qt">' + q + '</span></button>';
+  }).join("");
+
+function nomePilar(id){ const p = PILARES.find(x => x.id === id); return p ? p.nome : ""; }
+
+function desenharPautas(filtro){
+  const lista = filtro === "todos" ? PAUTAS : PAUTAS.filter(p => p.p === filtro);
+  $("#vazio").hidden = lista.length > 0;
+  $("#listaPautas").innerHTML = lista.map(p =>
+    '<article class="pauta ' + p.p + '">' +
+      '<div class="top"><span class="pl">' + nomePilar(p.p) + '</span><span class="fm">' + p.f + '</span></div>' +
+      '<div class="gancho">' + p.g + '</div>' +
+      '<p class="nota">' + p.n + '</p>' +
+      (p.pendente ? '<span class="flag">precisa da sua validação</span>' : '') +
+      '<button class="copiar" type="button" data-t="' + p.g.replace(/"/g, "&quot;") + '">Copiar gancho</button>' +
+    '</article>'
+  ).join("");
+  $$(".copiar").forEach(b => b.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(b.dataset.t); }
+    catch(e){
+      const ta = document.createElement("textarea");
+      ta.value = b.dataset.t; document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); } catch(e2){}
+      document.body.removeChild(ta);
+    }
+    b.textContent = "Copiado"; b.classList.add("feito");
+    setTimeout(() => { b.textContent = "Copiar gancho"; b.classList.remove("feito"); }, 1800);
+  }));
+}
+filtros.addEventListener("click", e => {
+  const b = e.target.closest(".fl"); if (!b) return;
+  $$(".fl").forEach(x => x.classList.remove("on"));
+  b.classList.add("on");
+  desenharPautas(b.dataset.f);
+});
+desenharPautas("todos");
+
+/* ---------- oficina da peça 2 ---------- */
+$("#btMontar").addEventListener("click", () => {
+  const at = $("#fAtributo").value.trim() || "3 vagas demarcadas";
+  const ho = $("#fHoje").value.trim()     || "estaciona o carro da esposa na rua";
+  const fi = $("#fFicha").value.trim()    || "Canto do Forte · 129 m² · R$ 1.190.000";
+  const s = $("#saidaPecas");
+  s.innerHTML =
+    '<div class="lin"><div class="lb2">peça 1 · vitrine editada</div><div class="tx2">' + fi + '</div></div>' +
+    '<div class="lin"><div class="lb2">peça 2 · dor e desejo · use como capa</div><div class="tx2">"Chega de ' + ho + '."</div></div>' +
+    '<div class="lin"><div class="lb2">peça 2 · slide de prova</div><div class="tx2">' + at + '. Na prática: ' + ho + ' deixa de acontecer.</div></div>' +
+    '<div class="lin"><div class="lb2">peça 2 · slide que filtra</div><div class="tx2">Se isso não é um problema na sua vida, existe opção melhor por este mesmo valor.</div></div>' +
+    '<div class="lin"><div class="lb2">peça 3 · critério</div><div class="tx2">"Nesse valor e nesse bairro, para quem eu mostraria esse imóvel e para quem eu não mostraria?"</div></div>';
+  s.classList.add("ver");
+});
+
+/* ---------- régua editorial ---------- */
+$("#regua").innerHTML = REGUA.map((r, i) =>
+  '<div class="ck" data-i="' + i + '" role="checkbox" aria-checked="false" tabindex="0">' +
+    '<div class="bx">&check;</div><div class="txt3"><h4>' + r.t + '</h4><p>' + r.d + '</p></div>' +
+  '</div>'
+).join("");
+function marcarRegua(el){
+  el.classList.toggle("ok");
+  el.setAttribute("aria-checked", el.classList.contains("ok"));
+  const n = $$("#regua .ck.ok").length, p = $("#placar");
+  p.textContent = n + " de " + REGUA.length + " marcados";
+  p.className = "placar";
+  if (n >= 6) { p.classList.add("bom"); p.textContent = n + " de 7. Pode subir."; }
+  else if (n <= 5 && n > 0) { p.classList.add("ruim"); p.textContent = n + " de 7. Falhou em " + (7 - n) + ". Reescreva antes de publicar."; }
+}
+$$("#regua .ck").forEach(el => {
+  el.addEventListener("click", () => marcarRegua(el));
+  el.addEventListener("keydown", e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); marcarRegua(el); } });
+});
+
+/* ---------- plano de 30 dias com progresso guardado ---------- */
+const CHAVE = "plano30-" + CLIENTE.nome.toLowerCase().replace(/\s+/g, "-");
+let feitos = guarda.ler(CHAVE, []);
+$("#semanas").innerHTML = SEMANAS.map((s, si) =>
+  '<div class="sem"><div class="w">' + s.w + '</div><h4>' + s.t + '</h4><ul>' +
+  s.itens.map((it, ii) => {
+    const id = si + "-" + ii;
+    return '<li data-id="' + id + '" class="' + (feitos.indexOf(id) > -1 ? "ok" : "") + '" role="checkbox" aria-checked="' + (feitos.indexOf(id) > -1) + '" tabindex="0"><span class="mk">&check;</span><span>' + it + '</span></li>';
+  }).join("") + '</ul></div>'
+).join("");
+const totalTarefas = SEMANAS.reduce((a, s) => a + s.itens.length, 0);
+function atualizarProgresso(){
+  const n = feitos.length;
+  $("#barraProg").style.width = (totalTarefas ? (n / totalTarefas) * 100 : 0) + "%";
+  $("#txtProg").textContent = n + " de " + totalTarefas + " tarefas concluídas";
+}
+function alternarTarefa(li){
+  const id = li.dataset.id, i = feitos.indexOf(id);
+  if (i > -1) feitos.splice(i, 1); else feitos.push(id);
+  li.classList.toggle("ok");
+  li.setAttribute("aria-checked", li.classList.contains("ok"));
+  guarda.salvar(CHAVE, feitos);
+  atualizarProgresso();
+}
+$$(".sem li").forEach(li => {
+  li.addEventListener("click", () => alternarTarefa(li));
+  li.addEventListener("keydown", e => { if (e.key === " " || e.key === "Enter") { e.preventDefault(); alternarTarefa(li); } });
+});
+atualizarProgresso();
+
+/* ---------- pendências e recusas ---------- */
+$("#pendencias").innerHTML = PENDENCIAS.map((p, i) =>
+  '<div class="pd"><div class="nn">' + (i + 1) + '</div><h4>' + p.t + '</h4><p>' + p.d + '</p></div>'
+).join("");
+$("#recusas").innerHTML = RECUSAS.map(r =>
+  '<div><h4>' + r.t + '</h4><p>' + r.d + '</p></div>'
+).join("");
+
+/* ---------- contato ---------- */
+$("#canais").innerHTML =
+  '<a class="bt cheio" href="https://wa.me/' + CONSULTORA.whatsapp + '" target="_blank" rel="noopener">WhatsApp ' + CONSULTORA.whatsappVisivel + '</a>' +
+  '<a class="bt" href="mailto:' + CONSULTORA.email + '">' + CONSULTORA.email + '</a>' +
+  '<a class="bt" href="https://instagram.com/' + CONSULTORA.instagram.replace("@", "") + '" target="_blank" rel="noopener">' + CONSULTORA.instagram + '</a>';
+$("#formulario").addEventListener("submit", e => {
+  e.preventDefault();
+  const n = $("#cNome").value.trim(), m = $("#cEmail").value.trim(), t = $("#cMsg").value.trim();
+  if (!n || !m || !t) { alert("Preencha nome, e-mail e mensagem."); return; }
+  $("#okMsg").classList.add("ver");
+  e.target.reset();
+});
+
+/* ---------- rodapé ---------- */
+$("#rodapeNome").textContent = CONSULTORA.nome;
+$("#rodapeLinha").textContent = CONSULTORA.assinatura + " · " + CONSULTORA.cidade;
+$("#rodapeAno").textContent = "Plano de Ativação de " + CLIENTE.nome + " · " + new Date().getFullYear();
+
+/* ---------- animação de entrada ---------- */
+const suave = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+$$(".folha .conteudo").forEach(el => el.classList.add("sobe"));
+if ("IntersectionObserver" in window && suave){
+  const obs = new IntersectionObserver(es => {
+    es.forEach(en => { if (en.isIntersecting){ en.target.classList.add("dentro"); obs.unobserve(en.target); } });
+  }, { threshold:.12 });
+  $$(".sobe").forEach(el => obs.observe(el));
+} else {
+  $$(".sobe").forEach(el => el.classList.add("dentro"));
+}
+
+/* ---------- contadores ---------- */
+function animarNumero(el){
+  const alvo = parseFloat(el.dataset.conta);
+  const pre = el.dataset.prefixo || "", suf = el.dataset.sufixo || "";
+  if (!suave){ el.textContent = pre + alvo + suf; return; }
+  const dur = 1100; const t0 = performance.now();
+  function passo(t){
+    const k = Math.min((t - t0) / dur, 1);
+    const v = Math.round(alvo * (1 - Math.pow(1 - k, 3)));
+    el.textContent = pre + v + suf;
+    if (k < 1) requestAnimationFrame(passo);
+  }
+  requestAnimationFrame(passo);
+}
+if ("IntersectionObserver" in window){
+  const obsN = new IntersectionObserver(es => {
+    es.forEach(en => { if (en.isIntersecting){ animarNumero(en.target); obsN.unobserve(en.target); } });
+  }, { threshold:.5 });
+  $$("[data-conta]").forEach(el => obsN.observe(el));
+} else {
+  $$("[data-conta]").forEach(animarNumero);
+}
+
+/* ---------- aba ativa conforme a rolagem ---------- */
+const alvos = ABAS.map(a => document.getElementById(a.id)).filter(Boolean);
+if ("IntersectionObserver" in window){
+  const obsA = new IntersectionObserver(es => {
+    es.forEach(en => {
+      if (en.isIntersecting){
+        $$(".aba").forEach(b => b.classList.toggle("on", b.dataset.alvo === en.target.id));
+      }
+    });
+  }, { rootMargin:"-40% 0px -55% 0px" });
+  alvos.forEach(el => obsA.observe(el));
+}
+
+/* ---------- card de boas vindas, uma vez por visita ---------- */
+const fundo = $("#fundoCartao");
+function fecharCartao(){ fundo.classList.remove("ver"); }
+function abrirCartao(){
+  let visto = false;
+  try { visto = sessionStorage.getItem("boasvindas") === "1"; } catch(e){}
+  if (visto) return;
+  fundo.classList.add("ver");
+  try { sessionStorage.setItem("boasvindas", "1"); } catch(e){}
+}
+setTimeout(abrirCartao, 7000);
+$("#fecharCartao").addEventListener("click", fecharCartao);
+$("#btComecar").addEventListener("click", () => {
+  fecharCartao();
+  document.getElementById("s05").scrollIntoView({ behavior:"smooth" });
+});
+fundo.addEventListener("click", e => { if (e.target === fundo) fecharCartao(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") fecharCartao(); });
+</script>
+</body>
+</html>
