@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Julliana Marques · Conteúdo</title>
+<meta name="description" content="O sistema de trabalho da marca de Julliana Marques: banco de pautas, ferramentas de criação, decisões rápidas, plano de ação e repertório.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23331319'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='17' font-weight='bold' fill='%23C9A227' text-anchor='middle'%3EJ%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#331319">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400..600&family=Archivo:wght@600;700;800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css?v=20260925">
+</head>
+<body>
+
+<button class="menu-bt" id="menuBt" aria-label="Abrir menu"><span class="ic">☰</span> <span id="menuTxt">Conteúdo</span></button>
+<aside class="rail" id="rail">
+  <a class="rail-casa" href="index.html">← início</a>
+  <div class="marca" id="railMarca"></div>
+  <nav id="navAbas" aria-label="Seções"></nav>
+  <button class="topo" id="btTopo">↑ topo</button>
+</aside>
+
+<i id="prog" aria-hidden="true"></i>
+<main id="main"></main>
+
+<div class="fundo" id="fundoDiag" role="dialog" aria-modal="true">
+  <div class="cartao">
+    <button class="fechar" data-fecha="fundoDiag" aria-label="Fechar">×</button>
+    <div class="migalha"><b>estou travada</b></div>
+    <h3>O que está acontecendo agora?</h3>
+    <p style="margin-bottom:12px">Escolhe a frase que mais parece com o seu momento.</p>
+    <div id="diagLista"></div>
+  </div>
+</div>
+
+<script src="comum.js?v=20260925"></script>
+<script>
+comDados(function(){
+
+var CASA = "Conteúdo";
+window.CASA = CASA;
+$("#menuTxt").textContent = "Conteúdo";
+$("#railMarca").innerHTML = "Conteúdo<br><span style='opacity:.6;font-weight:700'>"+esc(MARCA.cliente)+"</span>";
+
+var GRUPOS=[
+  {id:"g0",n:"00",l:"Agora"},
+  {id:"g1",n:"01",l:"Pautas"},
+  {id:"g2",n:"02",l:"Criar"},
+  {id:"g3",n:"03",l:"Decidir"},
+  {id:"g4",n:"04",l:"Executar"},
+  {id:"g5",n:"05",l:"Repertório"},
+  {id:"g6",n:"06",l:"Seu material"}
+];
+
+/* ===== 00 AGORA ===== */
+var CH="plano30-"+MARCA.cliente.toLowerCase().replace(/\s+/g,"-");
+var pFeitos=guarda.ler(CH,[]);
+var pSem=guarda.ler(CH+"-sem",0);
+var pTotal=PLANO.semanas.reduce(function(a,s){return a+s.itens.length},0);
+var jaLeu=MEM.leu();
+var diasFora=MEM.diasDesde(MEM.registrarVisita());
+
+function estadoLinha(){
+  if(pFeitos.length>=pTotal) return "Plano de 30 dias concluído. Agora o ritmo é seu.";
+  var s=PLANO.semanas[pSem];
+  var fSem=s.itens.filter(function(_,i){return pFeitos.indexOf(pSem+"-"+i)>-1}).length;
+  return s.w.charAt(0).toUpperCase()+s.w.slice(1)+" de "+PLANO.semanas.length+
+    " · "+fSem+" de "+s.itens.length+" peças desta semana";
+}
+
+var portas=[
+  {q:"Tenho uma cena",  d:"Aconteceu alguma coisa e eu quero transformar em conteúdo", a:"criar"},
+  {q:"Preciso de uma ideia", d:"Não tenho cena. Quero escolher no banco", a:"pautas"},
+  {q:"Gravei, está bom?", d:"Passar na régua antes de publicar", a:"regua"},
+  {q:"Estou travada", d:"Me ajuda a descobrir para onde ir", a:"diagnostico", dest:true}
+];
+
+var esta = (function(){
+  if(pFeitos.length>=pTotal) return "";
+  var s=PLANO.semanas[pSem];
+  return '<div class="ag-sem"><div class="rot-ed">o que está aberto esta semana</div>'+
+    '<div class="foco">'+esc(s.foco)+'</div>'+
+    '<ul class="ag-itens">'+s.itens.map(function(it,i){
+      var id=pSem+"-"+i;
+      return '<li data-id="'+id+'" class="'+(pFeitos.indexOf(id)>-1?"ok":"")+'"><span class="mk">✓</span><span>'+esc(it)+'</span></li>';
+    }).join("")+'</ul>'+
+    '<button class="bt" data-alvo="plano">Ver o plano inteiro →</button></div>';
+})();
+
+var decisoes=[
+  {t:"Isso cabe na minha marca?", d:"para uma pauta, um convite ou uma ideia nova"},
+  {t:"Quem está falando aqui?",   d:"seu perfil, o da Elite ou o do Nexus"},
+  {t:"Isso ajuda ela a escolher?",d:"antes de publicar para quem compra"},
+  {t:"Isso parece comigo?",       d:"quando a dúvida é sobre a própria marca"}
+];
+
+folha("tinta agora",
+  '<div class="ag-topo"><div class="prod">Sistema</div>'+
+  '<h1>'+esc(MARCA.cliente).replace(" ","<br>")+'</h1></div>'+
+
+  (!jaLeu
+    ? '<a class="porta-out primeira" href="marca.html">'+
+        '<span class="rot">comece por aqui</span>'+
+        '<span class="nm">O seu Guia de Marca →</span>'+
+        '<span class="ds">Antes de trabalhar, leia o que reconhecemos sobre a sua marca. Depois você volta para cá e não precisa ler de novo.</span>'+
+      '</a>'+
+      '<button class="bt" id="jaLi" style="margin-top:18px">Já li. Quero trabalhar</button>'
+    : '<div class="ag-estado">'+
+        '<div class="ag-agora">'+esc(estadoLinha())+'</div>'+
+        (diasFora>=3 ? '<div class="ag-fora">Faz '+diasFora+' dias desde a sua última visita.</div>' : '')+
+      '</div>'+
+      '<div class="ag-portas">'+portas.map(function(p){
+        return '<button class="at'+(p.dest?" destaque":"")+'" data-alvo="'+p.a+'">'+
+          '<span class="q">'+esc(p.q)+'</span><span class="d">'+esc(p.d)+'</span><span class="seta">→</span></button>';
+      }).join("")+'</div>'+
+      esta+
+      '<div class="ag-dec"><div class="rot-ed">decidir rápido</div>'+
+      decisoes.map(function(d){
+        return '<button class="ag-d" data-alvo="decisoes"><b>'+esc(d.t)+'</b><span>'+esc(d.d)+'</span></button>';
+      }).join("")+'</div>'+
+      '<a class="ag-volta" href="marca.html">Revisitar o seu Guia de Marca →</a>'
+  ),'g0');
+
+divisor(GRUPOS[1]);
+
+folha("grade",mig("Seu Conteúdo","Para quem")+usar(DISTRIBUICAO.usar)+
+  '<h2>'+esc(DISTRIBUICAO.titulo)+'</h2>'+
+  '<p>'+esc(DISTRIBUICAO.resumo)+'</p>'+
+  '<div class="bar">'+DISTRIBUICAO.itens.map(function(d){return '<div class="'+d.cor+'">'+d.pc+'%</div>'}).join("")+'</div>'+
+  '<div class="leg">'+DISTRIBUICAO.itens.map(function(d){
+    return '<div><div class="pc">'+d.pc+'% · '+esc(d.t)+'</div><p>'+esc(d.d)+'</p></div>';
+  }).join("")+'</div>'+
+  '<div class="aviso"><span class="nt">a regra na hora de gravar</span><p>'+esc(DISTRIBUICAO.regra)+'</p></div>');
+
+/* ---------- referências de cada pilar ---------- */
+function codigoIG(u){
+  var m = String(u||"").match(/instagram\.com\/(?:p|reel|reels|tv)\/([A-Za-z0-9_-]+)/);
+  return m ? m[1] : "";
+}
+function refs(p){
+  var lista = p.referencias || [];
+  if(!lista.length){
+    return '<div class="rot-ed">referências deste pilar</div>'+
+      '<div class="vazio"><b>COLAR AQUI.</b> Quando você encontrar um post que serve de referência para este pilar, '+
+      'copie o link no Instagram e cole no dados.js, dentro de <b>referencias</b> do pilar '+esc(p.n)+'. '+
+      'Ele aparece aqui, já com a sua análise do lado.</div>';
+  }
+  return '<div class="rot-ed">referências deste pilar</div>'+
+    '<div class="refs-grade">'+lista.map(function(r){
+      var c = codigoIG(r.url);
+      return '<div class="ref">'+
+        (c ? '<iframe loading="lazy" data-src="https://www.instagram.com/p/'+at(c)+'/embed" title="'+at(r.quem||"referência")+'"></iframe>'
+           : '<div class="semlink">Link do Instagram não reconhecido. Confira o endereço no dados.js.</div>')+
+        '<div class="pq">'+(r.quem?'<div class="quem">'+esc(r.quem)+'</div>':'')+
+        '<p>'+br(r.pq||"")+'</p></div></div>';
+    }).join("")+'</div>';
+}
+
+folha("escura",mig("Seu Conteúdo","Pilares")+usar(PILARES.usar)+
+  '<h2 class="h-princ">Cinco lugares de onde<br>o seu conteúdo pode nascer.</h2>'+
+  '<div class="pilares">'+PILARES.itens.map(function(p){
+    return '<details class="porta"><summary>'+
+      '<span class="po-n">'+esc(p.n)+'</span>'+
+      '<span><span class="po-t">'+esc(p.nome)+'</span><span class="po-s">'+esc(p.pergunta)+'</span></span>'+
+      '<span class="po-cta"></span></summary>'+
+      '<div class="man-corpo">'+
+        '<div class="rot-ed">o que isso constrói</div>'+
+        '<p class="ed-destaque m">'+esc(p.constroi)+'</p>'+
+        '<div class="abas-pil">'+
+          '<button class="ab on" data-pil="'+at(p.id)+'" data-ab="ed">Editorias</button>'+
+          '<button class="ab" data-pil="'+at(p.id)+'" data-ab="ref">Referências'+
+            (p.referencias&&p.referencias.length?' <i>'+p.referencias.length+'</i>':'')+'</button>'+
+        '</div>'+
+        '<div class="pn on" data-pil="'+at(p.id)+'" data-pn="ed">'+
+          '<div class="tracos m">'+p.editorias.map(function(e){
+            return '<div><div class="tr-w">'+esc(e.t)+'</div><p>'+esc(e.d)+'</p></div>';
+          }).join("")+'</div>'+
+        '</div>'+
+        '<div class="pn refs" data-pil="'+at(p.id)+'" data-pn="ref">'+refs(p)+'</div>'+
+      '</div></details>';
+  }).join("")+'</div>');
+
+folha("areia",mig("Seu Conteúdo","Banco de pautas")+
+  usar("Use quando quiser postar, mas estiver sem ideia.")+
+  '<h2>Não sabe o que postar? Comece aqui.</h2>'+
+  '<p>Escolha um território. Abra o roteiro. Adapte com uma situação real sua.</p>'+
+  '<div class="filtros" id="filtros"></div><div class="pautas" id="listaPautas"></div>','pautas');
+
+
+divisor(GRUPOS[2]);
+
+folha("tinta",mig("Criar","Da cena ao conteúdo")+usar(CADEIA.usar)+
+  '<h2>'+esc(CADEIA.titulo)+'</h2>'+
+  '<p>'+esc(CADEIA.resumo)+'</p>'+
+  '<div class="wiz" id="wiz">'+
+    '<div id="wizPasso"></div>'+
+    '<div class="nav">'+
+      '<button class="bt" id="wizVoltar">← voltar</button>'+
+      '<button class="bt cheio" id="wizProx">próximo →</button>'+
+      '<span class="prog" id="wizProg"></span>'+
+    '</div>'+
+  '</div>'+
+  '<div class="resultado" id="wizResultado"></div>'+
+  mais("O filtro: nem toda cena vira conteúdo",CADEIA.filtro.join("\n\n")+"\n\n"+CADEIA.habito),'criar');
+
+folha("grade",mig("Criar","Sua IA")+usar(IA.usar)+
+  '<h2>Use IA sem terceirizar a sua marca.</h2>'+
+  '<p>'+esc(IA.aviso)+'</p>'+
+  '<div class="ia-grid">'+IA.prompts.map(function(p,i){
+    return '<div class="ia-c"><h4>'+esc(p.t)+'</h4><p>'+esc(p.d)+'</p>'+
+      '<button class="mini" data-ia="'+i+'">Copiar prompt</button></div>';
+  }).join("")+'</div>'+
+  '<p class="dim" style="margin-top:20px;font-size:15px">Cada prompt já vai com o seu posicionamento embutido. É só colar numa conversa nova.</p>');
+
+folha("escura",mig("Criar","Imóvel com critério")+usar(FERRAMENTA_IMOVEL.usar)+
+  '<h2>'+esc(FERRAMENTA_IMOVEL.titulo)+'</h2>'+
+  '<p>'+esc(FERRAMENTA_IMOVEL.resumo)+'</p>'+
+  '<div class="uni u3">'+FERRAMENTA_IMOVEL.pecas.map(function(p,i){
+    return '<div class="cel'+(i===2?" aceso":"")+'"><div class="k">peça '+esc(p.n)+' · '+esc(p.t)+'</div><div class="v">'+esc(p.v)+'</div><p>'+esc(p.d)+'</p></div>';
+  }).join("")+'</div>');
+
+
+divisor(GRUPOS[3]);
+
+folha("mato",mig("Criar","A régua")+usar(REGUA.usar)+
+  '<h2>'+esc(REGUA.titulo)+'</h2>'+
+  '<p>'+esc(REGUA.intro)+'</p>'+
+  '<div class="checks" id="reguaLista"></div>'+
+  '<div class="placar" id="placar"><div class="pt">Marque o que o seu conteúdo já cumpre.</div></div>','regua');
+
+/* ===== DECIDIR RÁPIDO ===== */
+folha("areia",mig("Decidir","Quatro decisões")+
+  usar("Use quando precisar resolver uma dúvida em segundos, sem reler nada.")+
+  '<h2 class="h-princ">Quatro perguntas<br>que resolvem quase tudo.</h2>'+
+  '<p class="ed-linha">A explicação de cada uma está na sua Leitura. Aqui fica só a régua.</p>'+
+  '<div class="decisoes">'+
+
+  /* 1 · isso cabe na minha marca */
+  '<details class="porta"><summary>'+
+    '<span class="po-n">01</span>'+
+    '<span><span class="po-t">'+esc(TERRITORIO.ferramenta.titulo)+'</span>'+
+    '<span class="po-s">quando aparece uma pauta, um convite ou uma ideia nova</span></span>'+
+    '<span class="po-cta"></span></summary>'+
+    '<div class="man-corpo">'+ed(TERRITORIO.ferramenta.intro)+
+    '<div class="perguntas">'+TERRITORIO.ferramenta.perguntas.map(function(q,i){
+      return '<div class="perg"><span class="n">'+(i+1)+'</span><p class="t">'+br(q)+'</p></div>';
+    }).join("")+'</div>'+
+    '<p class="ed-destaque m">'+br(TERRITORIO.ferramenta.fecho)+'</p>'+
+    '<a class="volta-leitura" href="marca.html#territorio">entenda de onde isso vem →</a>'+
+    '</div></details>'+
+
+  /* 2 · quem está falando aqui */
+  '<details class="porta"><summary>'+
+    '<span class="po-n">02</span>'+
+    '<span><span class="po-t">Quem está falando aqui?</span>'+
+    '<span class="po-s">seu perfil, o canal da Elite ou o do Nexus</span></span>'+
+    '<span class="po-cta"></span></summary>'+
+    '<div class="man-corpo"><div class="quem">'+CAMADAS.quem.casos.map(function(q){
+      return '<div class="qi"><p class="qp">'+enf(q.p)+'</p>'+
+        (q.grande ? '<p class="qr-g">'+br(q.r)+'</p>'
+                  : '<div class="qr"><b>'+esc(q.quem)+'</b><span>'+br(q.r)+'</span></div>')+'</div>';
+    }).join("")+'</div>'+
+    '<a class="volta-leitura" href="marca.html#suas-frentes">entenda de onde isso vem →</a>'+
+    '</div></details>'+
+
+  /* 3 · isso ajuda ela a escolher */
+  '<details class="porta"><summary>'+
+    '<span class="po-n">03</span>'+
+    '<span><span class="po-t">Isso ajuda ela a escolher?</span>'+
+    '<span class="po-s">antes de publicar para quem compra</span></span>'+
+    '<span class="po-cta"></span></summary>'+
+    '<div class="man-corpo"><p class="ed-linha">'+br(CLIENTE.regua.intro)+'</p>'+
+    '<p class="ed-destaque">'+br(CLIENTE.regua.p)+'</p>'+
+    '<a class="volta-leitura" href="marca.html#cliente-ideal">entenda de onde isso vem →</a>'+
+    '</div></details>'+
+
+  /* 4 · isso parece comigo */
+  '<details class="porta"><summary>'+
+    '<span class="po-n">04</span>'+
+    '<span><span class="po-t">Isso parece comigo?</span>'+
+    '<span class="po-s">quando a dúvida é sobre a própria marca</span></span>'+
+    '<span class="po-cta"></span></summary>'+
+    '<div class="man-corpo">'+
+    '<p class="ed-linha">Essa resposta está no seu Manual. Abra a área da dúvida:</p>'+
+    '<div class="rotas">'+MANUAL.areas.map(function(a){
+      return '<a class="rota-man" href="marca.html#manual"><span class="n">'+esc(a.n)+'</span>'+
+        '<span class="t">'+esc(a.t)+'</span><span class="s">'+esc(a.s.replace(/\n/g," "))+'</span></a>';
+    }).join("")+'</div></div></details>'+
+
+  '</div>','decisoes');
+
+divisor(GRUPOS[4]);
+
+folha("tinta",mig("Executar","Plano de ação")+usar(PLANO.usar)+
+  '<h2>'+esc(PLANO.titulo)+'</h2>'+
+  '<p>'+esc(PLANO.sub)+'</p><p><b>'+esc(PLANO.ritmo)+'</b></p>'+
+  '<div class="sem-nav" id="semNav"></div>'+
+  '<div id="semCard"></div>'+
+  '<div class="trilho"><i id="barraProg"></i></div><div class="prog-t" id="txtProg"></div>','plano');
+
+folha("grade",mig("Executar","Minha evolução")+usar(OBSERVACAO.usar)+
+  '<h2>'+esc(OBSERVACAO.titulo)+'</h2>'+
+  '<p>'+esc(OBSERVACAO.intro)+'</p>'+
+  '<div style="margin-top:24px">'+OBSERVACAO.perguntas.map(function(p,i){
+    return '<div class="r1"><div class="k">'+(i+1)+'</div><div class="v">'+esc(p)+'</div></div>';
+  }).join("")+'</div>'+
+  '<p class="mao m" style="margin-top:28px">'+esc(OBSERVACAO.fecho)+'</p>');
+
+folha("areia",mig("Executar","Ainda não")+usar(AINDA_NAO.usar)+
+  '<h2>Três coisas diferentes que costumam ser confundidas.</h2>'+
+  '<div class="grupos">'+AINDA_NAO.grupos.map(function(g){
+    return '<div class="gr '+g.cor+'"><div class="gt">'+esc(g.g)+'</div>'+
+      g.itens.map(function(i){return '<div class="it"><b>'+esc(i.t)+'</b><span>'+esc(i.d)+'</span></div>'}).join("")+'</div>';
+  }).join("")+'</div>');
+
+
+divisor(GRUPOS[5]);
+
+folha("escura",mig("Repertório","Como usar")+usar(REPERTORIO.usar)+
+  '<h2>'+esc(REPERTORIO.titulo)+'</h2>'+
+  '<p>'+esc(REPERTORIO.resumo)+'</p>'+
+  '<div class="aviso"><span class="nt">'+esc(REPERTORIO.ritual.t)+'</span>'+
+  REPERTORIO.ritual.passos.map(function(p){return '<p style="margin-bottom:8px">'+esc(p)+'</p>'}).join("")+
+  '<p style="margin-top:14px"><b>'+esc(REPERTORIO.ritual.fecho)+'</b></p></div>');
+
+folha("grade",mig("Repertório","Fontes")+
+  '<div class="rep">'+REPERTORIO.blocos.map(function(b){
+    var links = (b.itens&&b.itens.length)
+      ? '<div class="links">'+b.itens.map(function(i){
+          return '<a href="'+at(i.u)+'" target="_blank" rel="noopener">'+esc(i.t)+'<span>'+esc(i.n)+'</span></a>';
+        }).join("")+'</div>'
+      : '<div class="vazio">Os links desta pasta ainda vão entrar. A Gi cola em dados.js, no bloco REPERTORIO.</div>';
+    return '<div class="rp"><h4>'+esc(b.t)+'</h4>'+
+      '<div class="lb3">para que serve</div><p>'+esc(b.serve)+'</p>'+
+      '<div class="lb3">quando entrar aqui</div><p>'+esc(b.quando)+'</p>'+
+      '<div class="lb3">como virar conteúdo</div><p>'+esc(b.como)+'</p>'+links+'</div>';
+  }).join("")+'</div>','g5b');
+
+
+divisor(GRUPOS[6]);
+
+folha("grade",mig("Agora é seu","Materiais")+
+  '<h2>Gravações e exercícios.</h2>'+
+  '<div class="uni u3">'+GRAVACOES.itens.map(function(g){
+    return '<div class="cel"><div class="k">'+esc(g.n)+' · '+esc(g.d)+'</div><div class="v">'+esc(g.t)+'</div><p>'+esc(g.txt)+'</p></div>';
+  }).join("")+'</div>'+
+  '<div class="botoes"><a class="bt cheio" href="'+at(GRAVACOES.link)+'" target="_blank" rel="noopener">Abrir as gravações no Drive</a></div>'+
+  '<div class="risco"></div><h3>Exercícios complementares</h3>'+
+  '<div class="uni u2">'+EXERCICIOS.map(function(e){
+    return '<div class="cel"><div class="k">'+esc(e.tag)+'</div><div class="v">'+esc(e.t)+'</div><p>'+esc(e.d)+'</p></div>';
+  }).join("")+'</div>');
+
+folha("fogo",mig("Agora é seu","Fechamento")+
+  '<p class="mao g">'+esc(FECHAMENTO.titulo)+'</p>'+
+  '<p style="margin-top:26px;white-space:pre-line">'+br(FECHAMENTO.txt)+'</p>');
+
+folha("tinta",mig("Agora é seu","Antes de fechar")+
+  '<h2>'+esc(FECHAMENTO.pedido)+'</h2>'+
+  FECHAMENTO.perguntas.map(function(p,i){
+    return '<div class="campo"><label for="f'+i+'">'+(i+1)+'. '+esc(p)+'</label><textarea id="f'+i+'" rows="3"></textarea></div>';
+  }).join("")+
+  '<div class="botoes"><button class="bt cheio" id="btEnviar">Enviar para a Gi</button>'+
+  '<button class="bt" id="btCopiar">Copiar respostas</button></div>'+
+  '<p id="okMsg" style="margin-top:22px;display:none;font-weight:700;color:var(--ocre)"></p>');
+
+folha("areia",mig("Agora é seu","Mentoria")+
+  '<h2>'+esc(MENTORIA.titulo)+'</h2>'+
+  '<p style="white-space:pre-line">'+br(MENTORIA.txt)+'</p>'+
+  '<div class="botoes"><a class="bt cheio" href="'+at(CONSULTORA.whatsapp)+'" target="_blank" rel="noopener">'+esc(MENTORIA.cta)+'</a>'+
+  '<a class="bt" href="'+at(CONSULTORA.whatsapp)+'" target="_blank" rel="noopener">Travou? Me chama no WhatsApp</a></div>');
+
+H.push('<footer class="rodape"><div><b>'+esc(CONSULTORA.nome)+'</b><p>'+esc(CONSULTORA.assinatura)+' · '+esc(CONSULTORA.cidade)+'</p></div>'+
+  '<p>Conteúdo de '+esc(MARCA.cliente)+' · '+new Date().getFullYear()+'</p></footer>');
+
+
+montar();
+navegacao(GRUPOS);
+/* ---------- abas dentro de cada pilar, com os embeds carregados só ao abrir ---------- */
+document.addEventListener("click",function(e){
+  var b=e.target.closest(".abas-pil .ab"); if(!b) return;
+  var pil=b.dataset.pil, qual=b.dataset.ab;
+  $$('.abas-pil .ab[data-pil="'+pil+'"]').forEach(function(x){x.classList.toggle("on",x===b)});
+  $$('.pn[data-pil="'+pil+'"]').forEach(function(pn){
+    var on = pn.dataset.pn===qual;
+    pn.classList.toggle("on",on);
+    if(on) $$("iframe[data-src]",pn).forEach(function(f){f.src=f.dataset.src;f.removeAttribute("data-src")});
+  });
+});
+
+ligarGerais();
+
+var bl=$("#jaLi");
+if(bl) bl.addEventListener("click",function(){ MEM.marcarLeu(); location.reload(); });
+
+$("#main").addEventListener("click",function(e){
+  var li=e.target.closest(".ag-itens li[data-id]"); if(!li) return;
+  var id=li.dataset.id, k=pFeitos.indexOf(id);
+  if(k>-1) pFeitos.splice(k,1); else pFeitos.push(id);
+  guarda.salvar(CH,pFeitos);
+  li.classList.toggle("ok",pFeitos.indexOf(id)>-1);
+  var a=$(".ag-agora"); if(a) a.textContent=estadoLinha();
+});
+
+/* ---------- diagnóstico ---------- */
+$("#diagLista").innerHTML=DIAGNOSTICO.map(function(d){
+  return '<button class="opcao" data-alvo="'+d.para+'" data-fecha="fundoDiag">'+esc(d.p)+'<span>→ '+esc(d.r)+'</span></button>';
+}).join("");
+
+/* ---------- pautas ---------- */
+function nomePilar(id){var p=PILARES.itens.filter(function(x){return x.id===id})[0];return p?p.nome:""}
+var BEATS=["gancho","cena","leitura","remate"];
+var USADAS=guarda.ler("jm-usadas",[]);
+function usada(i){return USADAS.indexOf(i)>-1}
+function nUsadas(){return USADAS.length}
+function pintaFiltros(){
+  var naoUsadas=PAUTAS.length-nUsadas();
+  var el=$('.fl[data-f="novas"] .qt'); if(el) el.textContent=naoUsadas;
+}
+$("#filtros").innerHTML='<button class="fl on" data-f="todos">Todos <span class="qt">'+PAUTAS.length+'</span></button>'+
+  '<button class="fl" data-f="novas">Ainda não usei <span class="qt">'+(PAUTAS.length-USADAS.length)+'</span></button>'+
+  PILARES.itens.map(function(p,i){
+    var q=PAUTAS.filter(function(x){return x.p===p.id}).length;
+    return '<button class="fl" data-f="'+p.id+'">'+(i+1)+'. '+esc(p.nome)+' <span class="qt">'+q+'</span></button>';
+  }).join("");
+function desenhar(f){
+  var lista = f==="todos" ? PAUTAS
+            : f==="novas" ? PAUTAS.filter(function(p){return !usada(PAUTAS.indexOf(p))})
+            : PAUTAS.filter(function(p){return p.p===f});
+  if(!lista.length){ $("#listaPautas").innerHTML='<div class="vazio">Você já usou todas as pautas deste filtro. Isso é uma boa notícia.</div>'; return; }
+  $("#listaPautas").innerHTML=lista.map(function(p,i){
+    var ip=PAUTAS.indexOf(p);
+    return '<article class="pauta '+p.p+(usada(ip)?" usada":"")+'" data-i="'+ip+'">'+
+      '<div class="top"><span class="pl2">'+esc(nomePilar(p.p))+'</span><span class="fm">'+esc(p.f)+'</span></div>'+
+      '<div class="g">'+esc(p.g)+'</div>'+
+      '<div class="tags"><span class="tg">'+esc(p.o)+'</span></div>'+
+      (p.pendente?'<span class="flag">precisa da sua validação</span>':'')+
+      '<button class="abrir">Abrir roteiro</button>'+
+      '<button class="jausei" data-u="'+ip+'">'+(usada(ip)?"já usei ✓":"marcar como usada")+'</button>'+
+      '<div class="detalhe">'+
+        '<div class="dt-bloco"><div class="rot">por que essa pauta existe</div><p>'+esc(p.pq)+'</p></div>'+
+        '<div class="dt-bloco"><div class="rot">o que queremos fazer sentir</div><p>'+esc(p.sentir)+'</p></div>'+
+        '<div class="dt-bloco"><div class="rot">roteiro</div><ol class="roteiro">'+
+          p.rot.map(function(r,j){return '<li><b>'+BEATS[j]+'</b>'+esc(r)+'</li>'}).join("")+'</ol></div>'+
+        '<div class="dt-bloco"><div class="rot">cena ou evidência</div><p>'+esc(p.cena)+'</p></div>'+
+        '<div class="acoes">'+
+          '<button class="mini" data-cp="gancho">Copiar gancho</button>'+
+          '<button class="mini" data-cp="roteiro">Copiar roteiro</button>'+
+          '<button class="mini" data-cp="ia">Adaptar com IA</button>'+
+        '</div>'+
+      '</div></article>';
+  }).join("");
+}
+$("#filtros").addEventListener("click",function(e){
+  var b=e.target.closest(".fl"); if(!b)return;
+  $$(".fl").forEach(function(x){x.classList.remove("on")});
+  b.classList.add("on"); desenhar(b.dataset.f);
+});
+$("#listaPautas").addEventListener("click",function(e){
+  var u=e.target.closest("[data-u]");
+  if(u){ var iu=parseInt(u.dataset.u,10), k=USADAS.indexOf(iu);
+    if(k>-1) USADAS.splice(k,1); else USADAS.push(iu);
+    guarda.salvar("jm-usadas",USADAS);
+    var art=u.closest(".pauta"); art.classList.toggle("usada",usada(iu));
+    u.textContent=usada(iu)?"já usei ✓":"marcar como usada";
+    pintaFiltros(); return; }
+  var card=e.target.closest(".pauta"); if(!card)return;
+  if(e.target.closest(".abrir")){ card.classList.toggle("aberta");
+    e.target.closest(".abrir").textContent=card.classList.contains("aberta")?"Fechar roteiro":"Abrir roteiro"; return; }
+  var cp=e.target.closest("[data-cp]"); if(!cp)return;
+  var p=PAUTAS[parseInt(card.dataset.i,10)];
+  if(cp.dataset.cp==="gancho"){ copiar(p.g); feedback(cp,"Copiado"); }
+  else if(cp.dataset.cp==="roteiro"){
+    copiar(p.g+"\n\n"+p.rot.map(function(r,j){return BEATS[j].toUpperCase()+": "+r}).join("\n\n")+"\n\nCena: "+p.cena);
+    feedback(cp,"Copiado");
+  } else {
+    copiar(IA.base+"\n\nVou trabalhar esta pauta:\nGancho: "+p.g+"\nPor que existe: "+p.pq+"\nO que quero fazer sentir: "+p.sentir+
+      "\nRoteiro base:\n"+p.rot.map(function(r,j){return "- "+BEATS[j]+": "+r}).join("\n")+
+      "\n\nMe pergunte qual cena real eu vou usar. Depois adapte esse roteiro para a minha cena, mantendo o tom descrito acima. Não invente dados de mercado.");
+    feedback(cp,"Prompt copiado");
+  }
+});
+desenhar("todos");
+
+/* ---------- assistente da cena ---------- */
+var CH_WIZ="lm-cena";
+var wizI=0, wizR=["","","",""];
+try{ var gw=JSON.parse(localStorage.getItem(CH_WIZ)||"null");
+  if(gw && gw.length===4) wizR=gw; }catch(e){}
+function salvarWiz(){ try{localStorage.setItem(CH_WIZ,JSON.stringify(wizR))}catch(e){} }
+function wizDesenha(){
+  var p=CADEIA.passos[wizI];
+  $("#wizPasso").innerHTML='<div class="passo-n">'+p.t+'</div><h3>'+esc(p.p)+'</h3>'+
+    '<div class="ajuda">'+esc(p.d)+'</div>'+
+    '<textarea id="wizTA" rows="3" placeholder="'+at(p.ph)+'">'+esc(wizR[wizI])+'</textarea>';
+  $("#wizProg").textContent=(wizI+1)+" de "+CADEIA.passos.length;
+  $("#wizVoltar").style.visibility=wizI===0?"hidden":"visible";
+  $("#wizProx").textContent=wizI===CADEIA.passos.length-1?"ver o resultado →":"próximo →";
+  $("#wizTA").addEventListener("input",function(){wizR[wizI]=this.value;salvarWiz()});
+}
+$("#wizProx").addEventListener("click",function(){
+  wizR[wizI]=$("#wizTA").value; salvarWiz();
+  if(wizI<CADEIA.passos.length-1){ wizI++; wizDesenha(); }
+  else {
+    if(!wizR[3].trim()){ alert("A sua leitura é a parte que não pode ficar em branco. Sem ela, é notícia."); return; }
+    var r=$("#wizResultado");
+    r.innerHTML='<div class="passo-n" style="color:var(--ocre);font-weight:700;font-size:12px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:16px">a sua matéria-prima está aqui</div>'+
+      CADEIA.passos.map(function(p,i){
+        return '<div class="lin"><div class="lb2">'+esc(p.t)+'</div><div class="tx2">'+esc(wizR[i]||"(em branco)")+'</div></div>';
+      }).join("")+
+      '<div class="botoes"><button class="bt cheio" id="wizIA">Levar para a IA</button>'+
+      '<button class="bt" id="wizCopiar" style="color:var(--creme)">Copiar tudo</button>'+
+      '<button class="bt" data-alvo="pautas" style="color:var(--creme)">Ver formatos possíveis</button></div>';
+    r.classList.add("ver");
+    var texto=CADEIA.passos.map(function(p,i){return p.t+": "+(wizR[i]||"")}).join("\n\n");
+    $("#wizCopiar").addEventListener("click",function(){copiar(texto);feedback(this,"Copiado")});
+    $("#wizIA").addEventListener("click",function(){
+      copiar(IA.base+"\n\nEu já fiz o trabalho de leitura. Aqui está a minha matéria-prima:\n\n"+texto+
+        "\n\nCom base nisso, me dê três opções de gancho e um roteiro em quatro tempos (gancho, cena, leitura, remate) para o mais forte. Use as minhas palavras sempre que possível. Não invente detalhes.");
+      feedback(this,"Prompt copiado");
+    });
+    r.scrollIntoView({behavior:"smooth",block:"nearest"});
+  }
+});
+$("#wizVoltar").addEventListener("click",function(){ wizR[wizI]=$("#wizTA").value; salvarWiz(); wizI--; wizDesenha(); });
+wizDesenha();
+
+/* ---------- ia ---------- */
+document.addEventListener("click",function(e){
+  var b=e.target.closest("[data-ia]"); if(!b)return;
+  copiar(IA.base+"\n\n"+IA.prompts[parseInt(b.dataset.ia,10)].p);
+  feedback(b,"Copiado");
+});
+
+/* ---------- régua que ensina ---------- */
+$("#reguaLista").innerHTML=REGUA.itens.map(function(r,i){
+  return '<div class="ck" data-i="'+i+'" role="checkbox" aria-checked="false" tabindex="0"><div><h4>'+esc(r.t)+'</h4><p>'+esc(r.d)+'</p></div></div>';
+}).join("");
+function avaliar(){
+  var oks=$$("#reguaLista .ck").map(function(el){return el.classList.contains("ok")});
+  var n=oks.filter(Boolean).length, total=REGUA.itens.length, p=$("#placar");
+  p.className="placar";
+  if(n===0){ p.innerHTML='<div class="pt">Marque o que o seu conteúdo já cumpre.</div>'; return; }
+  var faltas=REGUA.itens.filter(function(r,i){return !oks[i]}).map(function(r){return r.falta});
+  if(n>=total-1){
+    p.classList.add("bom");
+    p.innerHTML='<div class="pt">'+n+' de '+total+'. Pode subir.</div>'+
+      (faltas.length?'<ul><li>'+esc(faltas[0])+'</li></ul>':'<p style="margin:0;font-size:15.5px;opacity:.9">Esse aqui está seu.</p>');
+  } else {
+    p.classList.add("ruim");
+    p.innerHTML='<div class="pt">'+(n>=total-3?"Está quase. ":"")+n+' de '+total+'.</div>'+
+      '<p style="margin:0 0 4px;font-size:15.5px;opacity:.92">O que ainda falta:</p>'+
+      '<ul>'+faltas.slice(0,3).map(function(f){return '<li>'+esc(f)+'</li>'}).join("")+'</ul>';
+  }
+}
+var CH_REGUA="lm-regua";
+function salvarRegua(){ try{localStorage.setItem(CH_REGUA,
+  $$("#reguaLista .ck").map(function(e){return e.classList.contains("ok")?"1":"0"}).join(""))}catch(e){} }
+$$("#reguaLista .ck").forEach(function(el){
+  function alterna(){ el.classList.toggle("ok"); el.setAttribute("aria-checked",el.classList.contains("ok")); avaliar(); salvarRegua(); }
+  el.addEventListener("click",alterna);
+  el.addEventListener("keydown",function(e){if(e.key===" "||e.key==="Enter"){e.preventDefault();alterna()}});
+});
+try{ var gr=localStorage.getItem(CH_REGUA);
+  if(gr) $$("#reguaLista .ck").forEach(function(el,i){
+    if(gr[i]==="1"){el.classList.add("ok");el.setAttribute("aria-checked","true")}});
+}catch(e){}
+avaliar();
+
+/* ---------- plano, uma semana por vez ---------- */
+var CHAVE="plano30-"+MARCA.cliente.toLowerCase().replace(/\s+/g,"-");
+var feitos=guarda.ler(CHAVE,[]);
+var semAtual=guarda.ler(CHAVE+"-sem",0);
+var totalT=PLANO.semanas.reduce(function(a,s){return a+s.itens.length},0);
+function semFeita(si){ return PLANO.semanas[si].itens.every(function(_,ii){return feitos.indexOf(si+"-"+ii)>-1}) }
+function desenhaNav(){
+  $("#semNav").innerHTML=PLANO.semanas.map(function(s,i){
+    return '<button class="sn'+(i===semAtual?" on":"")+(semFeita(i)?" feita":"")+'" data-s="'+i+'">'+esc(s.w)+(semFeita(i)?" ✓":"")+'</button>';
+  }).join("");
+}
+function desenhaSem(){
+  var s=PLANO.semanas[semAtual];
+  $("#semCard").innerHTML='<div class="sem-card"><div class="w">'+esc(s.w)+'</div><h3>'+esc(s.t)+'</h3>'+
+    '<div class="foco">'+esc(s.foco)+'</div><ul>'+
+    s.itens.map(function(it,ii){
+      var id=semAtual+"-"+ii;
+      return '<li data-id="'+id+'" class="'+(feitos.indexOf(id)>-1?"ok":"")+'"><span class="mk">✓</span><span>'+esc(it)+'</span></li>';
+    }).join("")+'</ul>'+
+    (semFeita(semAtual)&&semAtual<PLANO.semanas.length-1
+      ? '<div class="botoes"><button class="bt cheio" id="proxSem">Terminei. Ir para a '+esc(PLANO.semanas[semAtual+1].w)+' →</button></div>' : '')+
+    '</div>';
+  desenhaNav(); prog();
+}
+function prog(){
+  $("#barraProg").style.width=(totalT?(feitos.length/totalT)*100:0)+"%";
+  $("#txtProg").textContent=feitos.length+" de "+totalT+" tarefas concluídas no mês";
+}
+$("#semNav").addEventListener("click",function(e){
+  var b=e.target.closest(".sn"); if(!b)return;
+  semAtual=parseInt(b.dataset.s,10); guarda.salvar(CHAVE+"-sem",semAtual); desenhaSem();
+});
+$("#semCard").addEventListener("click",function(e){
+  if(e.target.closest("#proxSem")){ semAtual++; guarda.salvar(CHAVE+"-sem",semAtual); desenhaSem(); return; }
+  var li=e.target.closest("li[data-id]"); if(!li)return;
+  var id=li.dataset.id, i=feitos.indexOf(id);
+  if(i>-1) feitos.splice(i,1); else feitos.push(id);
+  guarda.salvar(CHAVE,feitos); desenhaSem();
+});
+desenhaSem();
+
+/* ---------- feedback final ---------- */
+function montarTexto(){
+  var t="Oi Gi! Terminei a Leitura.\n\n";
+  FECHAMENTO.perguntas.forEach(function(p,i){ t+=(i+1)+". "+p+"\n"+($("#f"+i).value.trim()||"(não respondi)")+"\n\n"; });
+  return t.trim();
+}
+$("#btEnviar").addEventListener("click",function(){
+  if(!FECHAMENTO.perguntas.some(function(p,i){return $("#f"+i).value.trim()})){
+    alert("Escreva pelo menos uma resposta antes de enviar."); return; }
+  var u=CONSULTORA.whatsapp+(CONSULTORA.whatsapp.indexOf("?")>-1?"&":"?")+"text="+encodeURIComponent(montarTexto());
+  window.open(u,"_blank","noopener");
+  var m=$("#okMsg"); m.style.display="block"; m.textContent=FECHAMENTO.obrigada;
+});
+$("#btCopiar").addEventListener("click",function(){
+  copiar(montarTexto());
+  var m=$("#okMsg"); m.style.display="block"; m.textContent="Respostas copiadas. Agora é só colar onde você quiser.";
+});
+
+
+animacoes();
+
+});
+</script>
+</body>
+</html>

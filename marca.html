@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Julliana Marques · Guia de Marca</title>
+<meta name="description" content="A Leitura de Marca de Julliana Marques: de onde partimos, a essência, território, princípios, suas frentes, manual, arquétipos, manifesto e cliente ideal.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23331319'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='17' font-weight='bold' fill='%23C9A227' text-anchor='middle'%3EJ%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#331319">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400..600&family=Archivo:wght@600;700;800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css?v=20260925">
+</head>
+<body>
+
+<button class="menu-bt" id="menuBt" aria-label="Abrir menu"><span class="ic">☰</span> <span id="menuTxt">Guia de Marca</span></button>
+<aside class="rail" id="rail">
+  <a class="rail-casa" href="index.html">← início</a>
+  <div class="marca" id="railMarca"></div>
+  <nav id="navAbas" aria-label="Telas da Leitura"></nav>
+  <button class="topo" id="btTopo">↑ topo</button>
+</aside>
+
+<i id="prog" aria-hidden="true"></i>
+<main id="main"></main>
+
+<script src="comum.js?v=20260925"></script>
+<script>
+comDados(function(){
+
+var CASA = "Guia de Marca";
+$("#menuTxt").textContent = "Guia de Marca";
+$("#railMarca").innerHTML = "Guia de Marca<br><span style='opacity:.6;font-weight:700'>"+esc(MARCA.cliente)+"</span>";
+window.CASA = CASA;
+
+/* ===== CAPA DA LEITURA ===== */
+folha("tinta capa",
+  '<div class="prod">Guia de Marca</div>'+
+  '<h1>'+esc(MARCA.cliente).replace(" ","<br>")+'</h1>'+
+  '<p class="sub">O que reconhecemos sobre a sua marca nos nossos encontros. Leia com calma, na ordem. No fim tem a porta para o lugar onde isso vira trabalho.</p>'+
+  '<div class="botoes" style="margin-top:clamp(28px,4vw,52px)">'+
+    '<button class="bt cheio" data-alvo="de-onde-partimos">Começar a leitura →</button>'+
+    '<a class="bt" href="conteudo.html" style="color:var(--creme)">Ir direto para o Conteúdo</a>'+
+  '</div>','capa');
+
+folha("grade",mig("Sua Marca","De onde partimos")+usar(RETRATO.usar)+
+  '<h2>'+esc(RETRATO.titulo)+'</h2>'+
+  ed(RETRATO.bloco)+
+  '<div class="notas">'+RETRATO.notas.map(function(n){
+    return '<div class="nt-item '+(n.peso||"forte")+'"><div class="nota-v" data-conta="'+n.v+'">0</div><p>'+esc(n.t)+'</p></div>';
+  }).join("")+'</div>'+
+  mais("Entenda por que chegamos aqui",RETRATO.detalhe));
+
+folha("areia",mig("Sua Marca","A essência")+usar(ESSENCIA.usar)+
+  '<div class="ed-pausa"></div>'+
+  '<p class="mao frase-mae">'+br(ESSENCIA.frase)+'</p>'+
+  '<div class="ed-pausa g"></div>'+
+  '<p class="ed-ponte">'+esc(ESSENCIA.ponte)+'</p>'+
+  ESSENCIA.desdobra.map(function(d){return '<p class="ed-seq">'+br(d)+'</p>'}).join("")+
+  '<div class="bloco-virada">'+ESSENCIA.virada.map(function(v){return '<p>'+br(v)+'</p>'}).join("")+'</div>'+
+  '<div class="evidencia"><span class="rot">evidência</span>'+
+  '<p class="ed-ponte">'+esc(ESSENCIA.provaIntro)+'</p>'+
+  '<p class="fala"><span class="asp">“</span>'+esc(ESSENCIA.prova)+'<span class="asp">”</span></p>'+
+  '<p class="onde">'+br(ESSENCIA.provaOnde)+'</p></div>'+
+  ed(ESSENCIA.fecho));
+
+folha("escura",mig("Sua Marca","Em 1 minuto")+usar(RESUMO_1MIN.usar)+
+  '<div class="selo">'+esc(RESUMO_1MIN.selo)+'</div>'+
+  '<h2 class="h-cola">'+esc(RESUMO_1MIN.headline[0])+'<br><span class="peso">'+esc(RESUMO_1MIN.headline[1])+'</span></h2>'+
+  '<div class="ficha">'+RESUMO_1MIN.campos.map(function(c){
+    return '<div class="ficha-item'+(c.anota?" lado":"")+'">'+
+      '<div class="txt"><div class="rot">'+esc(c.rot)+'</div>'+
+      (c.resp?'<p class="resp">'+br(c.resp)+'</p>':'')+
+      (c.grande?'<p class="grande">'+br(c.grande)+'</p>':'')+'</div>'+
+      (c.anota?'<div class="anota"><span class="tr"></span><span class="w">'+esc(c.anota)+'</span></div>':'')+
+      '</div>';
+  }).join("")+'</div>');
+
+folha("",mig("Sua Marca","Território")+usar(TERRITORIO.usar)+
+  '<h2 class="h-terr">'+esc(TERRITORIO.titulo)+'</h2>'+
+  ed(TERRITORIO.abertura)+
+  '<div class="contraste">'+
+    '<div class="c-assuntos"><div class="rot-ed">'+esc(TERRITORIO.contraste.rotA)+'</div>'+
+    '<p class="c-lista">'+br(TERRITORIO.contraste.assuntos)+'</p></div>'+
+    '<div class="bloco-virada"><div class="rot-ed">'+esc(TERRITORIO.contraste.rotB)+'</div>'+
+    '<p class="c-perg">'+br(TERRITORIO.contraste.pergunta)+'</p></div>'+
+  '</div>'+
+  mais("Entenda o que queremos provocar com esse olhar",TERRITORIO.olhar)+
+  mais("Por que começar pelo Canto do Forte?",TERRITORIO.forte)+
+  '<div class="ed-pausa g"></div>'+
+  '<h3 class="h-ferramenta">'+esc(TERRITORIO.ferramenta.titulo)+'</h3>'+
+  ed(TERRITORIO.ferramenta.intro)+
+  '<div class="perguntas">'+TERRITORIO.ferramenta.perguntas.map(function(q,i){
+    return '<div class="perg"><span class="n">'+(i+1)+'</span><p class="t">'+br(q)+'</p></div>';
+  }).join("")+'</div>'+
+  '<p class="ed-destaque">'+br(TERRITORIO.ferramenta.fecho)+'</p>');
+
+folha("mato",mig("Sua Marca","Princípios")+usar(PRINCIPIOS.usar)+
+  '<h2 class="h-princ">'+br(PRINCIPIOS.titulo)+'</h2>'+
+  ed(PRINCIPIOS.abertura)+
+  '<div class="principios">'+PRINCIPIOS.itens.map(function(p,i){
+    return '<details class="pr-item"><summary>'+
+      '<span class="num">'+(i<9?"0":"")+(i+1)+'</span>'+
+      '<span class="tit">'+br(p.t)+'</span>'+
+      '<span class="pr-cta"></span></summary>'+
+      '<div class="pr-corpo">'+ed(p.corpo)+'</div></details>';
+  }).join("")+'</div>'+
+  '<div class="fecho-princ">'+ed(PRINCIPIOS.fecho)+'</div>');
+
+folha("escura",mig("Sua Marca","Suas frentes")+usar(CAMADAS.usar)+
+  '<h2 class="h-princ">'+br(CAMADAS.titulo)+'</h2>'+
+  '<div class="editorial">'+CAMADAS.versoes.map(function(v){return '<p class="ed-seq">'+br(v)+'</p>'}).join("")+'</div>'+
+  ed(CAMADAS.abertura)+
+  '<div class="bloco-claro">'+CAMADAS.central.map(function(c){return '<p>'+br(c)+'</p>'}).join("")+'</div>'+
+  '<div class="frentes">'+CAMADAS.itens.map(function(c,i){
+    return '<details class="fr nv'+(i===0?1:(i===3?3:2))+'"><summary>'+
+      '<span class="fr-n">'+esc(c.nome)+'</span>'+
+      '<span class="fr-s">'+br(c.papel)+'</span>'+
+      '<span class="fr-cta"></span></summary>'+
+      '<div class="fr-corpo">'+ed(c.corpo)+'</div></details>';
+  }).join("")+'</div>'+
+  '<div class="ed-pausa g"></div>'+
+  '<h3 class="h-ferramenta">'+br(CAMADAS.quem.titulo)+'</h3>'+
+  '<div class="quem">'+CAMADAS.quem.casos.map(function(q){
+    return '<div class="qi"><p class="qp">'+enf(q.p)+'</p>'+
+      (q.grande
+        ? '<p class="qr-g">'+br(q.r)+'</p>'
+        : '<div class="qr"><b>'+esc(q.quem)+'</b><span>'+br(q.r)+'</span></div>')+
+      '</div>';
+  }).join("")+'</div>'+
+  '<div class="ed-pausa g"></div>'+
+  ed(CAMADAS.fecho));
+
+function manBloco(b){
+  var h = b.rot ? '<div class="rot-ed">'+esc(b.rot)+'</div>' : '';
+  if(b.tipo==="virada") h+='<div class="bloco-virada">'+b.linhas.map(function(l){return '<p>'+br(l)+'</p>'}).join("")+'</div>';
+  else if(b.tipo==="ideias") h+='<div class="perguntas">'+b.itens.map(function(t,i){
+      return '<div class="perg"><span class="n">'+(i+1)+'</span><p class="t">'+br(t)+'</p></div>'}).join("")+'</div>';
+  else if(b.tipo==="ecos") h+='<div class="ecos"><div class="ec-i">'+esc(b.intro)+'</div>'+
+      b.frases.map(function(f){return '<p class="ec">'+br(f)+'</p>'}).join("")+'</div>';
+  else if(b.tipo==="tracos") h+='<div class="tracos">'+b.itens.map(function(t){
+      return '<div><div class="tr-w">'+esc(t.t)+'</div><p>'+br(t.d)+'</p></div>'}).join("")+'</div>';
+  else if(b.tipo==="protege") h+='<div class="protege">'+b.itens.map(function(t){
+      return '<div class="pg"><div class="pg-t">'+esc(t.t)+'</div><p class="pg-a">'+br(t.a)+'</p><p class="pg-b">'+br(t.b)+'</p></div>'}).join("")+'</div>';
+  else if(b.corpo) h+=ed(b.corpo);
+  if(b.mais) h+=mais(b.mais.r,b.mais.corpo);
+  return '<div class="man-bloco">'+h+'</div>';
+}
+function manArea(a){return a.blocos.map(manBloco).join("")}
+
+folha("grade",mig("Sua Marca","Manual")+usar(MANUAL.usar)+
+  '<h2 class="h-princ">'+br(MANUAL.titulo)+'</h2>'+
+  ed(MANUAL.abertura)+
+  '<div class="portas">'+MANUAL.areas.map(function(a){
+    return '<details class="porta"><summary>'+
+      '<span class="po-n">'+esc(a.n)+'</span>'+
+      '<span><span class="po-t">'+esc(a.t)+'</span><span class="po-s">'+br(a.s)+'</span></span>'+
+      '<span class="po-cta"></span></summary>'+
+      '<div class="man-corpo"></div></details>';
+  }).join("")+'</div>','manual');
+
+folha("tinta",mig("Sua Marca","Arquétipos")+usar(ARQUETIPOS.usar)+
+  '<h2 class="h-princ">'+br(ARQUETIPOS.titulo)+'</h2>'+
+  ed(ARQUETIPOS.abertura)+
+
+  '<div class="arq-heroi">'+
+  '<div class="rot-ed">'+esc(ARQUETIPOS.heroi.rot)+'</div>'+
+  '<p class="ed-destaque g">'+br(ARQUETIPOS.heroi.h)+'</p>'+
+  '<div class="rot-ed" style="margin-top:clamp(26px,3.4vw,46px)">'+esc(ARQUETIPOS.heroi.rotLinha)+'</div>'+
+  '<div class="tl">'+ARQUETIPOS.heroi.linha.map(function(m){
+    return '<div class="tl-i"><div class="tl-q">'+esc(m.q)+'</div><p class="tl-t">'+br(m.t)+'</p></div>';
+  }).join("")+'</div>'+
+  '<div class="evidencia so"><span class="rot">'+esc(ARQUETIPOS.heroi.falaRot)+'</span>'+
+  '<p class="fala"><span class="asp">“</span>'+br(ARQUETIPOS.heroi.fala)+'<span class="asp">”</span></p></div>'+
+  ed(ARQUETIPOS.heroi.porque)+
+  '<div class="ed-pausa"></div>'+
+  '<div class="rot-ed">'+esc(ARQUETIPOS.heroi.naoRot)+'</div>'+
+  ed(ARQUETIPOS.heroi.nao)+
+  '</div>'+
+
+  '<div class="duo">'+ARQUETIPOS.duo.map(function(d){
+    return '<div class="du"><div class="rot-ed">'+esc(d.rot)+'</div>'+
+      '<h3 class="du-h">'+br(d.h)+'</h3>'+ed(d.corpo)+
+      '<p class="du-f">'+br(d.fecho)+'</p>'+
+      (d.evid?'<div class="anota"><span class="tr"></span><span class="w">'+esc(d.evid)+'</span></div>':'')+
+      '</div>';
+  }).join("")+'</div>'+
+
+  '<div class="bloco-claro">'+
+  '<div class="rot-ed">'+esc(ARQUETIPOS.mago.rot)+'</div>'+
+  '<h3>'+br(ARQUETIPOS.mago.h)+'</h3>'+
+  '<p class="fala-mini"><span class="asp">“</span>'+esc(ARQUETIPOS.mago.fala)+'<span class="asp">”</span></p>'+
+  ed(ARQUETIPOS.mago.corpo)+'</div>'+
+
+  '<div class="ed-pausa"></div>'+
+  '<h3 class="h-ferramenta">'+br(ARQUETIPOS.comunicacao.titulo)+'</h3>'+
+  '<div class="aparece">'+ARQUETIPOS.comunicacao.itens.map(function(c){
+    return '<div class="ap"><div class="ap-t">'+esc(c.t)+'</div><p>'+br(c.d)+'</p></div>';
+  }).join("")+'</div>'+
+  '<div class="ed-pausa g"></div>'+
+  ed(ARQUETIPOS.fecho));
+
+folha("grade",mig("Sua Marca","Cliente ideal")+usar(CLIENTE.usar)+
+  '<div class="rot-ed">'+esc(CLIENTE.rot)+'</div>'+
+  '<h2 class="h-princ">'+br(CLIENTE.titulo)+'</h2>'+
+  ed(CLIENTE.abertura)+
+
+  '<div class="contraste eq">'+
+    '<div class="c-assuntos"><div class="rot-ed">'+esc(CLIENTE.diz.rotA)+'</div>'+
+    '<p class="c-lista">'+br(CLIENTE.diz.itens)+'</p></div>'+
+    '<div class="c-assuntos"><div class="rot-ed">'+esc(CLIENTE.diz.rotB)+'</div>'+
+    '<p class="porque">'+esc(CLIENTE.diz.porque)+'</p></div>'+
+  '</div>'+
+
+  '<div class="rot-ed">'+esc(CLIENTE.quem.rot)+'</div>'+ed(CLIENTE.quem.corpo)+
+
+  '<div class="contraste eq topo">'+
+    '<div class="c-assuntos"><div class="rot-ed">'+esc(CLIENTE.lista.rotA)+'</div>'+
+    '<p class="c-lista fraca">'+br(CLIENTE.lista.a)+'</p></div>'+
+    '<div class="c-assuntos"><div class="rot-ed">'+esc(CLIENTE.lista.rotB)+'</div>'+
+    CLIENTE.lista.b.map(function(x){return '<p class="ed-seq m">'+br(x)+'</p>'}).join("")+'</div>'+
+  '</div>'+
+  ed(CLIENTE.lista.fecho)+
+
+  '<div class="ed-pausa"></div>'+
+  '<div class="ecos"><div class="ec-i">'+esc(CLIENTE.tensao.rot)+'</div>'+
+  '<p class="ec">'+br(CLIENTE.tensao.um)+'</p></div>'+
+  '<p class="ed-ponte" style="margin-top:clamp(20px,2.6vw,34px)">'+br(CLIENTE.tensao.ponte)+'</p>'+
+  '<p class="ec g">'+br(CLIENTE.tensao.dois)+'</p>'+
+
+  '<div class="ed-pausa g"></div>'+
+  '<div class="rot-ed">'+esc(CLIENTE.momentos.rot)+'</div>'+
+  '<div class="momentos">'+CLIENTE.momentos.itens.map(function(m,k){
+    return '<details class="porta"><summary>'+
+      '<span class="po-n">0'+(k+1)+'</span>'+
+      '<span><span class="po-t">'+esc(m.t)+'</span><span class="po-s">'+br(m.s)+'</span></span>'+
+      '<span class="po-cta"></span></summary>'+
+      '<div class="man-corpo">'+ed(m.corpo)+
+      '<div class="rot-ed" style="margin-top:clamp(20px,2.6vw,34px)">a pergunta por trás</div>'+
+      '<p class="ed-destaque m">'+br(m.perg)+'</p></div></details>';
+  }).join("")+'</div>'+
+
+  '<div class="ed-pausa g"></div>'+
+  '<h3 class="h-ferramenta">'+br(CLIENTE.percebe.titulo)+'</h3>'+
+  '<div class="ecos duas"><div class="ec-i">'+esc(CLIENTE.percebe.rot)+'</div>'+
+  CLIENTE.percebe.frases.map(function(f){return '<p class="ec">'+br(f)+'</p>'}).join("")+'</div>'+
+
+  '<div class="ed-pausa g"></div>'+
+  '<div class="rot-ed">'+esc(CLIENTE.nao.rot)+'</div>'+
+  '<p class="ed-recuo">'+br(CLIENTE.nao.itens)+'</p>'+
+  '<div class="bloco-virada forte">'+CLIENTE.nao.virada.map(function(v){
+    return '<p>'+br(v)+'</p>'}).join("")+'</div>'+
+
+  '<h3 class="h-ferramenta">'+br(CLIENTE.troca.titulo)+'</h3>'+
+  '<div class="troca">'+CLIENTE.troca.itens.map(function(t){
+    return '<div class="tr2"><div class="tx-menos"><div class="lb">menos isso</div><p>'+br(t.a)+'</p></div>'+
+      '<div class="tx-mais"><div class="lb">mais isso</div><p>'+br(t.b)+'</p></div></div>';
+  }).join("")+'</div>'+
+
+  '<div class="ed-pausa g"></div>'+
+  '<p class="ed-linha">'+br(CLIENTE.regua.intro)+'</p>'+
+  '<p class="ed-destaque g">'+br(CLIENTE.regua.p)+'</p>');
+
+
+/* ===== FECHAMENTO DA LEITURA ===== */
+folha("mf-folha",mig("Leitura","Fim da leitura")+
+  '<div class="mf"><div class="mf-rot">fim da leitura</div>'+
+  '<p class="mf-n">Isso é o que reconhecemos sobre a sua marca.</p>'+
+  '<p class="mf-n">Você pode voltar aqui sempre que precisar se lembrar de quem você é<br>ou de por que decidimos alguma coisa.</p>'+
+  '<div class="mf-p g"></div>'+
+  '<p class="mf-s">A partir de agora,<br>o trabalho acontece em outro lugar.</p>'+
+  '<div class="mf-p gg"></div>'+
+  '<a class="porta-out" href="conteudo.html">'+
+    '<span class="rot">a porta seguinte</span>'+
+    '<span class="nm">O seu Conteúdo →</span>'+
+    '<span class="ds">Pautas, ferramentas, decisões rápidas e o plano de ação. É onde você vai entrar toda semana.</span>'+
+  '</a></div>','fim');
+
+montar();
+try{ MEM.marcarLeu(); }catch(e){}
+navegacao(null);
+/* ---------- manual: uma área por vez, conteúdo sob demanda ---------- */
+var manPronto=[];
+$$(".portas .porta").forEach(function(d,i){
+  d.addEventListener("toggle",function(){
+    if(!d.open) return;
+    $$(".portas .porta").forEach(function(o){ if(o!==d) o.open=false; });
+    if(!manPronto[i]){ d.querySelector(".man-corpo").innerHTML=manArea(MANUAL.areas[i]); manPronto[i]=1; }
+  });
+});
+
+
+ligarGerais();
+animacoes();
+
+});
+</script>
+</body>
+</html>

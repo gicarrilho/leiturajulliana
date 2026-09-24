@@ -1,6 +1,6 @@
 /* =============================================================================
    MOTOR COMPARTILHADO · não precisa ser editado.
-   Usado pelo index.html (Sistema) e pelo leitura.html (Leitura).
+   Usado pelo index.html (capa), marca.html (Guia) e conteudo.html (Conteúdo).
    Todo o conteúdo vive em dados.js.
    ============================================================================= */
 

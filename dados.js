@@ -3,9 +3,10 @@
    -----------------------------------------------------------------------------
    ESTE É O ÚNICO ARQUIVO QUE PRECISA SER EDITADO.
 
-   A entrega tem duas portas, e as duas leem este mesmo arquivo:
-     leitura.html  ·  a Leitura de Marca, para se reconhecer
-     index.html    ·  o Sistema, para trabalhar toda semana
+   A entrega tem três páginas, e as três leem este mesmo arquivo:
+     index.html     ·  a capa. O manifesto e as duas portas.
+     marca.html     ·  o Guia de Marca, para se reconhecer.
+     conteudo.html  ·  o Conteúdo, para trabalhar toda semana.
    Os outros arquivos (comum.js e estilo.css) são o motor. Não precisa abrir.
 
    Como editar direto no site:
@@ -26,10 +27,7 @@
    PROCURE POR "COLAR AQUI" para achar o que ainda falta preencher.
    ============================================================================= */
 
-/* A entrega agora tem dois arquivos, com o mesmo dados.js:
-   leitura.html  = a Leitura de Marca, para se reconhecer
-   index.html    = o Sistema, para trabalhar toda semana
-   Os nomes das duas portas ficam aqui. */
+/* Os nomes que aparecem na capa e no topo das duas páginas. */
 const MARCA = {
   produto: "Leitura de Marca",
   cliente: "Julliana Marques",
@@ -963,6 +961,14 @@ const PILARES = {
         { t: "O FORTE POR DENTRO", d: "O bairro de 26 dos 45 negócios, nas duas leituras: como é morar ali e como é comprar ali." },
         { t: "PG EM MOVIMENTO", d: "Obra nova, bairro que virou, o que encareceu, o que a cidade ainda não tem." },
         { t: "ONDE O DINHEIRO ESTÁ INDO", d: "A camada de mercado para quem já mora aqui: o que sustenta preço, o que revende, o que é promessa de folder." }
+      ],
+      /* REFERENCIAS deste pilar. COLAR AQUI.
+         Copie o link do post no Instagram (Compartilhar, Copiar link) e cole em url.
+         Serve post, reel e carrossel. Em quem vai o arroba do perfil.
+         Em pq vai, em uma ou duas frases, o que voce quer que ela olhe nessa referencia.
+         Modelo de uma linha:
+         { url: "https://www.instagram.com/p/XXXXXXXXXXX/", quem: "@perfil", pq: "O que olhar aqui." }, */
+      referencias: [
       ] },
 
     { id: "p2", n: "02", nome: "Como quem compra escolhe",
@@ -972,6 +978,14 @@ const PILARES = {
         { t: "O QUE VOCÊ NÃO ABRE MÃO?", d: "A pergunta que revela o que a pessoa realmente quer, e que quase ninguém faz antes de mostrar imóvel." },
         { t: "VIDA REAL", d: "O que acontece depois da chave: vizinho, barulho, mercado a pé, a praia que você usa e a que só olha." },
         { t: "ANTES DE DECIDIR", d: "Os erros que você vê de perto, contados como cena. Nunca como lista de dicas." }
+      ],
+      /* REFERENCIAS deste pilar. COLAR AQUI.
+         Copie o link do post no Instagram (Compartilhar, Copiar link) e cole em url.
+         Serve post, reel e carrossel. Em quem vai o arroba do perfil.
+         Em pq vai, em uma ou duas frases, o que voce quer que ela olhe nessa referencia.
+         Modelo de uma linha:
+         { url: "https://www.instagram.com/p/XXXXXXXXXXX/", quem: "@perfil", pq: "O que olhar aqui." }, */
+      referencias: [
       ] },
 
     { id: "p3", n: "03", nome: "Imóvel com critério",
@@ -981,6 +995,14 @@ const PILARES = {
         { t: "VITRINE EDITADA", d: "Foto protagonista e ficha selecionada. Três informações, no máximo quatro." },
         { t: "DOR E DESEJO", d: "O atributo vira a cena que acaba na vida da pessoa." },
         { t: "CRITÉRIO E COMPARAÇÃO", d: "Para quem eu mostraria esse, e para quem eu não mostraria." }
+      ],
+      /* REFERENCIAS deste pilar. COLAR AQUI.
+         Copie o link do post no Instagram (Compartilhar, Copiar link) e cole em url.
+         Serve post, reel e carrossel. Em quem vai o arroba do perfil.
+         Em pq vai, em uma ou duas frases, o que voce quer que ela olhe nessa referencia.
+         Modelo de uma linha:
+         { url: "https://www.instagram.com/p/XXXXXXXXXXX/", quem: "@perfil", pq: "O que olhar aqui." }, */
+      referencias: [
       ] },
 
     { id: "p4", n: "04", nome: "O mercado que está chegando",
@@ -990,6 +1012,14 @@ const PILARES = {
         { t: "ISSO É ALTO PADRÃO?", d: "A série que coloca a sua leitura em público. Precisa da sua validação antes de subir." },
         { t: "RADAR DO MERCADO", d: "O que você traz de fora e o que disso chega aqui em dois, cinco anos." },
         { t: "O QUE O COMPRADOR JÁ PERCEBEU", d: "O que as pessoas pararam de pedir e o que virou inegociável, antes de o construtor entender." }
+      ],
+      /* REFERENCIAS deste pilar. COLAR AQUI.
+         Copie o link do post no Instagram (Compartilhar, Copiar link) e cole em url.
+         Serve post, reel e carrossel. Em quem vai o arroba do perfil.
+         Em pq vai, em uma ou duas frases, o que voce quer que ela olhe nessa referencia.
+         Modelo de uma linha:
+         { url: "https://www.instagram.com/p/XXXXXXXXXXX/", quem: "@perfil", pq: "O que olhar aqui." }, */
+      referencias: [
       ] },
 
     { id: "p5", n: "05", nome: "Bastidores Julliana",
@@ -1000,6 +1030,9 @@ const PILARES = {
         { t: "NO NEXUS", d: "Critério de entrada, código de ética, o mercado que você quer ver existir." },
         { t: "FORA DA BOLHA", d: "Viagem, feira, projeto. Nunca \"olha onde eu estou\". Sempre \"olha o que eu vi aqui que mudou a minha régua\"." },
         { t: "DE ONDE EU VIM", d: "A sua trajetória, contada para corretor e para a equipe. Sempre virada para fora." }
+      ],
+      /* REFERENCIAS deste pilar. COLAR AQUI. Mesmo modelo dos pilares acima. */
+      referencias: [
       ] }
   ]
 };
