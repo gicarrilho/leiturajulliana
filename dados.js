@@ -1,7 +1,12 @@
 /* =============================================================================
-   PORTFÓLIO DA MARCA · JULLIANA MARQUES
+   JULLIANA MARQUES · conteúdo das duas páginas
    -----------------------------------------------------------------------------
    ESTE É O ÚNICO ARQUIVO QUE PRECISA SER EDITADO.
+
+   A entrega tem duas portas, e as duas leem este mesmo arquivo:
+     leitura.html  ·  a Leitura de Marca, para se reconhecer
+     index.html    ·  o Sistema, para trabalhar toda semana
+   Os outros arquivos (comum.js e estilo.css) são o motor. Não precisa abrir.
 
    Como editar direto no site:
    1. Abra github.com/gicarrilho/leiturajulliana
@@ -21,10 +26,14 @@
    PROCURE POR "COLAR AQUI" para achar o que ainda falta preencher.
    ============================================================================= */
 
+/* A entrega agora tem dois arquivos, com o mesmo dados.js:
+   leitura.html  = a Leitura de Marca, para se reconhecer
+   index.html    = o Sistema, para trabalhar toda semana
+   Os nomes das duas portas ficam aqui. */
 const MARCA = {
-  produto: "Portfólio da Marca",
+  produto: "Leitura de Marca",
   cliente: "Julliana Marques",
-  subtitulo: "Tudo o que reconhecemos sobre a sua marca, e as ferramentas para você colocar isso em movimento sem depender de mim."
+  subtitulo: "O que reconhecemos sobre a sua marca nos nossos encontros."
 };
 
 const CONSULTORA = {
