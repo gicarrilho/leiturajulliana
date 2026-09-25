@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Julliana Marques · Leitura de Marca</title>
-<meta name="description" content="A Leitura de Marca de Julliana Marques. O manifesto, o guia de marca e o lugar onde a marca vira conteúdo.">
+<meta name="description" content="A Leitura de Marca de Julliana Marques. O manifesto, o guia de marca e a expressão da marca em conteúdo.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23331319'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='17' font-weight='bold' fill='%23C9A227' text-anchor='middle'%3EJ%3C/text%3E%3C/svg%3E">
 <meta name="theme-color" content="#331319">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400..600&family=Archivo:wght@600;700;800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400..600&family=Archivo:wght@600;700;800&family=Instrument+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="estilo.css?v=20260925">
 </head>
 <body class="casa">
@@ -23,28 +23,70 @@ comDados(function(){
 
 window.CASA = "Leitura de Marca";
 
-/* ===== 1 · O MANIFESTO. É a primeira coisa que ela vê. ===== */
-folha("tinta mf-folha noite",
-  '<div class="assina">'+
-    '<span class="nome">'+esc(MARCA.cliente)+'</span>'+
-    '<span class="prod">'+esc(MARCA.produto)+'</span>'+
-  '</div>'+
-  '<div class="mf"><div class="mf-rot">'+esc(MANIFESTO.rot)+'</div>'+
-  MANIFESTO.blocos.map(function(b){
-    if(b.n==="p") return '<div class="mf-p'+(b.g?" "+b.g:"")+'"></div>';
-    if(b.n==="fim") return '<div class="mf-fim">'+b.t.split("\n\n").map(function(x){
-      return '<p>'+br(x)+'</p>'}).join("")+'</div>';
-    return '<p class="mf-'+b.n+'">'+br(b.t)+'</p>';
-  }).join("")+'</div>','manifesto');
+/* ===========================================================================
+   1 · O MANIFESTO, INTEIRO, EM UMA TELA SÓ.
+   Os blocos do dados.js viram grupos. Um "p" fecha um grupo e abre o seguinte.
+   Os grupos são distribuídos na grade na ordem abaixo.
+   =========================================================================== */
+function grupos(blocos){
+  var g=[], atual=null;
+  blocos.forEach(function(b){
+    if(b.n==="p"){ atual=null; return; }
+    if(!atual || atual.tipo!==b.n){ atual={tipo:b.n, textos:[]}; g.push(atual); }
+    atual.textos.push(b.t);
+  });
+  return g;
+}
+function textos(g,cls){
+  if(!g) return "";
+  return '<div class="'+cls+'">'+g.textos.map(function(t){return '<p>'+enf(t)+'</p>'}).join("")+'</div>';
+}
 
-/* ===== 2 · OS DOIS CAMINHOS ===== */
+var G = grupos(MANIFESTO.blocos);
+
+var cabeca =
+  '<div class="mfc-cab">'+
+    '<span class="nome">'+esc(MARCA.cliente)+'</span>'+
+    '<span class="rot">'+esc(MANIFESTO.rot)+'</span>'+
+  '</div>';
+
+var composicao;
+if(G.length===11){
+  composicao =
+    '<div class="mfc-texto">'+
+      textos(G[0],"corpo")+
+      textos(G[1],"corpo lista")+
+      textos(G[2],"hero")+
+      textos(G[3],"corpo")+
+      textos(G[4],"corpo tri")+
+      textos(G[5],"corpo marco")+
+      textos(G[6],"corpo")+
+      textos(G[7],"hero")+
+      textos(G[8],"corpo")+
+      textos(G[9],"corpo fala")+
+    '</div>'+
+    '<div class="mfc-fim">'+G[10].textos.join("\n\n").split("\n\n").map(function(t){
+      return '<p>'+enf(t)+'</p>'}).join("")+'</div>';
+} else {
+  /* se o manifesto mudar de tamanho, empilha tudo em vez de sumir com alguma parte */
+  composicao = '<div class="mfc-texto">'+G.map(function(g){
+    var cls = g.tipo==="s"?"hero":(g.tipo==="l"?"corpo lista":(g.tipo==="t"?"corpo tri":(g.tipo==="q"?"corpo fala":"corpo")));
+    return textos(g,cls);
+  }).join("")+'</div>';
+}
+
+folha("manifesto",cabeca+composicao,'manifesto');
+
+/* ===========================================================================
+   2 · OS DOIS CAMINHOS
+   =========================================================================== */
 var PORTAS = [
   { n:"01", nome:"O seu Guia de Marca", href:"marca.html",
     ds:"O que reconhecemos sobre você nos nossos encontros. É para ler com calma, uma vez, e voltar sempre que precisar lembrar de quem você é ou de por que decidimos alguma coisa.",
     itens:["De onde partimos","A essência","Em 1 minuto","Território","Princípios","Suas frentes","Manual","Arquétipos","Cliente ideal"],
     vai:"Entrar no guia →" },
-  { n:"02", nome:"A sua marca em forma de conteúdo", href:"conteudo.html", quente:true,
-    ds:"É onde a marca vira trabalho. Pautas prontas, ferramentas para criar, a régua para conferir antes de publicar e o plano dos primeiros trinta dias.",
+  { n:"02", nome:"A expressão da sua marca", href:"conteudo.html", quente:true,
+    ds:"É onde a marca vira presença digital. Pautas prontas, ferramentas para criar, a régua para conferir antes de publicar e o plano dos primeiros trinta dias.",
     itens:["Pilares","Banco de pautas","Da cena ao conteúdo","A régua","Plano de 30 dias","Repertório"],
     vai:"Entrar no conteúdo →" }
 ];
@@ -52,7 +94,7 @@ var PORTAS = [
 folha("areia caminhos",
   '<div class="rot-ed">por onde seguir</div>'+
   '<h2>Daqui saem dois caminhos.</h2>'+
-  '<p class="intro">O primeiro é para se reconhecer. O segundo é para trabalhar. Você não precisa escolher um: o segundo só faz sentido depois do primeiro, mas depois disso você vai voltar muito mais ao segundo.</p>'+
+  '<p class="intro">O primeiro é para se reconhecer.<br>O segundo é para realizar.</p>'+
   '<div class="cxs c2" style="margin-top:clamp(20px,2.6vw,34px)">'+
   PORTAS.map(function(p){
     return '<a class="cx cx-porta'+(p.quente?" quente":"")+'" href="'+at(p.href)+'">'+
@@ -72,7 +114,6 @@ folha("areia caminhos",
 montar();
 animacoes();
 
-/* barra de progresso, sem o resto da navegação */
 var barra=$("#prog"), tick=false;
 function progresso(){
   var h=document.documentElement.scrollHeight-window.innerHeight;
